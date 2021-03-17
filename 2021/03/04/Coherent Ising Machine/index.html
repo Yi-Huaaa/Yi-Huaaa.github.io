@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":"ture"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Coherent Ising Machine前言 Coherent Ising Machine (CIM)，是一種用於解決Ising problem的量子機器，有點類似於退火。但卻是based on 物理光學所做出來的機器。因為摩爾定律的衰落與量子電腦與量子信息的進步，因此survey了這方面的相關主題，並挑選了CIM。報告的內容主要分成兩部分：  第一部分是講解一下CIM的物理背景與實體機器如何">
+  <meta name="description" content="Coherent Ising MachineIntroduction Coherent Ising Machine (CIM)，是一種用於解決Ising problem的量子機器，有點類似於退火。但卻是based on 物理光學所做出來的機器。因為摩爾定律的衰落與量子電腦與量子信息的進步，因此survey了這方面的相關主題，並挑選了CIM。報告的內容主要分成兩部分：  第一部分是講解一下CIM的物">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Coherent Ising Machine survey reoprt until 2020">
 <meta property="og:url" content="http://example.com/2021/03/04/Coherent%20Ising%20Machine/index.html">
 <meta property="og:site_name" content="YHC&#39;s blog">
-<meta property="og:description" content="Coherent Ising Machine前言 Coherent Ising Machine (CIM)，是一種用於解決Ising problem的量子機器，有點類似於退火。但卻是based on 物理光學所做出來的機器。因為摩爾定律的衰落與量子電腦與量子信息的進步，因此survey了這方面的相關主題，並挑選了CIM。報告的內容主要分成兩部分：  第一部分是講解一下CIM的物理背景與實體機器如何">
+<meta property="og:description" content="Coherent Ising MachineIntroduction Coherent Ising Machine (CIM)，是一種用於解決Ising problem的量子機器，有點類似於退火。但卻是based on 物理光學所做出來的機器。因為摩爾定律的衰落與量子電腦與量子信息的進步，因此survey了這方面的相關主題，並挑選了CIM。報告的內容主要分成兩部分：  第一部分是講解一下CIM的物">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i.imgur.com/0N2n0q4.png">
 <meta property="og:image" content="https://i.imgur.com/RDsSKzm.png">
@@ -64,7 +64,7 @@
 <meta property="og:image" content="https://i.imgur.com/J6Ku15H.png">
 <meta property="og:image" content="https://i.imgur.com/AXmUmBn.png">
 <meta property="article:published_time" content="2021-03-04T06:20:57.000Z">
-<meta property="article:modified_time" content="2021-03-17T08:08:54.437Z">
+<meta property="article:modified_time" content="2021-03-17T08:14:50.896Z">
 <meta property="article:author" content="Yi-Hua Chung">
 <meta property="article:tag" content="Quantum Annealing">
 <meta property="article:tag" content="Quantum Simulation">
@@ -234,7 +234,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-17 16:08:54" itemprop="dateModified" datetime="2021-03-17T16:08:54+08:00">2021-03-17</time>
+                <time title="Modified: 2021-03-17 16:14:50" itemprop="dateModified" datetime="2021-03-17T16:14:50+08:00">2021-03-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -264,7 +264,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Coherent-Ising-Machine"><a href="#Coherent-Ising-Machine" class="headerlink" title="Coherent Ising Machine"></a>Coherent Ising Machine</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+        <h2 id="Coherent-Ising-Machine"><a href="#Coherent-Ising-Machine" class="headerlink" title="Coherent Ising Machine"></a>Coherent Ising Machine</h2><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><ul>
 <li><p>Coherent Ising Machine (CIM)，是一種用於解決Ising problem的量子機器，有點類似於退火。但卻是based on 物理光學所做出來的機器。<br>因為摩爾定律的衰落與量子電腦與量子信息的進步，因此survey了這方面的相關主題，並挑選了CIM。報告的內容主要分成兩部分：</p>
 <ol>
 <li>第一部分是講解一下CIM的物理背景與實體機器如何運行。</li>
@@ -284,7 +284,7 @@
 <li><p>其中影響performance的因素包刮：size，N的大小、annealing time、問題是否為fully connected、Degree的大小…等等。皆會在最後第二部分的地方做效能的探討。</p>
 </li>
 </ul>
-<h2 id="主要的Survey-paper-按年份"><a href="#主要的Survey-paper-按年份" class="headerlink" title="主要的Survey paper (按年份)"></a>主要的Survey paper (按年份)</h2><ol>
+<h3 id="Major-survey-paper-sorted-by-date"><a href="#Major-survey-paper-sorted-by-date" class="headerlink" title="Major survey paper (sorted by date)"></a>Major survey paper (sorted by date)</h3><ol>
 <li>(2013) Coherent Ising machine based on degenerate optical parametric oscillators </li>
 <li>(2014) Network of Time-Multiplexed Optical Parametric Oscillators as a Coherent Ising Machine </li>
 <li>(2016) A coherent Ising machine for 2000-node optimization problems </li>
@@ -292,7 +292,7 @@
 <li>(2019) Experimental investigation of performance differences between coherent Ising machines and a quantum annealer </li>
 <li>(2020) Synchronously-pumped OPO coherent Ising machine : benchmarking and prospects</li>
 </ol>
-<h2 id="一、CIM的機器介紹"><a href="#一、CIM的機器介紹" class="headerlink" title="一、CIM的機器介紹"></a>一、CIM的機器介紹</h2><ul>
+<h3 id="一、CIM的機器介紹"><a href="#一、CIM的機器介紹" class="headerlink" title="一、CIM的機器介紹"></a>一、CIM的機器介紹</h3><ul>
 <li><p>CIM的物理機器可以分成兩的部分。第一部分是OPO Part，也就是機器產生OPO (Ising spin)的部分；另外是Feedback Part，也就是機器決定是否要做coupling的部分。其中整個OPO part的過程都是在一個腔體中進行，而被產生的OPO會在光纖所形成的管路中一直跑，直到整個系統的Hamiltonian降到最低，也就類似於退火的過程結束。</p>
 </li>
 <li><p>除此之外，CIM的物理機器大略可分成三代機器，分別是在2003-2012的第一代，團隊在實驗桌上進行小型的CIM實驗。2014是Stanford與NTT合作的CIM的實體機的出現。以及2016後使用FPGA作為決定是否要做coupling的主要算力的第三代機器。其中第三代機器也從2016一路使用到2020在硬體結構上並沒有太大的變化。</p>
@@ -356,8 +356,8 @@
 <li><p>最後再補充一點是，為什麼CIM的光波(OPO)能夠一直在光纖中存在而不消散，原因是因為如果他的機器架構圖中顯示的，在Fig.1的左上角的laser pump下面有接出另一條線路，這條線路便是用來補充pump energy進入各個OPO中，使OPO在很長的光纖中不消散的原因。</p>
 </li>
 </ul>
-<h2 id="二、CIM的Hamiltonian物理背景與作用理論"><a href="#二、CIM的Hamiltonian物理背景與作用理論" class="headerlink" title="二、CIM的Hamiltonian物理背景與作用理論"></a>二、CIM的Hamiltonian物理背景與作用理論</h2><h3 id="CIM的Hamiltonian如下："><a href="#CIM的Hamiltonian如下：" class="headerlink" title="CIM的Hamiltonian如下："></a>CIM的Hamiltonian如下：</h3><p><img src="https://i.imgur.com/EHfUBbr.png"></p>
-<h3 id="物理背景與作用理論推導過程"><a href="#物理背景與作用理論推導過程" class="headerlink" title="物理背景與作用理論推導過程"></a>物理背景與作用理論推導過程</h3><ul>
+<h3 id="二、CIM的Hamiltonian物理背景與作用理論"><a href="#二、CIM的Hamiltonian物理背景與作用理論" class="headerlink" title="二、CIM的Hamiltonian物理背景與作用理論"></a>二、CIM的Hamiltonian物理背景與作用理論</h3><h4 id="CIM的Hamiltonian如下："><a href="#CIM的Hamiltonian如下：" class="headerlink" title="CIM的Hamiltonian如下："></a>CIM的Hamiltonian如下：</h4><p><img src="https://i.imgur.com/EHfUBbr.png"></p>
+<h4 id="物理背景與作用理論推導過程"><a href="#物理背景與作用理論推導過程" class="headerlink" title="物理背景與作用理論推導過程"></a>物理背景與作用理論推導過程</h4><ul>
 <li><p>這部分會討論三條Hamiltonian的來源，然而因為第三條式子推不出來，因此下面只討論兩條Hamiltonian的部分。</p>
 </li>
 <li><p>先推導第一式：</p>
@@ -416,7 +416,7 @@
 <li><p>而就像我們在前一個部分，也就是物理機器的部分有提到過的CIM的運行原理，CIM的整個系統的laser pump會一直打，將pump rate打高，隨著pump rate越來越高，會因為pump rate和OPO的amplitude的實部，也就是in-phase component成正比，當pump rate越來越大的同時，in-phase component也會越來越大。當能夠被測得的光波震幅越來越大後，Ising Energy同時也在降低。並且在pump rate達到groud state時會產程bifurcatiton，，並且很快就會得到我們所求，能量最低的狀態。</p>
 </li>
 </ul>
-<h2 id="三、CIM效能"><a href="#三、CIM效能" class="headerlink" title="三、CIM效能"></a>三、CIM效能</h2><h3 id="CIM-simulation-on-classical-computer"><a href="#CIM-simulation-on-classical-computer" class="headerlink" title="CIM simulation on classical computer"></a>CIM simulation on classical computer</h3><ul>
+<h3 id="三、CIM效能"><a href="#三、CIM效能" class="headerlink" title="三、CIM效能"></a>三、CIM效能</h3><h4 id="CIM-simulation-on-classical-computer"><a href="#CIM-simulation-on-classical-computer" class="headerlink" title="CIM simulation on classical computer"></a>CIM simulation on classical computer</h4><ul>
 <li><p>在2018年的時候，D-wave在arxiv上發了一篇CIM的simulation的論文，” Emulating the coherent Ising machine with a mean-field algorithm”。以CIM是將Ising problem的能量最小化，其中在前面推演其Hamiltonian的過程可以發現，整個CIM降低能量的過程是會受到noise所干擾的。而D-wave發表的方式則是利用與CIM類似的noise，進行比較平均場退火的演算法，Noisy mean-field annealing (NMFA) algorithm。Pseudo code如下所示：<br><img src="https://i.imgur.com/l78kYps.png"></p>
 </li>
 <li><p>從演算法上講，CIM遵循一個簡單的循環，也就是我們在前面所提到的CIM的一個circulation，在每次的循環中重複測量spin的state，然後跟從該測量中得出的mean-field做組合，去決定是不是要做coupling的動作。D-wave將CIM性能與NMFA進行了比較，NMFA是一種演算法，使用[−1，1]，而不是CIM中所使用的光脈衝相位。CIM使用光脈衝注入mean-field，而NMFA使用Boltzmann factor注入mean-field用以降低溫度，作法類似annealing (相類似於SA之類的做法)。而在此篇論文中，D-wave也有敘述了NMFA演算法中的變數對應於CIM中的變數以及相對應的物理現象，在這篇報告不會詳細做討論。其中D-wave使用跑在GPU上的code也有release出來。</p>
@@ -442,7 +442,7 @@
 <li><p>在經過上面的比較後，D-wave對CIM這種量子光學儀器下的評論是：儘管它確實代表了光學的一種新穎用途，但尚未提出宏觀的計算量子模型。因此，目前尚不清楚潛在的潛力相干的伊辛機具有實用性，但可作為未來的計算技術。</p>
 </li>
 </ul>
-<h3 id="CIM的實體機器與D-wave的實體機器實驗比較"><a href="#CIM的實體機器與D-wave的實體機器實驗比較" class="headerlink" title="CIM的實體機器與D-wave的實體機器實驗比較"></a>CIM的實體機器與D-wave的實體機器實驗比較</h3><ul>
+<h4 id="CIM的實體機器與D-wave的實體機器實驗比較"><a href="#CIM的實體機器與D-wave的實體機器實驗比較" class="headerlink" title="CIM的實體機器與D-wave的實體機器實驗比較"></a>CIM的實體機器與D-wave的實體機器實驗比較</h4><ul>
 <li><p>那在2018年D-wave發表了前一個部分所提到的CIM的simulation並做出一番見解，認為CIM的實體機器技術還有待發展後。CIM便於2019與2020發表了兩篇論文回應了D-wave對於CIM的評論。分別是：(2019_Science) Experimental investigation of performance differences between coherent Ising machines and a quantum annealer，與(2020_SPIE) Synchronously-pumped OPO coherent Ising machine : benchmarking and prospects。</p>
 </li>
 <li><p>其中，比較的對象並不是D-wave之前做的NMFA演算法，而是D-wave實體機器的對決。比較用的機器一樣式Stanford和NTT的CIM機器，與D-wave在2019最新的機器D-wave 2000 qubits(簡稱DW2Q)做比較。並提出DW2Q機器本身一個重要的問題點就是embedding的問題。並且針對embedding做了一番論述。其中包括D-wave的機器無法跑到更多的qubits的原因便是因為D-wave的機器在跑fully connected的問題的時候，會於到embedding的問題。因此基本上雖然有2000個qubits，然而實際上只能到跑兩千開根號，大約是64，但實際上則為61的qubits。比Stanford的qubits數量 = 100，和NTT的CIM的qubits = 2000都來的小許多。因此在最後比較當qubits數目超過61時，D-wave的所花的時間並不是真正使用D-wave機器的時間，因為他還沒辦法跑那麼多qubits，而是根據在N=61以下的趨勢線去做內插所得到的結果。並且所有跑的問題皆和上面一樣。包括SK-model、MAX-CUT on dense graph、MAX-CUT on sparse graph。</p>
@@ -507,7 +507,7 @@
 <li><p>並且可將所有的實驗結果整理成如下表所示：<br><img src="https://i.imgur.com/AXmUmBn.png"></p>
 </li>
 </ul>
-<h2 id="報告總結"><a href="#報告總結" class="headerlink" title="報告總結"></a>報告總結</h2><ul>
+<h4 id="報告總結"><a href="#報告總結" class="headerlink" title="報告總結"></a>報告總結</h4><ul>
 <li>此份整理是做關於Coherent Ising Machine的一個survey，從2003年的paper開始一直看到2020年，也只是根據我個人的理解QQ。</li>
 <li>從一開CIM團隊在做物理意義上的推導、一直到後來小機器的模擬、實體機器的出現與實體機器的使用。並在最後最了不同問題的應用。</li>
 <li>從報告的一開始先提到了為甚麼選擇CIM作為此次報告的主題、再來是很簡略的先介紹甚麼是CIM，以及CIM所使用的Ising spin是什麼。再來，對CIM的物理機器做詳細的介紹、接著是CIM的Hamiltonian與作用理論。便對CIM做了一個相對詳盡的介紹。</li>
@@ -519,7 +519,7 @@
 </li>
 <li>總而言之，CIM是一個不同於傳統退火機器的Ising機器，他是based on物理光學所建構出的另一種Ising機器。並相對一般退火機器有其自身帶來的好處。並且相待期待在未來幾年Stanford和NTT的合作，將CIM的機器精益求精。</li>
 </ul>
-<h2 id="結尾補充"><a href="#結尾補充" class="headerlink" title="結尾補充"></a>結尾補充</h2><ul>
+<h4 id="結尾補充"><a href="#結尾補充" class="headerlink" title="結尾補充"></a>結尾補充</h4><ul>
 <li>在2020年4月時完成這份報告，那在同年2020年10月由CIM的其中一位負責人YAMAMOTO, Y.,發在arVix的Quantum Physics做了一份針對物理理論方面更詳細的總整理 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2006.05649">$Ref_{11}$</a>，若對CIM有極大的興趣，詳讀這份論文將會是更好的選擇。</li>
 </ul>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
@@ -609,7 +609,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Coherent-Ising-Machine"><span class="nav-number">1.</span> <span class="nav-text">Coherent Ising Machine</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E7%9A%84Survey-paper-%E6%8C%89%E5%B9%B4%E4%BB%BD"><span class="nav-number">1.2.</span> <span class="nav-text">主要的Survey paper (按年份)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81CIM%E7%9A%84%E6%A9%9F%E5%99%A8%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.3.</span> <span class="nav-text">一、CIM的機器介紹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81CIM%E7%9A%84Hamiltonian%E7%89%A9%E7%90%86%E8%83%8C%E6%99%AF%E8%88%87%E4%BD%9C%E7%94%A8%E7%90%86%E8%AB%96"><span class="nav-number">1.4.</span> <span class="nav-text">二、CIM的Hamiltonian物理背景與作用理論</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CIM%E7%9A%84Hamiltonian%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="nav-number">1.4.1.</span> <span class="nav-text">CIM的Hamiltonian如下：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%83%8C%E6%99%AF%E8%88%87%E4%BD%9C%E7%94%A8%E7%90%86%E8%AB%96%E6%8E%A8%E5%B0%8E%E9%81%8E%E7%A8%8B"><span class="nav-number">1.4.2.</span> <span class="nav-text">物理背景與作用理論推導過程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81CIM%E6%95%88%E8%83%BD"><span class="nav-number">1.5.</span> <span class="nav-text">三、CIM效能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CIM-simulation-on-classical-computer"><span class="nav-number">1.5.1.</span> <span class="nav-text">CIM simulation on classical computer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CIM%E7%9A%84%E5%AF%A6%E9%AB%94%E6%A9%9F%E5%99%A8%E8%88%87D-wave%E7%9A%84%E5%AF%A6%E9%AB%94%E6%A9%9F%E5%99%A8%E5%AF%A6%E9%A9%97%E6%AF%94%E8%BC%83"><span class="nav-number">1.5.2.</span> <span class="nav-text">CIM的實體機器與D-wave的實體機器實驗比較</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%B5%90%E8%AB%96"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">小結論</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A0%B1%E5%91%8A%E7%B8%BD%E7%B5%90"><span class="nav-number">1.6.</span> <span class="nav-text">報告總結</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E5%B0%BE%E8%A3%9C%E5%85%85"><span class="nav-number">1.7.</span> <span class="nav-text">結尾補充</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">1.8.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Coherent-Ising-Machine"><span class="nav-number">1.</span> <span class="nav-text">Coherent Ising Machine</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Major-survey-paper-sorted-by-date"><span class="nav-number">1.2.</span> <span class="nav-text">Major survey paper (sorted by date)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81CIM%E7%9A%84%E6%A9%9F%E5%99%A8%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.3.</span> <span class="nav-text">一、CIM的機器介紹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81CIM%E7%9A%84Hamiltonian%E7%89%A9%E7%90%86%E8%83%8C%E6%99%AF%E8%88%87%E4%BD%9C%E7%94%A8%E7%90%86%E8%AB%96"><span class="nav-number">1.4.</span> <span class="nav-text">二、CIM的Hamiltonian物理背景與作用理論</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CIM%E7%9A%84Hamiltonian%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="nav-number">1.4.1.</span> <span class="nav-text">CIM的Hamiltonian如下：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%83%8C%E6%99%AF%E8%88%87%E4%BD%9C%E7%94%A8%E7%90%86%E8%AB%96%E6%8E%A8%E5%B0%8E%E9%81%8E%E7%A8%8B"><span class="nav-number">1.4.2.</span> <span class="nav-text">物理背景與作用理論推導過程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81CIM%E6%95%88%E8%83%BD"><span class="nav-number">1.5.</span> <span class="nav-text">三、CIM效能</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CIM-simulation-on-classical-computer"><span class="nav-number">1.5.1.</span> <span class="nav-text">CIM simulation on classical computer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CIM%E7%9A%84%E5%AF%A6%E9%AB%94%E6%A9%9F%E5%99%A8%E8%88%87D-wave%E7%9A%84%E5%AF%A6%E9%AB%94%E6%A9%9F%E5%99%A8%E5%AF%A6%E9%A9%97%E6%AF%94%E8%BC%83"><span class="nav-number">1.5.2.</span> <span class="nav-text">CIM的實體機器與D-wave的實體機器實驗比較</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%B5%90%E8%AB%96"><span class="nav-number">1.5.3.</span> <span class="nav-text">小結論</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A0%B1%E5%91%8A%E7%B8%BD%E7%B5%90"><span class="nav-number">1.5.4.</span> <span class="nav-text">報告總結</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B5%90%E5%B0%BE%E8%A3%9C%E5%85%85"><span class="nav-number">1.5.5.</span> <span class="nav-text">結尾補充</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
