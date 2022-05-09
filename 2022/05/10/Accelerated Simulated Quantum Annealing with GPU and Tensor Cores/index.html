@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":"ture"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="ForewordRecently, our team submitted a research paper called “Accelerated Simulated Quantum Annealing with GPU and Tensor Cores,” which was just accepted by ISC high performance, 2022. IntroductionIn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Accelerated Simulated Quantum Annealing with GPU and Tensor Cores">
+<meta property="og:url" content="http://example.com/2022/05/10/Accelerated%20Simulated%20Quantum%20Annealing%20with%20GPU%20and%20Tensor%20Cores/index.html">
+<meta property="og:site_name" content="YHC&#39;s blog">
+<meta property="og:description" content="ForewordRecently, our team submitted a research paper called “Accelerated Simulated Quantum Annealing with GPU and Tensor Cores,” which was just accepted by ISC high performance, 2022. IntroductionIn">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/LaR5qKx.png">
+<meta property="og:image" content="https://i.imgur.com/ieXNVGI.png">
+<meta property="og:image" content="https://i.imgur.com/sg6Zpct.png">
+<meta property="og:image" content="https://i.imgur.com/qz949ms.png">
+<meta property="og:image" content="https://i.imgur.com/wCA5SWi.png">
+<meta property="og:image" content="https://i.imgur.com/JJ1ny2u.png">
+<meta property="og:image" content="https://i.imgur.com/TJgkOXd.png">
+<meta property="og:image" content="https://i.imgur.com/HwwI07W.png">
+<meta property="og:image" content="https://i.imgur.com/SFf2poB.png">
+<meta property="og:image" content="https://i.imgur.com/URkfuVz.png">
+<meta property="article:published_time" content="2022-05-09T17:58:57.000Z">
+<meta property="article:modified_time" content="2022-05-09T17:48:30.300Z">
+<meta property="article:author" content="Yi-Hua Chung">
+<meta property="article:tag" content="Simulated Quantum_Annealing (SQA)">
+<meta property="article:tag" content="Quantum_Simulation">
+<meta property="article:tag" content="Tensor core">
+<meta property="article:tag" content="GPU">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/LaR5qKx.png">
+
+<link rel="canonical" href="http://example.com/2022/05/10/Accelerated%20Simulated%20Quantum%20Annealing%20with%20GPU%20and%20Tensor%20Cores/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Accelerated Simulated Quantum Annealing with GPU and Tensor Cores | YHC's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YHC's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/10/Accelerated%20Simulated%20Quantum%20Annealing%20with%20GPU%20and%20Tensor%20Cores/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="Yi-Hua Chung">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YHC's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Accelerated Simulated Quantum Annealing with GPU and Tensor Cores
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-05-10 01:58:57 / Modified: 01:48:30" itemprop="dateCreated datePublished" datetime="2022-05-10T01:58:57+08:00">2022-05-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Quantum-Simulation/" itemprop="url" rel="index"><span itemprop="name">Quantum_Simulation</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="Foreword"><a href="#Foreword" class="headerlink" title="Foreword"></a>Foreword</h3><p>Recently, our team submitted a research paper called “Accelerated Simulated Quantum Annealing with GPU and Tensor Cores,” which was just accepted by ISC high performance, 2022.</p>
+<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>In this paper, we modify the SQA algorithm to increase the parallelism of the SQA algorithm and still guarantee the performance of the accuracy.<br>In general, SQA algorithms are often used to solve combinatorial optimization problems.<br>We will first map the combinatorial optimization problem (e.g. traveling salesman problem (TSP)) that needs to solve to the appropriate <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Ising_model"><strong>Ising model</strong></a>.<br>Different problems need to be mapped to different Ising models.<br>Some Ising models like the fully-connected model, King graph model, EA model, etc., are referred to by the teams solving quantum annealing-related works (e.g. Tohoku’s SQA accelerated by FPGA and <a target="_blank" rel="noopener" href="https://www.google.com/search?q=GPU+accelerated+quantum+annealing&rlz=1C5CHFA_enTW942TW943&oq=GPU+accelerated+quantum+annealing&aqs=chrome..69i57.10965j0j7&sourceid=chrome&ie=UTF-8">GPU</a>, Toshiba Simulated Bifurcation Machine <a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/8892209">SBM</a> ).<br>In our work, we propose an innovative parallelizing strategy called <strong>hierarchical update</strong> to vastly improve the efficiency of parallel computing, which is capable of accelerating state-of-the-art SQA implementations further by 7X-47.2X based on our case studies.<br>Furthermore, we develop a tensorizing scheme to leverage the Tensor Cores on modern GPUs to deliver up to 1.83X of additional speedup by using <a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cublas/index.html">cublas</a>, provided by NVIDIA CUDA Toolkit. Overall, our work solves fully-connected Ising models faster than any previous SQA works. Our solution outperforms existing GPU-based solutions by 86.6X and FPGA-based solutions by 14X.<br>Moreover, our proposed algorithm still maintains the performance of accuracy of SQA.<br>Finally, we use our algorithm to solve the max-cut problem <a target="_blank" rel="noopener" href="https://web.stanford.edu/~yyye/yyye/Gset/">gset</a> provided by Stanford University and compare the accuracy with the current state-of-the-art.<br>With the careful adjustment of corresponding parameters such as temperature, almost all gset problems have an average accuracy rate of over 97.5%.</p>
+<span id="more"></span>
+
+<h3 id="Content"><a href="#Content" class="headerlink" title="Content"></a>Content</h3><p>The structure of this article is as follows. Firstly, I will briefly talk about the Ising model and SQA. After a basic understanding of SQA, we will mention how the original state-of-the-art accelerated SQA can solve the fully connected Ising problem.<br>The second part will elaborate on the proposed accelerated strategy, “Hierarchical Update,” in this work. And describe how to adopt Tensor cores during the acceleration to make a higher speedup.<br>After talking about the methodology, we will cover some experiments conducted in this paper to verify the effect of the proposed acceleration strategy.<br>And make a summary in the final.<br>.</p>
+<h3 id="Ising-Model"><a href="#Ising-Model" class="headerlink" title="Ising Model"></a>Ising Model</h3><p>The Ising model is a huge lattice constructed by N spins. Besides, each spin can be in one of the two different states, $+1$ and $-1$. If the spin is labeled as $+1$, the spin direction is up. Conversely, the spin direction is down when the spin is marked as $-1$.</p>
+<p>In addition, as shown in Fig.1, some of the spins are connected. The connected strength between the spin $i$ and spin $j$ is called couplings and notated as $J_{ij}$.</p>
+<div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/LaR5qKx.png" width="200"/>
+  <figcaption class="figure-caption"> Figure 1. Sample Ising model - EA model </figcaption>
+</figure></div>
+
+<p>After having these parameters, we can formulate the Hamiltonian for the Ising model as the formula.</p>
+<div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/ieXNVGI.png" width="250"/>
+  <figcaption class="figure-caption"> Hamiltonian equation </figcaption>
+</figure></div>
+
+<p>When solving the Ising problem, our goal is to find a spin configuration to minimize the system energy. Thus, we will try to flip the spins on the Ising model to find out the spin configuration with the minimal Hamiltonian. Solving an Ising problem is a combinatorial problem, an NP-Complete problem.</p>
+<p>But why do we want to solve the Ising problem? Since we can reduce the other NPC problem, like MAX-CUT, min-CUT, Traveling salesman problem, etc., to the Ising problem and solve those problems we demand to fix by solving the Ising problem.</p>
+<p>Generally, the Ising problem is currently solved in a heuristic. One of the heuristic algorithms, “Simulated Quantum Annealing,” is an algorithm for solving combinatorial optimization problems. Before conversing about the SQA, let’s look at some Ising models with different connectivity.</p>
+<p>There are many different Ising models shown in Fig. 2.</p>
+<div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/sg6Zpct.png" width="800"/>
+  <figcaption class="figure-caption">  Figure 2. Ising models with different connectivities </figcaption>
+</figure></div>
+
+
+<p>The connectivity of the Ising model increase from the left-most to the rightmost Ising model. The higher spin connectivity for an Ising model, the more difficult it is to be accelerated. Since when we want to make a spin-flip, we need to know all the spins states of the connected spins. Hence, for the rightmost one, the fully-connected Ising model, we need to maintain the remaining $(N-1)$ spins in the same state when we want to flip a spin. Thus, $N$ rounds are required to traverse N spins and judge whether one spin can be reversed to make the Hamiltonian of the Ising model become lower in each round.<br>In our work, we accelerate solving the fully-connected Ising model, which is the most challenging Ising model to be accelerated by adopting simulated quantum annealing (SQA) algorithm.</p>
+<h3 id="Simulated-Quantum-Annealing"><a href="#Simulated-Quantum-Annealing" class="headerlink" title="Simulated Quantum Annealing"></a>Simulated Quantum Annealing</h3><p>So what is simulated quantum annealing (SQA)? SQA is a quantum-inspired algorithm. In order to mimic the quantum phenomenon, it will duplicate the original Ising model into M copies as shown in the graph below. This multi-trotter Ising model is called a transverse field Ising model (TFIM). Besides, different from the original fully connected Ising model, each spin on TFIM will also connect to the spins in the same position located at the previous and the next trotter of TFIM.</p>
+<div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/qz949ms.png" width="400"/>
+  <figcaption class="figure-caption">  Figure 3. TFIM </figcaption>
+</figure></div>
+
+<p>At the start of the SQA, by giving the initial temperature, and magnetic field, we need to randomly generate a set of spin configurations. As time increases (MC-step increases), the value of T(t) will gradually decrease. And under the same temperature, we will travers all the spins and try flip the spin which can make the system hamiltonian becomes lower under the same system situation. But remember we can only flip on e spin at a time, since the Ising model we solved is fully connected Ising model.</p>
+<p>Ok, so to make a spin-flip, we need to know the delta energy caused by a spin-flip. Here is the hamiltonian for the Fully-connected TFIM.</p>
+<div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/wCA5SWi.png" width="777"/>
+  <figcaption class="figure-caption">  </figcaption>
+</figure></div>
+
+
+
+<p>From this formula, we can separate the system’s total energy caused by a single spin. </p>
+<div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/JJ1ny2u.png" width="700"/>
+  <figcaption class="figure-caption">  </figcaption>
+</figure></div>
+
+<p>After manipulating the equation, we can get spin energy for the spin i located on the trotter m.</p>
+<div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/TJgkOXd.png" width="900"/>
+  <figcaption class="figure-caption">  </figcaption>
+</figure></div>
+
+<p>Hence, we can determine the delta energy caused by a spin-flip by knowing the spin energy for each spin since the spin state can only be $+1$ or $-1$.</p>
+<div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/HwwI07W.png" width="800"/>
+  <figcaption class="figure-caption">  </figcaption>
+</figure></div>
+
+<p>For more detail about the hamiltonian and delta energy caused by the spin-flip, you can refer to <a target="_blank" rel="noopener" href="https://www.semanticscholar.org/paper/Relationship-between-d-Dimensional-Quantal-Spin-and-Suzuki/83c00af8e8dcec7c7ab07318086012cff4d1462f">Ref-1</a> and <a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/8123652">Ref-2</a> here.</p>
+<ul>
+<li>Ref-1: “Relationship between d-Dimensional Quantal Spin Systems and (d+1)-Dimensional Ising Systems: Equivalence, Critical Exponents and Systematic Approximants of the Partition Function and Spin Correlations ”</li>
+<li>Ref-2: (IEEE international conference on rebooting computing (ICRC) “An ising computer based on simulated quantum annealing by path integral monte carlo method”</li>
+</ul>
+<p>With knowing delta energy makes by a spin-flip, let’s traverse the process of the SQA algorithm. </p>
+<div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/SFf2poB.png" width="900"/>
+  <figcaption class="figure-caption">  </figcaption>
+</figure></div>
+
+<p>After storing the coupling data into the coupling matrix, we need to generate a spin configuration set randomly. Besides, from the previous, we know that we need to calculate the spin energy for each spin to ensure whether to make the spin-flip. The equation shows that the bottleneck for calculating the spin energy is bound by this sigma term called local-field. Hence, before starting the Monte Carlo step, we will pre-calculate the local-field term of all the spins in parallel by using GPU as shown in line 5 to line 10 in the algorithm.</p>
+<p>After the initialization, we will traverse all the spins of the TFIM in the $N$ and $M$ for loop during each MC-step.</p>
+<div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/URkfuVz.png" width="950"/>
+  <figcaption class="figure-caption">  </figcaption>
+</figure></div>
+
+<p>Since we have pre-calculated the local field of each spin, we can compute the delta energy caused by each spin in $O(1)$ time. And then, we can determine whether the spin-flip can lower the system energy in line 17. If yes, then the spin can be flipped in line 18. However, since all the spins are connected, the remaining $(N-1)$ spins’ local field needs to be updated after a spin-flip. Thus, we need to update all the spins’ local fields in line 20 to line 22.</p>
+<p>Unlike constructing the local field of $N$ spins that need to cost O($N^2$), updating $N$ local fields only takes $O(N)$ by using this trick on the bottom right. For example, as the spin $i$ on the trotter $m$ is flipped. We need to update the $k-th$ spin on the $m$ trotter for $k$ from $1$ to $N$. By Subtracting the old local field from the new local field, since we can only flip one spin at a time, hence, this term can be eliminated (shown in the figure above). Furthermore, since the spin state of each spin will only be 1 and -1, we can replace the old spin state with the new spin state multiplied by $-1$. And finally, we know that we only need $O(1)$ time to update one local field. For update $N$ spins, it costs $O(N)$ but not $O(N^2)$.</p>
+<p>And after all the local fields update to be correct, we can go back to line 13 and check whether the next spin-flip can lower the system energy, then do the same thing again and again until all the spins are traversed. Then the system energy will decrease and start the next round of MC-step and do the same thing until the end of the Monte Carlo step.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Simulated-Quantum-Annealing-SQA/" rel="tag"><i class="fa fa-tag"></i> Simulated Quantum_Annealing (SQA)</a>
+              <a href="/tags/Quantum-Simulation/" rel="tag"><i class="fa fa-tag"></i> Quantum_Simulation</a>
+              <a href="/tags/Tensor-core/" rel="tag"><i class="fa fa-tag"></i> Tensor core</a>
+              <a href="/tags/GPU/" rel="tag"><i class="fa fa-tag"></i> GPU</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/27/qosf%20-%20cohort%205%20-%20Task%203%20-%20Find%20best%20results/" rel="prev" title="qosf - cohort 5 - Task 3 - Find best results">
+      <i class="fa fa-chevron-left"></i> qosf - cohort 5 - Task 3 - Find best results
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Foreword"><span class="nav-number">1.</span> <span class="nav-text">Foreword</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Content"><span class="nav-number">3.</span> <span class="nav-text">Content</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ising-Model"><span class="nav-number">4.</span> <span class="nav-text">Ising Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Simulated-Quantum-Annealing"><span class="nav-number">5.</span> <span class="nav-text">Simulated Quantum Annealing</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yi-Hua Chung"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yi-Hua Chung</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Yi-Huaaa" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Yi-Huaaa" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:r09944072@ntu.edu.tw" title="E-Mail (primary) → mailto:r09944072@ntu.edu.tw" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail (primary)</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yhchiara@gmail.com" title="E-Mail → mailto:yhchiara@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yi-Hua Chung</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
