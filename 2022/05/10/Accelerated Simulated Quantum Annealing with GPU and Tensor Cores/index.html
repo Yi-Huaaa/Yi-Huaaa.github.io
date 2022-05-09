@@ -45,8 +45,13 @@
 <meta property="og:image" content="https://i.imgur.com/K0NyOWw.jpg">
 <meta property="og:image" content="https://i.imgur.com/a5tnIPr.jpg">
 <meta property="og:image" content="https://i.imgur.com/YwR8MMB.jpg">
+<meta property="og:image" content="https://i.imgur.com/xgqwU6U.png">
+<meta property="og:image" content="https://i.imgur.com/lEcUUCK.jpg">
+<meta property="og:image" content="https://i.imgur.com/R0RPGhK.png">
+<meta property="og:image" content="https://i.imgur.com/vrU5wh4.png">
+<meta property="og:image" content="https://i.imgur.com/UcYXgFE.png">
 <meta property="article:published_time" content="2022-05-09T17:58:57.000Z">
-<meta property="article:modified_time" content="2022-05-09T18:06:55.804Z">
+<meta property="article:modified_time" content="2022-05-09T18:22:01.607Z">
 <meta property="article:author" content="Yi-Hua Chung">
 <meta property="article:tag" content="Quantum_Simulation">
 <meta property="article:tag" content="Simulated Quantum_Annealing (SQA)">
@@ -212,7 +217,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-05-10 01:58:57 / Modified: 02:06:55" itemprop="dateCreated datePublished" datetime="2022-05-10T01:58:57+08:00">2022-05-10</time>
+              <time title="Created: 2022-05-10 01:58:57 / Modified: 02:22:01" itemprop="dateCreated datePublished" datetime="2022-05-10T01:58:57+08:00">2022-05-10</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -380,6 +385,49 @@
 </figure></div>
 
 <p>After all the spins located in the small block are traversed, it means that all the spins in the same blocks of all the trotters have been judged to flip. Then we can head to deal with the next block as mentioned previously. This is the running process of the entire HU.</p>
+<h3 id="Tensor-Cores"><a href="#Tensor-Cores" class="headerlink" title="Tensor Cores"></a>Tensor Cores</h3><p>In addition, to achieve higher speedup, we will use Tensor cores to speed up the matrix multiplication of updating the local fields of all the spins after one block of spins has been judged.</p>
+<p>But one thing to be aware of is that we only flipped block*M spins.</p>
+<p>Therefore, when updating the local field, we do not need to do the matrix multiplication of the N<em>N</em>M dimension but do the N<em>blk_sz</em>M dimension’s matrix multiplication, which can greatly reduce the amount of unnecessary calculation.</p>
+<div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/xgqwU6U.png" width="900"/>
+  <figcaption class="figure-caption">  </figcaption>
+</figure></div>
+
+<h3 id="Analysis-for-HU"><a href="#Analysis-for-HU" class="headerlink" title="Analysis for HU"></a>Analysis for HU</h3><p>After talking about the HU, let’s give a simple analysis for HU.</p>
+<div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/lEcUUCK.jpg" width="900"/>
+  <figcaption class="figure-caption">  </figcaption>
+</figure></div>
+The amount of computation like multiplication and addition needed by the original strategy is shown on the left side. And the right-hand side shows the computation amount needed by adopting HU. 
+
+
+<p>Through the analysis, we can know that to judge N spins. The original strategy needs 2<em>N</em>N times multiplication and N<em>N times addition. The HU method needs 2</em>blk_sz<em>N+2</em>N<em>N/blk_sz times multiplication and blk_sz</em>N+N*N/blk_sz times addition. For blk_sz equals two, the HU method computation amount becomes lower than the original strategy, i.e., the larger blk_sz, the more computation amount HU can reduce until it reaches the GPU computational resource limit. And this is the first reason for HU to make a higher speedup for SQA.</p>
+<p>Besides, in our implementation, we let one SM process handle one trotter. Hence, we can reduce the time to launch the GPU kernel, which costs less kernel launching time. Furthermore, since block_size is small, we can also put all the data in the GPU’s local memory but the global memory to have faster memory access. Again, we will use Tensor Cores during the update of the local field to reach a higher acceleration. Finally, we maintain the M-dimension parallelism to make the HU method reach higher acceleration.</p>
+<h2 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h2><p>In the performance and evaluation parts, we did five different experiments to do some validation in our work. But I will only cover the some of the results here.</p>
+<h3 id="Experiment-1-Benefits-of-Hierarchical-Update"><a href="#Experiment-1-Benefits-of-Hierarchical-Update" class="headerlink" title="Experiment 1 - Benefits of Hierarchical Update"></a>Experiment 1 - Benefits of Hierarchical Update</h3><div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/R0RPGhK.png" width="900"/>
+  <figcaption class="figure-caption">  </figcaption>
+</figure></div>
+
+
+<p>For the first experiment, we compare the time cost by 100 annealing steps with and without using the HU method for M from 4 to 512 and the number of spin, that is N, from 1024 to 32768.<br>As shown in these figures, the dashed line shows the time cost by without using the HU method, and the solid line is the time cost by adopting the HU method. The time cost by adopting HU is hugely less than the time cost without using HU under all N and M clearly in the results.</p>
+<h3 id="Experiment-2-Per-Step-Annealing-Time"><a href="#Experiment-2-Per-Step-Annealing-Time" class="headerlink" title="Experiment 2 - Per-Step Annealing Time"></a>Experiment 2 - Per-Step Annealing Time</h3><div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/vrU5wh4.png" width="900"/>
+  <figcaption class="figure-caption">  </figcaption>
+</figure></div>
+
+<p>In this experiment, we compare the time cost by per-step annealing time under different N and M with four methods, including Tohoku’s GPU version, Tohoku’s FPGA version, and our proposed work using and without using HU for the second experiment. And make the time cost by Tohoku’s GPU version as a baseline to calculate the speedup of the other three works.</p>
+<p>As shown in the table, we can observe that as N and M grow, the speedup of our work compared to the baseline becomes larger. As N equals 32768 and M equals 512, adopting the HU method can reach a speedup of 47.2 times. And using the HU and Tensor cores can get to 86.6 times speedup even more.<br>Furthermore, the proposed method yields faster results under all problem sizes than Tohoku university’s works no matter using GPU or FPGA as the accelerator.</p>
+<h3 id="Experiment-5-The-Quality-of-Solution"><a href="#Experiment-5-The-Quality-of-Solution" class="headerlink" title="Experiment 5 - The Quality of Solution"></a>Experiment 5 - The Quality of Solution</h3><p>In the final experiment, we test the solution quality of our proposed work.</p>
+<p>We use the <a target="_blank" rel="noopener" href="https://web.stanford.edu/~yyye/yyye/Gset/">Gset problem</a>, which is solving the MAX-CUT problem, provided by Stanford University.<br>We run the SQA under 1000 annealing steps and try to find out the best solution quality by adjusting the initial temperature and the decreasing temperature value per MC-step.</p>
+<div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/UcYXgFE.png" width="450"/>
+  <figcaption class="figure-caption">  </figcaption>
+</figure></div>
+
+<p>The blue square means the best known CUT now. The stars mean the best solution we have found, and the green triangles represent the average CUT we have found now. The orange circles denote the best solution found by Tohoku University, and the pink circles symbolize the average CUT found by Tohoku.</p>
+<p>The table shows that the lowest average CUT we found is higher than 97.5% compared to the best known. It shows that using the HU method does not significantly impact the solution quality. Therefore, from the experiment results above, we demonstrate that the HU method can greatly speed up the SQA algorithm and does not impact the solution quality.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>We accelerate the SQA algorithm to solve the Ising problems by proposing the HU method and using Tensor cores to reach more speedup.<br>Compared to the original state-of-the-art proposed by Tohoku University, we can finally reach the speedup from 1.7 times to 86.6 times compared to the GPU’s version. And achieve the speedup from 2.7 times to 13.68 times compared to the FPGA’s version with maintaining the solution quality of SQA.</p>
 
     </div>
 
@@ -463,7 +511,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Foreword"><span class="nav-number">1.</span> <span class="nav-text">Foreword</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Content"><span class="nav-number"></span> <span class="nav-text">Content</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number"></span> <span class="nav-text">Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ising-Model"><span class="nav-number">1.</span> <span class="nav-text">Ising Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Simulated-Quantum-Annealing"><span class="nav-number">2.</span> <span class="nav-text">Simulated Quantum Annealing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Original-state-of-the-art-SOTA"><span class="nav-number">3.</span> <span class="nav-text">Original state-of-the-art (SOTA)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Methodology"><span class="nav-number"></span> <span class="nav-text">Methodology</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hierarchical-Update-HU"><span class="nav-number">1.</span> <span class="nav-text">Hierarchical Update (HU)</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Foreword"><span class="nav-number">1.</span> <span class="nav-text">Foreword</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Content"><span class="nav-number"></span> <span class="nav-text">Content</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number"></span> <span class="nav-text">Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ising-Model"><span class="nav-number">1.</span> <span class="nav-text">Ising Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Simulated-Quantum-Annealing"><span class="nav-number">2.</span> <span class="nav-text">Simulated Quantum Annealing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Original-state-of-the-art-SOTA"><span class="nav-number">3.</span> <span class="nav-text">Original state-of-the-art (SOTA)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Methodology"><span class="nav-number"></span> <span class="nav-text">Methodology</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hierarchical-Update-HU"><span class="nav-number">1.</span> <span class="nav-text">Hierarchical Update (HU)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tensor-Cores"><span class="nav-number">2.</span> <span class="nav-text">Tensor Cores</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Analysis-for-HU"><span class="nav-number">3.</span> <span class="nav-text">Analysis for HU</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Results"><span class="nav-number"></span> <span class="nav-text">Results</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Experiment-1-Benefits-of-Hierarchical-Update"><span class="nav-number">1.</span> <span class="nav-text">Experiment 1 - Benefits of Hierarchical Update</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Experiment-2-Per-Step-Annealing-Time"><span class="nav-number">2.</span> <span class="nav-text">Experiment 2 - Per-Step Annealing Time</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Experiment-5-The-Quality-of-Solution"><span class="nav-number">3.</span> <span class="nav-text">Experiment 5 - The Quality of Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number"></span> <span class="nav-text">Conclusion</span></a></div>
       </div>
       <!--/noindex-->
 
