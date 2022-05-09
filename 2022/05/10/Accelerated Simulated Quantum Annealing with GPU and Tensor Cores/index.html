@@ -37,8 +37,9 @@
 <meta property="og:image" content="https://i.imgur.com/HwwI07W.png">
 <meta property="og:image" content="https://i.imgur.com/SFf2poB.png">
 <meta property="og:image" content="https://i.imgur.com/URkfuVz.png">
+<meta property="og:image" content="https://i.imgur.com/fiP3qfK.png">
 <meta property="article:published_time" content="2022-05-09T17:58:57.000Z">
-<meta property="article:modified_time" content="2022-05-09T17:48:30.300Z">
+<meta property="article:modified_time" content="2022-05-09T17:55:16.032Z">
 <meta property="article:author" content="Yi-Hua Chung">
 <meta property="article:tag" content="Simulated Quantum_Annealing (SQA)">
 <meta property="article:tag" content="Quantum_Simulation">
@@ -204,7 +205,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-05-10 01:58:57 / Modified: 01:48:30" itemprop="dateCreated datePublished" datetime="2022-05-10T01:58:57+08:00">2022-05-10</time>
+              <time title="Created: 2022-05-10 01:58:57 / Modified: 01:55:16" itemprop="dateCreated datePublished" datetime="2022-05-10T01:58:57+08:00">2022-05-10</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -232,8 +233,8 @@
 <span id="more"></span>
 
 <h3 id="Content"><a href="#Content" class="headerlink" title="Content"></a>Content</h3><p>The structure of this article is as follows. Firstly, I will briefly talk about the Ising model and SQA. After a basic understanding of SQA, we will mention how the original state-of-the-art accelerated SQA can solve the fully connected Ising problem.<br>The second part will elaborate on the proposed accelerated strategy, “Hierarchical Update,” in this work. And describe how to adopt Tensor cores during the acceleration to make a higher speedup.<br>After talking about the methodology, we will cover some experiments conducted in this paper to verify the effect of the proposed acceleration strategy.<br>And make a summary in the final.<br>.</p>
-<h3 id="Ising-Model"><a href="#Ising-Model" class="headerlink" title="Ising Model"></a>Ising Model</h3><p>The Ising model is a huge lattice constructed by N spins. Besides, each spin can be in one of the two different states, $+1$ and $-1$. If the spin is labeled as $+1$, the spin direction is up. Conversely, the spin direction is down when the spin is marked as $-1$.</p>
-<p>In addition, as shown in Fig.1, some of the spins are connected. The connected strength between the spin $i$ and spin $j$ is called couplings and notated as $J_{ij}$.</p>
+<h3 id="Ising-Model"><a href="#Ising-Model" class="headerlink" title="Ising Model"></a>Ising Model</h3><p>The Ising model is a huge lattice constructed by N spins. Besides, each spin can be in one of the two different states, +1 and -1. If the spin is labeled as +1, the spin direction is up. Conversely, the spin direction is down when the spin is marked as -1.</p>
+<p>In addition, as shown in Fig.1, some of the spins are connected. The connected strength between the spin i and spin j is called couplings and notated as J_{ij}.</p>
 <div align="center"><figure class="figure text-center">
   <img src="https://i.imgur.com/LaR5qKx.png" width="200"/>
   <figcaption class="figure-caption"> Figure 1. Sample Ising model - EA model </figcaption>
@@ -255,7 +256,7 @@
 </figure></div>
 
 
-<p>The connectivity of the Ising model increase from the left-most to the rightmost Ising model. The higher spin connectivity for an Ising model, the more difficult it is to be accelerated. Since when we want to make a spin-flip, we need to know all the spins states of the connected spins. Hence, for the rightmost one, the fully-connected Ising model, we need to maintain the remaining $(N-1)$ spins in the same state when we want to flip a spin. Thus, $N$ rounds are required to traverse N spins and judge whether one spin can be reversed to make the Hamiltonian of the Ising model become lower in each round.<br>In our work, we accelerate solving the fully-connected Ising model, which is the most challenging Ising model to be accelerated by adopting simulated quantum annealing (SQA) algorithm.</p>
+<p>The connectivity of the Ising model increase from the left-most to the rightmost Ising model. The higher spin connectivity for an Ising model, the more difficult it is to be accelerated. Since when we want to make a spin-flip, we need to know all the spins states of the connected spins. Hence, for the rightmost one, the fully-connected Ising model, we need to maintain the remaining (N-1) spins in the same state when we want to flip a spin. Thus, N rounds are required to traverse N spins and judge whether one spin can be reversed to make the Hamiltonian of the Ising model become lower in each round.<br>In our work, we accelerate solving the fully-connected Ising model, which is the most challenging Ising model to be accelerated by adopting simulated quantum annealing (SQA) algorithm.</p>
 <h3 id="Simulated-Quantum-Annealing"><a href="#Simulated-Quantum-Annealing" class="headerlink" title="Simulated Quantum Annealing"></a>Simulated Quantum Annealing</h3><p>So what is simulated quantum annealing (SQA)? SQA is a quantum-inspired algorithm. In order to mimic the quantum phenomenon, it will duplicate the original Ising model into M copies as shown in the graph below. This multi-trotter Ising model is called a transverse field Ising model (TFIM). Besides, different from the original fully connected Ising model, each spin on TFIM will also connect to the spins in the same position located at the previous and the next trotter of TFIM.</p>
 <div align="center"><figure class="figure text-center">
   <img src="https://i.imgur.com/qz949ms.png" width="400"/>
@@ -283,7 +284,7 @@
   <figcaption class="figure-caption">  </figcaption>
 </figure></div>
 
-<p>Hence, we can determine the delta energy caused by a spin-flip by knowing the spin energy for each spin since the spin state can only be $+1$ or $-1$.</p>
+<p>Hence, we can determine the delta energy caused by a spin-flip by knowing the spin energy for each spin since the spin state can only be +1 or -1.</p>
 <div align="center"><figure class="figure text-center">
   <img src="https://i.imgur.com/HwwI07W.png" width="800"/>
   <figcaption class="figure-caption">  </figcaption>
@@ -301,15 +302,23 @@
 </figure></div>
 
 <p>After storing the coupling data into the coupling matrix, we need to generate a spin configuration set randomly. Besides, from the previous, we know that we need to calculate the spin energy for each spin to ensure whether to make the spin-flip. The equation shows that the bottleneck for calculating the spin energy is bound by this sigma term called local-field. Hence, before starting the Monte Carlo step, we will pre-calculate the local-field term of all the spins in parallel by using GPU as shown in line 5 to line 10 in the algorithm.</p>
-<p>After the initialization, we will traverse all the spins of the TFIM in the $N$ and $M$ for loop during each MC-step.</p>
+<p>After the initialization, we will traverse all the spins of the TFIM in the N and M for loop during each MC-step.</p>
 <div align="center"><figure class="figure text-center">
   <img src="https://i.imgur.com/URkfuVz.png" width="950"/>
   <figcaption class="figure-caption">  </figcaption>
 </figure></div>
 
-<p>Since we have pre-calculated the local field of each spin, we can compute the delta energy caused by each spin in $O(1)$ time. And then, we can determine whether the spin-flip can lower the system energy in line 17. If yes, then the spin can be flipped in line 18. However, since all the spins are connected, the remaining $(N-1)$ spins’ local field needs to be updated after a spin-flip. Thus, we need to update all the spins’ local fields in line 20 to line 22.</p>
-<p>Unlike constructing the local field of $N$ spins that need to cost O($N^2$), updating $N$ local fields only takes $O(N)$ by using this trick on the bottom right. For example, as the spin $i$ on the trotter $m$ is flipped. We need to update the $k-th$ spin on the $m$ trotter for $k$ from $1$ to $N$. By Subtracting the old local field from the new local field, since we can only flip one spin at a time, hence, this term can be eliminated (shown in the figure above). Furthermore, since the spin state of each spin will only be 1 and -1, we can replace the old spin state with the new spin state multiplied by $-1$. And finally, we know that we only need $O(1)$ time to update one local field. For update $N$ spins, it costs $O(N)$ but not $O(N^2)$.</p>
+<p>Since we have pre-calculated the local field of each spin, we can compute the delta energy caused by each spin in O(1) time. And then, we can determine whether the spin-flip can lower the system energy in line 17. If yes, then the spin can be flipped in line 18. However, since all the spins are connected, the remaining (N-1) spins’ local field needs to be updated after a spin-flip. Thus, we need to update all the spins’ local fields in line 20 to line 22.</p>
+<p>Unlike constructing the local field of N spins that need to cost O(N^2), updating N local fields only takes O(N) by using this trick on the bottom right. For example, as the spin i on the trotter m is flipped. We need to update the k-th spin on the m trotter for k from 1 to N. By Subtracting the old local field from the new local field, since we can only flip one spin at a time, hence, this term can be eliminated (shown in the figure above). Furthermore, since the spin state of each spin will only be 1 and -1, we can replace the old spin state with the new spin state multiplied by -1. And finally, we know that we only need O(1) time to update one local field. For update N spins, it costs O(N) but not O(N^2).</p>
 <p>And after all the local fields update to be correct, we can go back to line 13 and check whether the next spin-flip can lower the system energy, then do the same thing again and again until all the spins are traversed. Then the system energy will decrease and start the next round of MC-step and do the same thing until the end of the Monte Carlo step.</p>
+<h3 id="Original-state-of-the-art-SOTA"><a href="#Original-state-of-the-art-SOTA" class="headerlink" title="Original state-of-the-art (SOTA)"></a>Original state-of-the-art (SOTA)</h3><p>Before this work, the SQA algorithm had been accelerated by many different strategies. Tohoku University proposed the state-of-the-art, published on 2020 IEEE access and 2019 IEEE transactions. The results of these two works are also the main comparison in our work today.</p>
+<p>They firstly parallel the calculation of constructing and updating local-field by using accelerators.<br>Besides, since SQA only specifies that we can not flip the connected spins at the same time, i.e., in the fully connected TFIM, we can not flip the spins of the same trotter and the corresponding spin on the upper and the lower trotter. However, we can flip different spins on other trotters simultaneously, as shown in the figure below, by using the pipeline method to increase the parallelism of the SQA algorithm.</p>
+<div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/fiP3qfK.png" width="400"/>
+  <figcaption class="figure-caption">  </figcaption>
+</figure></div>
+
+<p>These actions will make the time complexity of each MC step from M*N^2 to N^2 or even lower by using an accelerator to make more speedup on constructing or updating the local field parts.</p>
 
     </div>
 
@@ -393,7 +402,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Foreword"><span class="nav-number">1.</span> <span class="nav-text">Foreword</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Content"><span class="nav-number">3.</span> <span class="nav-text">Content</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ising-Model"><span class="nav-number">4.</span> <span class="nav-text">Ising Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Simulated-Quantum-Annealing"><span class="nav-number">5.</span> <span class="nav-text">Simulated Quantum Annealing</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Foreword"><span class="nav-number">1.</span> <span class="nav-text">Foreword</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Content"><span class="nav-number">3.</span> <span class="nav-text">Content</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ising-Model"><span class="nav-number">4.</span> <span class="nav-text">Ising Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Simulated-Quantum-Annealing"><span class="nav-number">5.</span> <span class="nav-text">Simulated Quantum Annealing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Original-state-of-the-art-SOTA"><span class="nav-number">6.</span> <span class="nav-text">Original state-of-the-art (SOTA)</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
