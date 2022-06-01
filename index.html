@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/10/Accelerated%20Simulated%20Quantum%20Annealing%20with%20GPU%20and%20Tensor%20Cores/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/10/Accelerating%20Simulated%20Quantum%20Annealing%20with%20GPU%20and%20Tensor%20Cores/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/05/10/Accelerated%20Simulated%20Quantum%20Annealing%20with%20GPU%20and%20Tensor%20Cores/" class="post-title-link" itemprop="url">Accelerated Simulated Quantum Annealing with GPU and Tensor Cores</a>
+            <a href="/2022/05/10/Accelerating%20Simulated%20Quantum%20Annealing%20with%20GPU%20and%20Tensor%20Cores/" class="post-title-link" itemprop="url">Accelerated Simulated Quantum Annealing with GPU and Tensor Cores</a>
         </h2>
 
         <div class="post-meta">
@@ -183,10 +183,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2022-05-10 01:58:57 / Modified: 16:24:52" itemprop="dateCreated datePublished" datetime="2022-05-10T01:58:57+08:00">2022-05-10</time>
+              <time title="Created: 2022-05-10 01:58:57" itemprop="dateCreated datePublished" datetime="2022-05-10T01:58:57+08:00">2022-05-10</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-06-01 16:02:42" itemprop="dateModified" datetime="2022-06-01T16:02:42+08:00">2022-06-01</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -208,11 +214,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="Foreword"><a href="#Foreword" class="headerlink" title="Foreword"></a>Foreword</h3><p>Recently, our team submitted a research paper called “Accelerated Simulated Quantum Annealing with GPU and Tensor Cores,” which was just accepted by ISC high performance, 2022.</p>
+          <h3 id="Foreword"><a href="#Foreword" class="headerlink" title="Foreword"></a>Foreword</h3><p>Recently, our team submitted a research paper called <a target="_blank" rel="noopener" href="https://www.springerprofessional.de/en/accelerating-simulated-quantum-annealing-with-gpu-and-tensor-cor/23090986"><strong>“Accelerating Simulated Quantum Annealing with GPU and Tensor Cores,”</strong></a> which was accepted by ISC high performance, 2022.</p>
 <p>In this paper, we modify the SQA algorithm to increase the parallelism of the SQA algorithm and still guarantee the performance of the accuracy.<br>In general, SQA algorithms are often used to solve combinatorial optimization problems.<br>We will first map the combinatorial optimization problem (e.g. traveling salesman problem (TSP)) that needs to solve to the appropriate <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Ising_model"><strong>Ising model</strong></a>.<br>Different problems need to be mapped to different Ising models.<br>Some Ising models like the fully-connected model, King graph model, EA model, etc., are referred to by the teams solving quantum annealing-related works (e.g. Tohoku’s SQA accelerated by FPGA and <a target="_blank" rel="noopener" href="https://www.google.com/search?q=GPU+accelerated+quantum+annealing&rlz=1C5CHFA_enTW942TW943&oq=GPU+accelerated+quantum+annealing&aqs=chrome..69i57.10965j0j7&sourceid=chrome&ie=UTF-8">GPU</a>, Toshiba Simulated Bifurcation Machine <a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/8892209">SBM</a>).<br>In our work, we propose an innovative parallelizing strategy called <strong>hierarchical update</strong> to vastly improve the efficiency of parallel computing, which is capable of accelerating state-of-the-art SQA implementations further by 7X-47.2X based on our case studies.<br>Furthermore, we develop a tensorizing scheme to leverage the Tensor Cores on modern GPUs to deliver up to 1.83X of additional speedup by using <a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cublas/index.html">cublas</a>, provided by NVIDIA CUDA Toolkit. Overall, our work solves fully-connected Ising models faster than any previous SQA works. Our solution outperforms existing GPU-based solutions by 86.6X and FPGA-based solutions by 14X.<br>Moreover, our proposed algorithm still maintains the performance of accuracy of SQA.<br>Finally, we use our algorithm to solve the max-cut problem <a target="_blank" rel="noopener" href="https://web.stanford.edu/~yyye/yyye/Gset/">gset</a> provided by Stanford University and compare the accuracy with the current state-of-the-art.<br>With the careful adjustment of corresponding parameters such as temperature, almost all gset problems have an average accuracy rate of over 97.5%.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/05/10/Accelerated%20Simulated%20Quantum%20Annealing%20with%20GPU%20and%20Tensor%20Cores/#more" rel="contents">
+              <a class="btn" href="/2022/05/10/Accelerating%20Simulated%20Quantum%20Annealing%20with%20GPU%20and%20Tensor%20Cores/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
