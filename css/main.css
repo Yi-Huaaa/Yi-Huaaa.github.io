@@ -1169,7 +1169,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #e36171;
+  background: #ff5c5e;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2565,4 +2565,39 @@ ul.breadcrumb li + li:last-child {
   .pagination {
     margin: 8px 0 0;
   }
+}
+body {
+  line-height: 1.7; /* 預設約 1.7 */
+}
+p {
+  margin-bottom: 0.7em; /* 段落間距縮小 */
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0.4em;
+  margin-top: 0.6em;
+}
+ul,
+ol {
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+}
+table {
+  line-height: 1.2;
+}
+.site-title {
+  font-family: "Patrick Hand", cursive;
+  font-weight: bold; /* 如果要加粗 */
+}
+.menu .menu-item a {
+  font-weight: bold;
+}
+.sidebar {
+  line-height: 1.5; /* 調整行距（預設可能是 1.5，改大一些） */
+  font-size: 1rem; /* 調整目錄文字大小 */
+/* font-weight: bold; */
 }
