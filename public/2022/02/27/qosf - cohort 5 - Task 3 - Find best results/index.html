@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":"ture"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Brefily IntroductionOriginal problemThis is the solution of qosf - cohort 5 - Task 3 - Find best results, including the original part and the bonus part of the full problem. Briefly introducing this p">
+<meta property="og:type" content="article">
+<meta property="og:title" content="qosf - cohort 5 - Task 3 - Find best results">
+<meta property="og:url" content="http://example.com/2022/02/27/qosf%20-%20cohort%205%20-%20Task%203%20-%20Find%20best%20results/index.html">
+<meta property="og:site_name" content="Yi-Hua Chung">
+<meta property="og:description" content="Brefily IntroductionOriginal problemThis is the solution of qosf - cohort 5 - Task 3 - Find best results, including the original part and the bonus part of the full problem. Briefly introducing this p">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/x7DchGF.png">
+<meta property="og:image" content="https://i.imgur.com/TdNPpxZ.png">
+<meta property="og:image" content="https://i.imgur.com/lD8RiWe.png">
+<meta property="og:image" content="https://i.imgur.com/7u4myDE.png">
+<meta property="og:image" content="https://i.imgur.com/Ey1MHEw.png">
+<meta property="og:image" content="https://i.imgur.com/8kRuJk9.png">
+<meta property="og:image" content="https://i.imgur.com/3rYlrP1.png">
+<meta property="article:published_time" content="2022-02-27T07:58:57.000Z">
+<meta property="article:modified_time" content="2025-02-07T21:14:17.313Z">
+<meta property="article:author" content="Yi-Hua Chung">
+<meta property="article:tag" content="Grovers_algorithm">
+<meta property="article:tag" content="Quantum_algorithm">
+<meta property="article:tag" content="Quantum_circuit">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/x7DchGF.png">
+
+<link rel="canonical" href="http://example.com/2022/02/27/qosf%20-%20cohort%205%20-%20Task%203%20-%20Find%20best%20results/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>qosf - cohort 5 - Task 3 - Find best results | Yi-Hua Chung</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <a target="_blank" rel="noopener" href="https://github.com/Yi-Huaaa" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; left: 0; transform: scale(-1, 1);" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style></a>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Yi-Hua Chung</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/27/qosf%20-%20cohort%205%20-%20Task%203%20-%20Find%20best%20results/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/ava3.JPG">
+      <meta itemprop="name" content="Yi-Hua Chung">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yi-Hua Chung">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          qosf - cohort 5 - Task 3 - Find best results
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-02-27 01:58:57" itemprop="dateCreated datePublished" datetime="2022-02-27T01:58:57-06:00">2022-02-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-02-07 15:14:17" itemprop="dateModified" datetime="2025-02-07T15:14:17-06:00">2025-02-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Quantum-Algorithm/" itemprop="url" rel="index"><span itemprop="name">Quantum_Algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Brefily-Introduction"><a href="#Brefily-Introduction" class="headerlink" title="Brefily Introduction"></a>Brefily Introduction</h1><h2 id="Original-problem"><a href="#Original-problem" class="headerlink" title="Original problem"></a>Original problem</h2><p>This is the solution of <strong>qosf - cohort 5 - Task 3 - Find best results</strong>, including the <strong>original part</strong> and the <strong>bonus part</strong> of the full problem.</p>
+<p>Briefly introducing this problem, we are playing tic-tac-toe. You are represented as <strong>‘X’</strong> and <strong>‘O’</strong> as your opponent.</p>
+<p>And you find the situation in the figure below, next is your turn.<br>Try to develop a quantum algorithm to be able to find the best decisions with a higher probability within two rounds.</p>
+<div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/x7DchGF.png" width="200"/>
+  <figcaption class="figure-caption"> Original problem </figcaption>
+</figure></div>
+
+
+<span id="more"></span>
+
+<p>The blank of the matrix is a qubit, for the state of the X’s is |1&gt; O’s is |0&gt;, and the empty cells are in an unknown state.</p>
+<p>Finally, if you think the solution is put the values:</p>
+<div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/TdNPpxZ.png" width="200"/>
+  <figcaption class="figure-caption"> Sample output </figcaption>
+</figure></div>
+
+<p>The state output must be | <strong>1100</strong> &gt;.</p>
+<h2 id="Bonus"><a href="#Bonus" class="headerlink" title="Bonus"></a>Bonus</h2><p>What if we start one step earlier and your opponent has not chosen yet, as shown in the following image, it shows with higher probability the chances of you winning. Please refer to the above considerations.</p>
+<div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/lD8RiWe.png" width="200"/>
+  <figcaption class="figure-caption"> Sample output </figcaption>
+</figure></div>
+
+<p>For the full problem, please refer to the <a target="_blank" rel="noopener" href="https://docs.google.com/document/d/1DN1_Qgrb4Dzpy8lLwi2nYtkQ1sivwyPAQSk86FUr6YA/edit">qosf cohort 5</a>.</p>
+<hr>
+<h1 id="Original-problem-1"><a href="#Original-problem-1" class="headerlink" title="Original problem"></a>Original problem</h1><h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><p>For the original problem, as the hint mentioned in the question, there are only remaining <strong>4</strong> blanks to fill, and the game will end within two rounds.<br>Therefore, we only need to discuss at most <strong>24</strong> situations (<strong>4!</strong>) and find whether the situations can make ‘X’ win (NOTE: There are some duplicated situations).</p>
+<p>After discussing by brutal force (by listing all the <strong>24</strong> cases), we can easily find out that there are only two reasonable solutions to this problem, including | <strong>1100</strong> &gt; and | <strong>1001</strong> &gt;.<br>Hence, I adopt the <a target="_blank" rel="noopener" href="https://qiskit.org/textbook/ch-algorithms/grover.html">Qiskit - Grover Algorithm</a> to amplify the probabilities of our willing results by designing the <strong>oracle</strong> and <strong>diffuser</strong> of Grover’s algorithm.<br>Since there are two reasonable answers, we only need to run <strong>oracle</strong> and <strong>diffuser</strong> for only one time per function.</p>
+<h2 id="Quantum-circuit-Oracle"><a href="#Quantum-circuit-Oracle" class="headerlink" title="Quantum circuit - Oracle"></a>Quantum circuit - Oracle</h2><p>To make the states | <strong>1100</strong> &gt; and | <strong>1001</strong> &gt; reflect, I design the oracle circuit as below:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">oracle</span> (<span class="params">nqubits</span>):</span></span><br><span class="line">    qc = QuantumCircuit(nqubits)</span><br><span class="line">    qc.cz(<span class="number">3</span>,<span class="number">2</span>) <span class="comment"># 1, control, target</span></span><br><span class="line">    qc.toffoli(<span class="number">3</span>,<span class="number">0</span>,<span class="number">2</span>) <span class="comment"># 2, control, control, target</span></span><br><span class="line">    qc.mct([<span class="number">3</span>,<span class="number">1</span>,<span class="number">0</span>], <span class="number">2</span>) <span class="comment"># 3, multi-toffoli</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 4, CCCZ, multi-control z, place on the target</span></span><br><span class="line">    qc.h(<span class="number">0</span>)</span><br><span class="line">    qc.mct([<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], <span class="number">0</span>)</span><br><span class="line">    qc.h(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    qc.mct([<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], <span class="number">0</span>) <span class="comment"># 5, multi-toffoli</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 6, CCCZ, multi-control z, place on the target</span></span><br><span class="line">    qc.h(<span class="number">0</span>)</span><br><span class="line">    qc.mct([<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], <span class="number">0</span>)</span><br><span class="line">    qc.h(<span class="number">0</span>)</span><br><span class="line"> </span><br><span class="line">    U_w = qc.to_gate()</span><br><span class="line">    U_w.name = <span class="string">&quot;U$_\omega$&quot;</span></span><br><span class="line">    <span class="keyword">return</span> U_w </span><br></pre></td></tr></table></figure>
+<p>↔</p>
+<ul>
+<li>For the convenience of explanation, I will represent binary as decimal representation in below. For example: | <strong>1100</strong> &gt; is represented by <strong>12</strong>, | <strong>1111</strong> &gt; is represented by <strong>15</strong>. The willing state-vectors are <strong>9</strong> and <strong>12</strong>. </li>
+<li><strong>cz(3,2):</strong> making state-vectors include <strong>12, 13, 14, 15</strong> reflect</li>
+<li><strong>toffoli(3,0,2):</strong> making exchange between (A ↔ B) for: (<strong>9 ↔ 13</strong>) and (<strong>11 ↔ 15</strong>). <pre><code>  After applying this gate, the reflecting state-vectors include **12, 9, 14, 11**
+</code></pre>
+</li>
+<li><strong>mct([3,1,0], 2), CCCNOT, for control=[3,1,0], target=2:</strong> making exchange between(<strong>11 ↔ 15</strong>)<pre><code>   After applying this gate, the reflecting state-vectors include **12, 9, 14, 15**
+</code></pre>
+</li>
+<li><strong>CCCZ, multi-control z, for control=[3,2,1], target=0:</strong> making reflection on <strong>15</strong>, the reflecting state-vectors include <strong>12, 9, 14</strong></li>
+<li><strong>mct([3,2,1], 0), CCCNOT for control=[3,2,1], target=0:</strong> making exchange between(<strong>11 ↔ 14</strong>)<pre><code>  After applying this gate, the reflecting state-vectors include **12, 9, 15**
+</code></pre>
+</li>
+<li><strong>CCCZ, multi-control z, for control=[3,2,1], target=0:</strong> making reflection on <strong>15</strong>, the reflecting state-vectors include <strong>12, 9</strong>, which are all we demanded.</li>
+</ul>
+<h2 id="Quantum-circuit-Diffuser"><a href="#Quantum-circuit-Diffuser" class="headerlink" title="Quantum circuit - Diffuser"></a>Quantum circuit - Diffuser</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">diffuser</span>(<span class="params">nqubits</span>):</span></span><br><span class="line">    qc = QuantumCircuit(nqubits)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> qubit <span class="keyword">in</span> <span class="built_in">range</span>(nqubits):</span><br><span class="line">        qc.h(qubit)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> qubit <span class="keyword">in</span> <span class="built_in">range</span>(nqubits):</span><br><span class="line">        qc.x(qubit)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Do multi-controlled-Z gate</span></span><br><span class="line">    qc.h(nqubits-<span class="number">1</span>)</span><br><span class="line">    qc.mct(<span class="built_in">list</span>(<span class="built_in">range</span>(nqubits-<span class="number">1</span>)), nqubits-<span class="number">1</span>) </span><br><span class="line">    qc.h(nqubits-<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> qubit <span class="keyword">in</span> <span class="built_in">range</span>(nqubits):</span><br><span class="line">        qc.x(qubit)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> qubit <span class="keyword">in</span> <span class="built_in">range</span>(nqubits):</span><br><span class="line">        qc.h(qubit)</span><br><span class="line"></span><br><span class="line">    U_s = qc.to_gate()</span><br><span class="line">    U_s.name = <span class="string">&quot;U$_s$&quot;</span></span><br><span class="line">    <span class="keyword">return</span> U_s</span><br></pre></td></tr></table></figure>
+<p>This part is referred to the <a target="_blank" rel="noopener" href="https://qiskit.org/textbook/ch-algorithms/grover.html#3.-Example:-3-Qubits-">3-qubit example Grover Algorithm of qiskit</a>.</p>
+<h2 id="Final-Quantum-Circuit"><a href="#Final-Quantum-Circuit" class="headerlink" title="Final Quantum Circuit"></a>Final Quantum Circuit</h2><div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/7u4myDE.png" width="800"/>
+  <figcaption class="figure-caption"> Final Quantum Circuit </figcaption>
+</figure></div>
+                                    
+                                    
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">n = <span class="number">4</span></span><br><span class="line">grover_circuit = QuantumCircuit(n)</span><br><span class="line">grover_circuit = initialize_s(grover_circuit, [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line">grover_circuit.barrier()</span><br><span class="line">grover_circuit.append(oracle(n), [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line">grover_circuit.append(diffuser(n), [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line"></span><br><span class="line">grover_circuit.measure_all()</span><br><span class="line">grover_circuit.draw()</span><br></pre></td></tr></table></figure>
+After applying the oracle and diffuser, the unrolled circuit will be shown as above.
+
+
+
+<h2 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h2><div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/Ey1MHEw.png" width="400"/>
+  <figcaption class="figure-caption"> Result -1 </figcaption>
+</figure></div>
+
+<p>Running <a target="_blank" rel="noopener" href="https://lab.quantum-computing.ibm.com/user/5eef481099288700193a0d60/lab/tree/qosf_bonus.ipynb?redirects=1">jupyterLab on IBM Lab</a>, we can finally find out the result shown as the histogram above.<br>As shown in the histogram, the output results with higher probabilities are | <strong>1001</strong> &gt; and | <strong>1100</strong> &gt;.</p>
+<h1 id="Bonus-1"><a href="#Bonus-1" class="headerlink" title="Bonus"></a>Bonus</h1><h2 id="Method-1"><a href="#Method-1" class="headerlink" title="Method"></a>Method</h2><p>Different from the original problem, there are <strong>5</strong> remaining blanks that can be filled.<br>Besides, we need to find the best decisions with <strong>higher probability</strong> within two rounds.</p>
+<p>Same as solving the original problem as above, I still make a discussion at first to find out the best decisions with <strong>higher probability</strong> within two rounds. </p>
+<p>After discussing by brutal force, we can easily find out that there are still two solutions with the highest probabilities to win under this situation, including | 10001 &gt;, and | 11000 &gt;.</p>
+<p>Similarly, I adopt the <strong>“Grover algorithm”</strong> to amplify the probabilities of our willing results by designing the <strong>oracle</strong> and <strong>diffuser</strong> of the algorithm.<br>Besides, same as above, there are two reasonable answers, hence, we only need to run oracle and diffuser for one time.</p>
+<p><em>NOTE: If you are interested in the discussion to find the best solution, you can reference the file ‘discu\brufo’ under the same GitHub repository. However, this file is just the calculation process when I solved this problem which is not organized. It is only provided as a supplementary that the content is relatively messy.</em></p>
+<h2 id="Quantum-circuit-Oracle-1"><a href="#Quantum-circuit-Oracle-1" class="headerlink" title="Quantum circuit - Oracle"></a>Quantum circuit - Oracle</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># oracle: make |10001&gt; and |11000&gt; reflect</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">oracle</span> (<span class="params">nqubits</span>):</span></span><br><span class="line">    qc = QuantumCircuit(nqubits)</span><br><span class="line">    qc.cz(<span class="number">4</span>,<span class="number">3</span>) <span class="comment"># 1, control, target </span></span><br><span class="line">    qc.toffoli(<span class="number">4</span>,<span class="number">0</span>,<span class="number">3</span>) <span class="comment"># 2, CCNOT, toffoli</span></span><br><span class="line">    </span><br><span class="line">    qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], <span class="number">0</span>) <span class="comment"># 3-1, CCCCX</span></span><br><span class="line">    <span class="comment"># 3-2, CCCCZ</span></span><br><span class="line">    qc.h(<span class="number">0</span>)</span><br><span class="line">    qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], <span class="number">0</span>)</span><br><span class="line">    qc.h(<span class="number">0</span>)</span><br><span class="line">    </span><br><span class="line">    qc.mct([<span class="number">4</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>], <span class="number">3</span>) <span class="comment"># 4-1, CCCCX</span></span><br><span class="line">    <span class="comment"># 4-2, CCCCZ</span></span><br><span class="line">    qc.h(<span class="number">0</span>)</span><br><span class="line">    qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], <span class="number">0</span>)</span><br><span class="line">    qc.h(<span class="number">0</span>)    </span><br><span class="line">    </span><br><span class="line">    qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">1</span>], <span class="number">2</span>) <span class="comment"># 5, CCCX</span></span><br><span class="line">    qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], <span class="number">0</span>) <span class="comment"># 6-1, CCCCX</span></span><br><span class="line">    <span class="comment"># 6-2, CCCCZ</span></span><br><span class="line">    qc.h(<span class="number">0</span>)</span><br><span class="line">    qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], <span class="number">0</span>)</span><br><span class="line">    qc.h(<span class="number">0</span>)    </span><br><span class="line"></span><br><span class="line">    qc.mct([<span class="number">4</span>,<span class="number">1</span>,<span class="number">0</span>], <span class="number">3</span>) <span class="comment"># 7, CCCX</span></span><br><span class="line">    qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">0</span>], <span class="number">2</span>) <span class="comment"># 8-1, CCCCX</span></span><br><span class="line">    <span class="comment"># 8-2, CCCCZ</span></span><br><span class="line">    qc.h(<span class="number">0</span>)</span><br><span class="line">    qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], <span class="number">0</span>)</span><br><span class="line">    qc.h(<span class="number">0</span>) </span><br><span class="line">    </span><br><span class="line">    qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>], <span class="number">0</span>) <span class="comment"># 9, CCCX</span></span><br><span class="line">    qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">0</span>], <span class="number">1</span>) <span class="comment"># 10-1, CCCCX</span></span><br><span class="line">    <span class="comment"># 10-2, CCCCZ</span></span><br><span class="line">    qc.h(<span class="number">0</span>)</span><br><span class="line">    qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], <span class="number">0</span>)</span><br><span class="line">    qc.h(<span class="number">0</span>) </span><br><span class="line">    </span><br><span class="line">    qc.mct([<span class="number">4</span>,<span class="number">2</span>,<span class="number">0</span>], <span class="number">1</span>) <span class="comment"># 11, CCCX</span></span><br><span class="line">    qc.mct([<span class="number">4</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>], <span class="number">3</span>) <span class="comment"># 12-1, CCCCX</span></span><br><span class="line">    <span class="comment"># 12-2, CCCCZ</span></span><br><span class="line">    qc.h(<span class="number">0</span>)</span><br><span class="line">    qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], <span class="number">0</span>)</span><br><span class="line">    qc.h(<span class="number">0</span>) </span><br><span class="line"></span><br><span class="line">    U_w = qc.to_gate()</span><br><span class="line">    U_w.name = <span class="string">&quot;U$_\omega$&quot;</span></span><br><span class="line">    <span class="keyword">return</span> U_w </span><br></pre></td></tr></table></figure>
+<ul>
+<li>For the convenience of explanation, I will represent binary as decimal representation below. For example: | <strong>10000</strong> &gt; is represented by <strong>16</strong>, | <strong>11000</strong> &gt; is represented by <strong>24</strong>. The willing states are <strong>17</strong> and <strong>24</strong>.</li>
+<li>In this part, I first use the CZ gate to reflect <strong>8</strong> state-vectors (<strong>24-31</strong>). <ul>
+<li> <strong>cz(4,3):</strong> At this point, only <strong>24</strong> of the reflected state is what we are willing to be reflected.</li>
+<li><strong>qc.toffoli(4,0,3):</strong> Next, I use the CCX gate to exchange the amplitude of (<strong>17 ↔ 25</strong>), (<strong>19 ↔ 27</strong>), (<strong>21 ↔ 29</strong>) and (<strong>23 ↔ 31</strong>). </li>
+<li>At this time, there are a total of reflected state-vectors are  <strong>24, 17, 26, 19, 28, 21, 30, 23</strong> with only <strong>24 and 17</strong> are the desired states needed to reflect.</li>
+</ul>
+</li>
+<li>After reflecting on those needed state-vectors, there are some state-vector that don’t need to be reflected. Hence, we need to reflect them back to be positive.</li>
+</ul>
+<ol>
+<li>The approach I took is to swap each state-vector with only three qubits are measured in | <strong>1</strong> &gt; by using the CCCX gate to swap with their corresponding state-vectors with <strong>4</strong> qubits are measured in | <strong>1</strong> &gt;. </li>
+<li>Then exchanges the state-vector with <strong>4</strong> qubits are measured in | <strong>1</strong> &gt; with | <strong>11111</strong> &gt; by using the CCCCX gate. </li>
+<li>Finally, we use the CCCCZ gate to reflect | <strong>11111</strong> &gt; as a positive state-vector. Then we can successfully make the state-vector reflected back to the positive amplitude.</li>
+</ol>
+<ul>
+<li><p>The processes in detail are shown below: </p>
+<ul>
+<li><p>Ｍaking the state <strong>30</strong> reflected back to positive, the remaining negative state-vectors are <strong>24, 17, 26, 19, 28, 21, 23</strong></p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], <span class="number">0</span>) <span class="comment"># 3-1, CCCCX</span></span><br><span class="line">qc.h(<span class="number">0</span>) <span class="comment"># 3-2, CCCCZ</span></span><br><span class="line">qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], <span class="number">0</span>)</span><br><span class="line">qc.h(<span class="number">0</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p>Ｍaking the state <strong>23</strong> reflected back to positive, the remaining negative state-vectors are  <strong>24, 17, 26, 19, 28, 21</strong></p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">qc.mct([<span class="number">4</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>], <span class="number">3</span>) <span class="comment"># 4-1, CCCCX</span></span><br><span class="line"><span class="comment"># 4-2, CCCCZ</span></span><br><span class="line">qc.h(<span class="number">0</span>)</span><br><span class="line">qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], <span class="number">0</span>)</span><br><span class="line">qc.h(<span class="number">0</span>) </span><br></pre></td></tr></table></figure></li>
+<li><p>Ｍaking the state <strong>26</strong> reflected back to positive, the remaining negative state-vectors are <strong>24, 17, 19, 28, 21</strong></p>
+<ul>
+<li>Making exchange between <strong>26 ↔ 30</strong> and <strong>27 ↔ 31</strong>. The exchange between 27 and 31 have no impact.<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">1</span>], <span class="number">2</span>) <span class="comment"># 5, CCCX</span></span><br></pre></td></tr></table></figure>
+Making exchange between <strong>30 ↔ 31</strong>.<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], <span class="number">0</span>) <span class="comment"># 6-1, CCCCX</span></span><br></pre></td></tr></table></figure>
+Making reflection on <strong>31</strong>. <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 6-2, CCCCZ</span></span><br><span class="line">qc.h(<span class="number">0</span>)</span><br><span class="line">qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], <span class="number">0</span>)</span><br><span class="line">qc.h(<span class="number">0</span>)  </span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>Making the state <strong>19</strong> reflected back to positive, the remaining negative state-vectors are <strong>24, 17, 28, 21</strong></p>
+<ul>
+<li><p>Making exchange between <strong>19 ↔ 27</strong> and <strong>23 ↔ 31</strong>. The exchange between 23 and 31 have no impact.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qc.mct([<span class="number">4</span>,<span class="number">1</span>,<span class="number">0</span>], <span class="number">3</span>) <span class="comment"># 7, CCCX</span></span><br></pre></td></tr></table></figure></li>
+<li><p>Making exchange between <strong>27 ↔ 31</strong>. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">0</span>], <span class="number">2</span>) <span class="comment"># 8-1, CCCCX</span></span><br></pre></td></tr></table></figure></li>
+<li><p>Making reflection on <strong>31</strong>. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 8-2, CCCCZ</span></span><br><span class="line">qc.h(<span class="number">0</span>)</span><br><span class="line">qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], <span class="number">0</span>)</span><br><span class="line">qc.h(<span class="number">0</span>)  </span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>Making the state  <strong>28</strong> reflected back to positive, the remaining negative state-vectors are <strong>24, 17, 21</strong></p>
+<ul>
+<li>Making exchange between <strong>28 ↔ 29</strong> and <strong>30 ↔ 31</strong>. The exchange between 30 and 31 have no impact.<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>], <span class="number">0</span>) <span class="comment"># 9, CCCX</span></span><br></pre></td></tr></table></figure></li>
+<li>Making exchange between <strong>29 ↔ 31</strong> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">0</span>], <span class="number">1</span>) <span class="comment"># 10-1, CCCCX</span></span><br><span class="line">```   </span><br><span class="line">* Making exchange between **<span class="number">29</span> ↔ <span class="number">31</span>**.</span><br><span class="line">```python=</span><br><span class="line">qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">0</span>], <span class="number">1</span>) <span class="comment"># 10-1, CCCCX</span></span><br><span class="line">```         </span><br><span class="line">* Making reflection on **<span class="number">31</span>**</span><br><span class="line">```python=</span><br><span class="line"><span class="comment"># 10-2, CCCCZ</span></span><br><span class="line">qc.h(<span class="number">0</span>)</span><br><span class="line">qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], <span class="number">0</span>)</span><br><span class="line">qc.h(<span class="number">0</span>)  </span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>Making the state <strong>21</strong> reflected back to positive, the remaining negative state-vectors are <strong>24, 17</strong></p>
+<ul>
+<li>Making exchange between <strong>21 ↔ 23</strong> and <strong>29 ↔ 31</strong>. The exchange between 29 and 31 have no impact.<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qc.mct([<span class="number">4</span>,<span class="number">2</span>,<span class="number">0</span>], <span class="number">1</span>) <span class="comment"># 11, CCCX</span></span><br></pre></td></tr></table></figure></li>
+<li>Making exchange between <strong>23 ↔ 31</strong><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qc.mct([<span class="number">4</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>], <span class="number">3</span>) <span class="comment"># 12-1, CCCCX</span></span><br></pre></td></tr></table></figure></li>
+<li>Making reflection on <strong>31</strong><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 12-2, CCCCZ</span></span><br><span class="line">qc.h(<span class="number">0</span>)</span><br><span class="line">qc.mct([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], <span class="number">0</span>)</span><br><span class="line">qc.h(<span class="number">0</span>)  </span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>Finally, we got that only the state-vectors <strong>24, and 17</strong> are reflected in negative. </p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Quantum-circuit-Diffuser-1"><a href="#Quantum-circuit-Diffuser-1" class="headerlink" title="Quantum circuit - Diffuser"></a>Quantum circuit - Diffuser</h2><p>This part is referred to the <a target="_blank" rel="noopener" href="https://qiskit.org/textbook/ch-algorithms/grover.html#3.-Example:-3-Qubits-">3-qubit example Grover Algorithm of qiskit</a>.</p>
+<h2 id="Final-Quantum-Circuit-1"><a href="#Final-Quantum-Circuit-1" class="headerlink" title="Final Quantum Circuit"></a>Final Quantum Circuit</h2><div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/8kRuJk9.png" width="900"/>
+  <figcaption class="figure-caption"> Bonus - Final Quantum Circuit </figcaption>
+</figure></div>
+                                    
+                                    
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">n = <span class="number">5</span></span><br><span class="line">grover_circuit = QuantumCircuit(n)</span><br><span class="line">grover_circuit = initialize_s(grover_circuit, [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>])</span><br><span class="line">grover_circuit.barrier()</span><br><span class="line">grover_circuit.append(oracle(n), [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>])</span><br><span class="line">grover_circuit.append(diffuser(n), [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>])</span><br><span class="line"></span><br><span class="line">grover_circuit.measure_all()</span><br><span class="line">grover_circuit.draw()</span><br></pre></td></tr></table></figure>
+After applying the oracle and diffuser, the unrolled circuit will be shown as above.
+
+<h2 id="Result-1"><a href="#Result-1" class="headerlink" title="Result"></a>Result</h2><div align="center"><figure class="figure text-center">
+  <img src="https://i.imgur.com/3rYlrP1.png" width="500"/>
+  <figcaption class="figure-caption"> Bonus - Final Quantum Circuit </figcaption>
+</figure></div>
+
+<p>Running <a target="_blank" rel="noopener" href="https://lab.quantum-computing.ibm.com/user/5eef481099288700193a0d60/lab/tree/qosf_bonus.ipynb?redirects=1">jupyterLab on IBM Lab</a>, we can finally find out the result shown as the histogram above.<br>As shown in the histogram, the output results with higher probabilities are | <strong>10001</strong> &gt; and | <strong>11000</strong> &gt;.</p>
+<h1 id="Discussion-by-brutal-force"><a href="#Discussion-by-brutal-force" class="headerlink" title="Discussion by brutal force"></a>Discussion by brutal force</h1><p>The discussion make by brutal force for the classical situation is shown in the <strong>“discu_brufo.pdf”</strong> file.</p>
+<h1 id="Full-code"><a href="#Full-code" class="headerlink" title="Full code"></a>Full code</h1><p>For the full executable code, please refer to <a target="_blank" rel="noopener" href="https://github.com/Yi-Huaaa/2022-qosf_cohort-5">my Github Repository</a>.</p>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>In this article, we introduce the solution of <strong>task3 of QC qosf Mentorship program cohort 5</strong>.</p>
+<p>This article focuses on describing how to build quantum circuits of the <strong>oracle function of Grover’s Algorithm</strong> by describing everything that happens after applying each gate in the oracle.</p>
+<h1 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h1><p>If there is any question or discussion, please feel free to send an email to <a href="mailto:r09944072@csie.ntu.edu.tw">me</a>.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Grovers-algorithm/" rel="tag"><i class="fa fa-tag"></i> Grovers_algorithm</a>
+              <a href="/tags/Quantum-algorithm/" rel="tag"><i class="fa fa-tag"></i> Quantum_algorithm</a>
+              <a href="/tags/Quantum-circuit/" rel="tag"><i class="fa fa-tag"></i> Quantum_circuit</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/04/Coherent%20Ising%20Machine/" rel="prev" title="Coherent Ising Machine survey reoprt until 2020">
+      <i class="fa fa-chevron-left"></i> Coherent Ising Machine survey reoprt until 2020
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/10/Accelerating%20Simulated%20Quantum%20Annealing%20with%20GPU%20and%20Tensor%20Cores/" rel="next" title="Accelerating Simulated Quantum Annealing with GPU and Tensor Cores">
+      Accelerating Simulated Quantum Annealing with GPU and Tensor Cores <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Brefily-Introduction"><span class="nav-number">1.</span> <span class="nav-text">Brefily Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Original-problem"><span class="nav-number">1.1.</span> <span class="nav-text">Original problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bonus"><span class="nav-number">1.2.</span> <span class="nav-text">Bonus</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Original-problem-1"><span class="nav-number">2.</span> <span class="nav-text">Original problem</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method"><span class="nav-number">2.1.</span> <span class="nav-text">Method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Quantum-circuit-Oracle"><span class="nav-number">2.2.</span> <span class="nav-text">Quantum circuit - Oracle</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Quantum-circuit-Diffuser"><span class="nav-number">2.3.</span> <span class="nav-text">Quantum circuit - Diffuser</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Final-Quantum-Circuit"><span class="nav-number">2.4.</span> <span class="nav-text">Final Quantum Circuit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Result"><span class="nav-number">2.5.</span> <span class="nav-text">Result</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bonus-1"><span class="nav-number">3.</span> <span class="nav-text">Bonus</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method-1"><span class="nav-number">3.1.</span> <span class="nav-text">Method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Quantum-circuit-Oracle-1"><span class="nav-number">3.2.</span> <span class="nav-text">Quantum circuit - Oracle</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Quantum-circuit-Diffuser-1"><span class="nav-number">3.3.</span> <span class="nav-text">Quantum circuit - Diffuser</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Final-Quantum-Circuit-1"><span class="nav-number">3.4.</span> <span class="nav-text">Final Quantum Circuit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Result-1"><span class="nav-number">3.5.</span> <span class="nav-text">Result</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Discussion-by-brutal-force"><span class="nav-number">4.</span> <span class="nav-text">Discussion by brutal force</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Full-code"><span class="nav-number">5.</span> <span class="nav-text">Full code</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Conclusion"><span class="nav-number">6.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Question"><span class="nav-number">7.</span> <span class="nav-text">Question</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yi-Hua Chung"
+      src="/uploads/ava3.JPG">
+  <p class="site-author-name" itemprop="name">Yi-Hua Chung</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Yi-Huaaa" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Yi-Huaaa" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/yi-hua-chung" title="LinkedIn → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;yi-hua-chung" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>LinkedIn</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yihua.chung@wisc.edu" title="E-Mail → mailto:yihua.chung@wisc.edu" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://scholar.google.com.tw/citations?hl=zh-TW&user=1bz0WQkAAAAJ" title="Google Scholar → https:&#x2F;&#x2F;scholar.google.com.tw&#x2F;citations?hl&#x3D;zh-TW&amp;user&#x3D;1bz0WQkAAAAJ" rel="noopener" target="_blank"><i class="fa fa-fw fa-google"></i>Google Scholar</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yi-Hua Chung</span>
+</div>
+
+<!--
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+-->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
