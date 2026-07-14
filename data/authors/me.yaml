@@ -67,16 +67,16 @@ experience:
     end: 2024/12
     summary: |
       Mentored by Nahmsuk Oh | Manager: Malleswara Gupta | Collaborated with Vishal Khandelwal, Aditya Shiledar, and Sudipto Kundu.
-      * Designed and implemented GPU-parallel kernel algorithms for LibCell selection in gate sizing, achieving a 38.13x speedup over the 16-core CPU-based Synopsys industrial sizer.
-      * Integrated the GPU kernels into Synopsys Fusion Compiler, enabling heterogeneous CPU-GPU co-processing for gate sizing; published in the *Euro-Par PhD Symposium 2025*.
+      - Designed and implemented GPU-parallel kernel algorithms for LibCell selection in gate sizing, achieving a 38.13x speedup over the 16-core CPU-based Synopsys industrial sizer.
+      - Integrated the GPU kernels into Synopsys Fusion Compiler, enabling heterogeneous CPU-GPU co-processing for gate sizing; published in the *Euro-Par PhD Symposium 2025*.
   - role: Full-Time Research Assistant
     org: Institute of Information Science, Academia Sinica
     start: 2022/08
     end: 2023/03
     summary: |
       Advised by [Prof. Bo-Yin Yang](https://homepage.iis.sinica.edu.tw/pages/byyang/index_en.html), [Prof. Daniel J. Bernstein](https://cr.yp.to/djb.html), and [Prof. Tanja Lange](https://www.hyperelliptic.org/tanja/). 
-      * Developed GPU-accelerated big-integer multiplication with NVIDIA-level performance for post-quantum cryptosystems.
-      * Accelerated NTRU and NTRU Prime lattice-based cryptosystems on Cortex-A72 with vectorized polynomial multipliers, achieving up to 6.7x faster multiplications and 7.67x faster key generation compared to state-of-the-art; published in the *Indocrypt, 2023*.
+      - Developed GPU-accelerated big-integer multiplication with NVIDIA-level performance for post-quantum cryptosystems.
+      - Accelerated NTRU and NTRU Prime lattice-based cryptosystems on Cortex-A72 with vectorized polynomial multipliers, achieving up to 6.7x faster multiplications and 7.67x faster key generation compared to state-of-the-art; published in the *Indocrypt, 2023*.
     button:
       text: Github
       url: https://github.com/vector-polymul-ntru-ntrup/vector-polymul-ntru-ntrup
@@ -84,10 +84,11 @@ experience:
 
 teaching:
   - role: Teaching Assistant, Advanced Computer Architecture II
-    org: "Department of ECE, University of Wisconsin-Madison; Instructor: Prof. Joshua San Miguel"
+    org: Department of ECE, University of Wisconsin-Madison
     start: 2026/01
     end: 2026/05
     summary: |
+      Instructor: [Prof. Joshua San Miguel](https://jsm.ece.wisc.edu)
       - Built a cross-platform Docker environment for gem5 simulation and benchmarking on Linux, macOS, and Windows.
       - Recognized with the Department of ECE Gerald Holdridge Teaching Excellence Award (2026)
     buttons:
@@ -101,11 +102,12 @@ teaching:
         url: https://hub.docker.com/r/yihuachung/gem5-parsec-lab
         icon: brands/docker
   - role: Teaching Assistant, Computer Architecture
-    org: "Department of CSIE, National Taiwan University; Instructor: Prof. Shih-Hao Hung"
+    org: Department of CSIE, National Taiwan University
     start: 2021/09
     end: 2022/01
     summary: |
-      Developed Verilog-based labs covering ALU, FPU, and pipelined RISC-V CPU designs.
+      Instructor: [Prof. Shih-Hao Hung](https://sites.google.com/csie.ntu.edu.tw/paslab/)
+      - Developed Verilog-based labs covering ALU, FPU, and pipelined RISC-V CPU designs.
 
 
 
