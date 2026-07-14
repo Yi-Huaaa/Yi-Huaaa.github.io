@@ -1,0 +1,142 @@
+schema: hugoblox/author/v1
+slug: me
+is_owner: true
+name:
+  display: Yi-Hua Chung
+  given: Yi-Hua
+  family: Chung
+  alternate: ''  # Example: 王伟
+  pronunciation: ''  # Example: Wáng Wěi
+  pronouns: she/her
+# postnominals:
+#   - PhD
+#   - MIEEE
+status:
+  icon: "☕️"
+role: Ph.D. Student
+bio: |
+  I am a fourth-year Ph.D. student in the Department of Electrical and Computer Engineering at UW-Madison, advised by Prof. [Tsung-Wei (TW) Huang](https://tsung-wei-huang.github.io/). My research focuses on GPU-accelerated algorithms for compiler optimization, graph partitioning, and design automation applications.
+
+  I developed SimPart, a GPU-parallel graph partitioner for logic simulation by integrating disjoint-set and replication-aided strategies, further optimized with conditional CUDA Graphs. I also collaborate with Synopsys to develop GPU-parallel algorithms for gate sizing in an industrial-use EDA tool.
+
+affiliations:
+  - name: Department of Electrical and Computer Engineering, University of Wisconsin-Madison
+    url: https://ece.wisc.edu/
+
+links:
+  - icon: at-symbol
+    url: mailto:yihua.chung@wisc.edu
+    label: E-mail Me
+  - icon: brands/github
+    url: https://github.com/Yi-Huaaa
+  - icon: brands/linkedin
+    url: https://www.linkedin.com/in/yi-hua-chung
+  - icon: academicons/google-scholar
+    url: https://scholar.google.com.tw/citations?hl=zh-TW&user=1bz0WQkAAAAJ
+  - icon: academicons/orcid
+    url: https://orcid.org/0009-0008-1064-2513
+
+interests:
+  - GPU Acceleration using CUDA
+  - Heterogeneous Computing
+  - Compiler Optimization
+  - GPU-Parallel Electronic Design Automation
+
+education:
+  - degree: Ph.D., Electrical and Computer Engineering
+    institution: University of Wisconsin-Madison
+    start: 2023/09 ─ Present
+  - degree: M.S., Graduate Institute of Networking and Multimedia
+    institution: National Taiwan University
+    start: 2021/02 ─ 2022/06
+  - degree: B.Eng., Biomechatronics Engineering
+    institution: National Taiwan University
+    start: 2016/09 ─ 2021/01
+
+
+experience:
+  - role: Student Researcher
+    org: Ricursive Intelligence
+    start: 2026/08
+    summary: |
+      Incoming internship for Fall 2026.
+  - role: Technical Intern, R&D Team, EDA Group
+    org: Synopsys, Sunnyvale
+    start: 2024/06
+    end: 2024/12
+    summary: |
+      Mentored by Nahmsuk Oh | Manager: Malleswara Gupta | Collaborated with Vishal Khandelwal, Aditya Shiledar, and Sudipto Kundu.
+      * Designed and implemented GPU-parallel kernel algorithms for LibCell selection in gate sizing, achieving a 38.13x speedup over the 16-core CPU-based Synopsys industrial sizer.
+      * Integrated the GPU kernels into Synopsys Fusion Compiler, enabling heterogeneous CPU-GPU co-processing for gate sizing; published in the *Euro-Par PhD Symposium 2025*.
+  - role: Full-Time Research Assistant
+    org: Institute of Information Science, Academia Sinica
+    start: 2022-08
+    end: 2023-03
+    summary: |
+      Advised by [Prof. Bo-Yin Yang](https://homepage.iis.sinica.edu.tw/pages/byyang/index_en.html), [Prof. Daniel J. Bernstein](https://cr.yp.to/djb.html), and [Prof. Tanja Lange](https://www.hyperelliptic.org/tanja/). 
+      * Developed GPU-accelerated big-integer multiplication with NVIDIA-level performance for post-quantum cryptosystems.
+      * Accelerated NTRU and NTRU Prime lattice-based cryptosystems on Cortex-A72 with vectorized polynomial multipliers, achieving up to 6.7x faster multiplications and 7.67x faster key generation compared to state-of-the-art; published in the *Indocrypt, 2023*.
+    button:
+      text: Github
+      url: https://github.com/vector-polymul-ntru-ntrup/vector-polymul-ntru-ntrup
+      icon: brands/github
+
+teaching:
+  - role: Teaching Assistant, Advanced Computer Architecture II
+    org: "Department of ECE, University of Wisconsin-Madison; Instructor: Prof. Joshua San Miguel"
+    start: 2026/01
+    end: 2026/05
+    summary: |
+      - Built a cross-platform Docker environment for gem5 simulation and benchmarking on Linux, macOS, and Windows.
+      - Recognized with the Department of ECE Gerald Holdridge Teaching Excellence Award (2026)
+    buttons:
+      - text: Course Website
+        url: https://sites.google.com/wisc.edu/ececs757spring2026/course-description?authuser=0
+        icon: hero/globe-alt
+      - text: ChampSim Env Setup
+        url: https://github.com/Yi-Huaaa/ECE-757-Advanced-computer-architecture-II_Final-project-environment-setup
+        icon: brands/github
+      - text: gem5 Docker Env Setup
+        url: https://hub.docker.com/r/yihuachung/gem5-parsec-lab
+        icon: brands/docker
+  - role: Teaching Assistant, Computer Architecture
+    org: "Department of CSIE, National Taiwan University; Instructor: Prof. Shih-Hao Hung"
+    start: 2021/09
+    end: 2022/01
+    summary: |
+      Developed Verilog-based labs covering ALU, FPU, and pipelined RISC-V CPU designs.
+
+
+
+skills:
+  - name: Technical Skills
+    items:
+      - label: Python
+        level: 5
+      - label: Machine Learning
+        level: 5
+      - label: Cloud Computing
+        level: 4
+  - name: Research & Communication
+    items:
+      - label: Academic Writing
+        level: 5
+      - label: Conference Presentations
+        level: 4
+      - label: Grant Proposals
+        level: 4
+
+languages:
+  - name: English
+    level: 5
+    label: Native
+  - name: Spanish
+    level: 4
+    label: Fluent
+
+awards:
+  - title: Best Paper Award
+    awarder: NeurIPS
+    date: "2022-12-01"
+    summary: Awarded for groundbreaking work on efficient training of large models.
+    icon: hero/trophy

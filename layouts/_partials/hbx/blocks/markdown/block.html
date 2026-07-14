@@ -1,0 +1,133 @@
+{{/* Hugo Blox: Markdown */}}
+{{/* Documentation: https://hugoblox.com/blocks/ */}}
+{{/* License: https://github.com/HugoBlox/kit/blob/main/LICENSE.md */}}
+{{/* Initialise */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+{{ $section_id := .wcIdentifier }}
+{{ $content := $block.content }}
+{{ if not (reflect.IsMap $content) }}{{ $content = dict }}{{ end }}
+{{ $title := "" }}
+{{ with index $content "title" }}{{ $title = printf "%v" . | emojify | $page.RenderString }}{{ end }}
+{{ $text := "" }}
+{{ with index $content "text" }}{{ $text = printf "%v" . | emojify | $page.RenderString | safeHTML }}{{ end }}
+{{/* Custom: optional multi-column layout */}}
+{{ $columns_raw := index $content "columns_content" }}
+{{ if and (reflect.IsSlice $columns_raw) (gt (len $columns_raw) 0) }}
+<div id="{{ $section_id }}" class="max-w-5xl mx-auto px-6">
+  {{ with $title }}
+  <div class="mb-10 text-3xl font-bold text-gray-900 dark:text-white text-center">
+    {{ . }}
+  </div>
+  {{ end }}
+  <div class="flex flex-col gap-8">
+    {{ range $columns_raw }}
+      {{ $col_title := "" }}
+      {{ with index . "title" }}{{ $col_title = printf "%v" . | emojify | $page.RenderString }}{{ end }}
+      {{ $col_icon := "" }}
+      {{ with index . "icon" }}{{ $col_icon = printf "%v" . }}{{ end }}
+      {{ $col_text := "" }}
+      {{ with index . "text" }}{{ $col_text = printf "%v" . | emojify | $page.RenderString | safeHTML }}{{ end }}
+      {{ with $col_title }}
+      <div class="mb-4 text-3xl font-bold text-gray-900 dark:text-white text-center">
+        {{ $col_title }}
+      </div>
+      {{ end }}
+      <div class="bg-white dark:bg-white/[0.02] backdrop-blur-sm rounded-xl border border-gray-200 dark:border-white/[0.06] p-6 shadow-sm dark:shadow-none">
+        {{ $col_items := index . "items" }}         
+        {{ if and (reflect.IsSlice $col_items) (gt (len $col_items) 0) }}
+        <ul class="space-y-4">
+          {{ range $col_items }}
+            {{ $item_text := "" }}
+            {{ with index . "text" }}{{ $item_text = printf "%v" . | emojify | $page.RenderString | safeHTML }}{{ end }}
+            {{ $item_image := "" }}
+            {{ with index . "image" }}{{ $item_image = printf "%v" . }}{{ end }}
+            <li class="flex items-start gap-3">
+              {{ if $item_image }}
+              <div class="w-56 h-36 rounded-md overflow-hidden shrink-0 border border-gray-200 dark:border-white/10">
+                <img src="{{ $item_image | relURL }}" alt="" class="w-full h-full object-cover" />
+              </div>
+              {{ else }}
+              <span class="w-2 h-2 rounded-full bg-primary-400 shrink-0 mt-2.5"></span>
+              {{ end }}
+              <div class="flex-1">
+                <div class="prose prose-slate dark:prose-invert max-w-none">{{ $item_text }}</div>
+                {{ $item_buttons := index . "buttons" }}
+                {{ if and (reflect.IsSlice $item_buttons) (gt (len $item_buttons) 0) }}
+                <div class="flex flex-wrap gap-4 mt-3">
+                  {{ range $item_buttons }}
+                    {{ $btn := . }}
+                    {{ $btn_url := index $btn "url" }}
+                    {{ if $btn_url }}
+                    {{ $btn_text := index $btn "text" | default "Learn more" }}
+                    {{ $btn_icon := index $btn "icon" }}
+                    {{ $btn_link := $btn_url }}
+                    {{ $btn_target := "" }}
+                    {{ $btn_scheme := (urls.Parse $btn_link).Scheme }}
+                    {{ if not $btn_scheme }}
+                      {{ $btn_link = $btn_link | relLangURL }}
+                      {{ if eq (path.Ext $btn_link) ".pdf" }}{{ $btn_target = "target=\"_blank\" rel=\"noopener\"" }}{{ end }}
+                    {{ else if in (slice "http" "https") $btn_scheme }}
+                      {{ $btn_target = "target=\"_blank\" rel=\"noopener\"" }}
+                    {{ end }}
+                    <a href="{{ $btn_link | safeURL }}" {{ $btn_target | safeHTMLAttr }} class="inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                      {{ with $btn_icon }}
+                        {{ partial "functions/get_icon" (dict "name" . "attributes" "class='w-4 h-4'") }}
+                      {{ end }}
+                      {{ $btn_text }}
+                    </a>
+                    {{ end }}
+                  {{ end }}
+                </div>
+                {{ end }}
+              </div>
+            </li>
+          {{ end }}
+        </ul>
+        {{ else }}
+        {{ with $col_text }}
+        <div class="prose prose-slate dark:prose-invert max-w-none prose-li:marker:text-primary-400 prose-ul:space-y-2">{{ . }}</div>
+        {{ end }}
+        {{ end }}
+        {{ $col_button := index . "button" }}
+        {{ if reflect.IsMap $col_button }}
+          {{ $btn_url := index $col_button "url" }}
+          {{ if $btn_url }}
+          {{ $btn_text := index $col_button "text" | default "Learn more" }}
+          {{ $btn_icon := index $col_button "icon" }}
+          {{ $btn_link := $btn_url }}
+          {{ $btn_target := "" }}
+          {{ $btn_scheme := (urls.Parse $btn_link).Scheme }}
+          {{ if not $btn_scheme }}
+            {{ $btn_link = $btn_link | relLangURL }}
+            {{ if eq (path.Ext $btn_link) ".pdf" }}{{ $btn_target = "target=\"_blank\" rel=\"noopener\"" }}{{ end }}
+          {{ else if in (slice "http" "https") $btn_scheme }}
+            {{ $btn_target = "target=\"_blank\" rel=\"noopener\"" }}
+          {{ end }}
+          <div class="mt-6 pt-4 border-t border-gray-100 dark:border-white/5">
+            <a href="{{ $btn_link | safeURL }}" {{ $btn_target | safeHTMLAttr }} class="inline-flex items-center gap-2 text-lg font-medium text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">          
+              {{ with $btn_icon }}
+                {{ partial "functions/get_icon" (dict "name" . "attributes" "class='w-4 h-4'") }}
+              {{ end }}
+              {{ $btn_text }}
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </a>
+          </div>
+          {{ end }}
+        {{ end }}
+      </div>
+    {{ end }}
+  </div>
+</div>
+{{ else }}
+<div id="{{ $section_id }}" class="flex flex-col items-center max-w-prose mx-auto gap-3 justify-center px-6">
+  {{ with $title }}
+  <div class="mb-6 text-3xl font-bold text-gray-900 dark:text-white">
+    {{ . }}
+  </div>
+  {{ end }}
+  {{ with $text }}<div class="prose prose-slate lg:prose-xl dark:prose-invert max-w-prose">{{ . }}</div>{{ end }}
+</div>
+{{ end }}
