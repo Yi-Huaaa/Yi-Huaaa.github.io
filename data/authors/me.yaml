@@ -70,8 +70,8 @@ experience:
       * Integrated the GPU kernels into Synopsys Fusion Compiler, enabling heterogeneous CPU-GPU co-processing for gate sizing; published in the *Euro-Par PhD Symposium 2025*.
   - role: Full-Time Research Assistant
     org: Institute of Information Science, Academia Sinica
-    start: 2022-08
-    end: 2023-03
+    start: 2022/08
+    end: 2023/03
     summary: |
       Advised by [Prof. Bo-Yin Yang](https://homepage.iis.sinica.edu.tw/pages/byyang/index_en.html), [Prof. Daniel J. Bernstein](https://cr.yp.to/djb.html), and [Prof. Tanja Lange](https://www.hyperelliptic.org/tanja/). 
       * Developed GPU-accelerated big-integer multiplication with NVIDIA-level performance for post-quantum cryptosystems.
