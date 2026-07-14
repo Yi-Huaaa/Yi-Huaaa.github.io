@@ -1,6 +1,7 @@
 schema: hugoblox/author/v1
 slug: me
 is_owner: true
+highlight_name: true
 name:
   display: Yi-Hua Chung
   given: Yi-Hua
