@@ -1,3 +1,9 @@
+<style>
+.pub-thumb { width: 100%; height: 12rem; }
+@media (min-width: 640px) {
+  .pub-thumb { width: 14rem; height: 9rem; }
+}
+</style>
 {{/* Hugo Blox: Markdown */}}
 {{/* Documentation: https://hugoblox.com/blocks/ */}}
 {{/* License: https://github.com/HugoBlox/kit/blob/main/LICENSE.md */}}
@@ -42,9 +48,9 @@
             {{ with index . "text" }}{{ $item_text = printf "%v" . | emojify | $page.RenderString | safeHTML }}{{ end }}
             {{ $item_image := "" }}
             {{ with index . "image" }}{{ $item_image = printf "%v" . }}{{ end }}
-            <li class="flex items-start gap-3">
+            <li class="flex flex-col sm:flex-row items-start gap-3">
               {{ if $item_image }}
-              <div class="w-56 h-36 rounded-md overflow-hidden shrink-0 border border-gray-200 dark:border-white/10">
+              <div class="pub-thumb rounded-md overflow-hidden shrink-0 border border-gray-200 dark:border-white/10">
                 <img src="{{ $item_image | relURL }}" alt="" class="w-full h-full object-cover" />
               </div>
               {{ else }}
