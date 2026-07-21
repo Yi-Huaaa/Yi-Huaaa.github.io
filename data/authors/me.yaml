@@ -58,11 +58,13 @@ education:
 experience:
   - role: Student Researcher
     org: Ricursive Intelligence
+    icon_image: /img/logos/ricursive.jpeg
     start: 2026/08
     summary: |
       Incoming internship for Fall 2026.
   - role: Technical Intern, R&D Team, EDA Group
     org: Synopsys, Sunnyvale
+    icon_image: /img/logos/synopsys.svg
     start: 2024/06
     end: 2024/12
     summary: |
@@ -71,6 +73,7 @@ experience:
       - Integrated the GPU kernels into Synopsys Fusion Compiler, enabling heterogeneous CPU-GPU co-processing for gate sizing; published in the *Euro-Par PhD Symposium 2025*.
   - role: Full-Time Research Assistant
     org: Institute of Information Science, Academia Sinica
+    icon_image: /img/logos/academia-sinica.jpeg
     start: 2022/08
     end: 2023/03
     summary: |
@@ -85,6 +88,7 @@ experience:
 teaching:
   - role: Teaching Assistant, Advanced Computer Architecture II
     org: Department of ECE, University of Wisconsin-Madison
+    icon_image: /img/logos/uw_madison.png
     start: 2026/01
     end: 2026/05
     summary: |
@@ -103,6 +107,7 @@ teaching:
         icon: brands/docker
   - role: Teaching Assistant, Computer Architecture
     org: Department of CSIE, National Taiwan University
+    icon_image: /img/logos/NTU.svg
     start: 2021/09
     end: 2022/01
     summary: |
