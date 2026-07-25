@@ -13,7 +13,7 @@ name:
 #   - PhD
 #   - MIEEE
 status:
-  icon: "☕️"
+  icon: "🦉"
 role: Ph.D. Student
 bio: |
   I am a fourth-year Ph.D. student in the Department of Electrical and Computer Engineering at UW-Madison, advised by Prof. [Tsung-Wei (TW) Huang](https://tsung-wei-huang.github.io/). My research focuses on GPU-accelerated algorithms for compiler optimization, graph partitioning, and design automation applications.
