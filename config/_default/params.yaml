@@ -107,7 +107,7 @@ hugoblox:
     style: minimal # minimal | columns | centered
     language_switcher: true
     # Custom footer text (HTML supported)
-    text: ""
+    text: "此心不動，隨機而動。"
 
   # ────────────────────────────────────────────────────────────────────────────
   # COPYRIGHT
