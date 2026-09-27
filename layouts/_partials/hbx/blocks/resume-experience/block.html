@@ -79,6 +79,7 @@
     {{ if reflect.IsMap . }}
       {{ $role := "" }}
       {{ $org := "" }}
+      {{ $org_url := "" }}
       {{ $start := "" }}
       {{ $end := "" }}
       {{ $summary := "" }}
@@ -92,6 +93,7 @@
       {{ if not $role }}{{ with index . "position" }}{{ $role = strings.TrimSpace (printf "%v" .) }}{{ end }}{{ end }}
       {{ with index . "org" }}{{ $org = strings.TrimSpace (printf "%v" .) }}{{ end }}
       {{ if not $org }}{{ with index . "company_name" }}{{ $org = strings.TrimSpace (printf "%v" .) }}{{ end }}{{ end }}
+      {{ with index . "company_url" }}{{ $org_url = strings.TrimSpace (printf "%v" .) }}{{ end }}
       {{ with index . "start" }}{{ $start = strings.TrimSpace (printf "%v" .) }}{{ end }}
       {{ if not $start }}{{ with index . "date_start" }}{{ $start = strings.TrimSpace (printf "%v" .) }}{{ end }}{{ end }}
       {{ with index . "end" }}{{ $end = strings.TrimSpace (printf "%v" .) }}{{ end }}
@@ -130,7 +132,7 @@
       {{/* Custom: pass through a raw "buttons" list if present */}}
       {{ $buttons_raw := index . "buttons" }}
       {{ if or $role $org }}
-        {{ $experience = $experience | append (dict "role" $role "org" $org "start" $start "end" $end "summary" $summary "icon" $icon "icon_image" $icon_image "tags" $tags "button" (dict "url" $button_url "text" $button_text "icon" $button_icon) "buttons" $buttons_raw) }}
+        {{ $experience = $experience | append (dict "role" $role "org" $org "org_url" $org_url "start" $start "end" $end "summary" $summary "icon" $icon "icon_image" $icon_image "tags" $tags "button" (dict "url" $button_url "text" $button_text "icon" $button_icon) "buttons" $buttons_raw) }}
       {{ end }}
     {{ end }}
   {{ end }}
@@ -234,8 +236,15 @@
               </h3>
               {{/* Company */}}
               <p class="{{ $accent.org_text }} font-medium mt-1">
-                {{ index $item "org" }}
-              </p>
+                {{ $org_url := index $item "org_url" }}
+                {{ if $org_url }}
+                  <a href="{{ $org_url | safeURL }}" target="_blank" rel="noopener" class="hover:underline">
+                    {{ index $item "org" }}
+                  </a>
+                {{ else }}
+                  {{ index $item "org" }}
+                {{ end }}
+              </p>      
             </div>
             
             {{/* Date badge */}}
@@ -270,10 +279,13 @@
           
           {{/* Description */}}
           {{ with index $item "summary" }}
-          <div class="prose dark:prose-invert max-w-none text-gray-600 dark:text-gray-400 leading-relaxed">
-            {{ . | emojify | $page.RenderString }}
-          </div>
+            {{ $summary_html := . | emojify | $page.RenderString }}
+            {{ $summary_html = replaceRE `<a ` `<a style="color: inherit !important; font-weight: inherit !important; font-size: inherit !important; text-decoration: underline !important;" ` $summary_html }}
+            <div class="prose dark:prose-invert max-w-none text-gray-600 dark:text-gray-400 leading-relaxed">
+              {{ $summary_html | safeHTML }}
+            </div>
           {{ end }}
+
           
           {{/* Tags/Skills */}}
           {{ with index $item "tags" }}
@@ -421,10 +433,12 @@
           
           {{/* Description */}}
           {{ with index $item "summary" }}
-          <div class="prose dark:prose-invert max-w-none text-gray-600 dark:text-gray-400 leading-relaxed">
-            {{ . | emojify | $page.RenderString }}
-          </div>
-          {{ end }}
+            {{ $summary_html := . | emojify | $page.RenderString }}
+            {{ $summary_html = replaceRE `<a ` `<a style="color: inherit !important; font-weight: inherit !important; font-size: inherit !important; text-decoration: underline !important;" ` $summary_html }}
+            <div class="prose dark:prose-invert max-w-none text-gray-600 dark:text-gray-400 leading-relaxed">
+              {{ $summary_html | safeHTML }}
+            </div>
+          {{ end }}          
 
           {{/* Action button */}}
           {{ $button := index $item "button" }}

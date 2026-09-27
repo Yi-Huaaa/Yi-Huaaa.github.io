@@ -15,7 +15,7 @@ sections:
       # Show a call-to-action button under your biography? (optional)
       button:
         text: Download CV
-        url: uploads/Yi-Hua-Chung-Resume-20260521.pdf
+        url: uploads/Yi-Hua-Chung-Resume-20260927.pdf
       headings:
         about: ''
         education: ''
@@ -53,11 +53,20 @@ sections:
         - title: Selected Publications
           icon: hero/book-open
           items:
+            - image: /img/publications/xeg.png
+              text: |
+                **XEG: A GPU-Parallel Algorithm for Efficient and Effective E-Graph Extraction**<br>
+                **Yi-Hua Chung**, Hao-Hsiang Hsiao, Cheng-Hsiang Chiu, Boyang Zhang, Che Chang, Joshua San Miguel, and Tsung-Wei Huang<br>
+                *ACM International Conference on Architectural Support for Programming Languages and Operating Systems (ASPLOS)*, Heraklion, Crete, Greece, 2027
+              # buttons:
+              #   - text: Paper
+              #     url: https://tsung-wei-huang.github.io/papers/
+              #     icon: hero/document-text
             - image: /img/publications/simpart.png
               text: |
                 **SimPart: A Simple Yet Effective Replication-aided Partitioning Algorithm for Logic Simulation on GPU**<br>
                 **Yi-Hua Chung**, Shui Jiang, Wan Luan Lee, Yanqing Zhang, Haoxing Ren, Tsung-Yi Ho, and Tsung-Wei Huang<br>
-                International European Conference on Parallel and Distributed Computing (Euro-Par), 2025
+                *International European Conference on Parallel and Distributed Computing (Euro-Par)*, Dresden, Germany, 2025
               buttons:
                 - text: Paper
                   url: uploads/publications/2025-simpart-paper.pdf
@@ -69,7 +78,7 @@ sections:
               text: |
                 **Accelerating Gate Sizing using GPU**<br>
                 **Yi-Hua Chung**, Nahmsuk Oh, Malleswara Gupta Balabhadra Naga Venkata, Aditya Shiledar, Sudipto Kundu, Vishal Khandelwal, and Tsung-Wei Huang<br>
-                International European Conference on Parallel and Distributed Computing (Euro-Par), 2025
+                *International European Conference on Parallel and Distributed Computing (Euro-Par)*, Dresden, Germany, 2025
               buttons:
                 - text: Paper
                   url: uploads/publications/2025-gate-sizing-paper.pdf

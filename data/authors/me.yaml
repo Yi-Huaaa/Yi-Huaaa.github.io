@@ -16,9 +16,14 @@ status:
   icon: "🦉"
 role: Ph.D. Student
 bio: |
-  I am a fourth-year Ph.D. student in the Department of Electrical and Computer Engineering at UW-Madison, advised by Prof. [Tsung-Wei (TW) Huang](https://tsung-wei-huang.github.io/). My research focuses on GPU-accelerated algorithms for compiler optimization, graph partitioning, and design automation applications.
+  I am a **fourth-year Ph.D. student** in the Department of Electrical and Computer Engineering at UW-Madison, advised by Prof. [Tsung-Wei (TW) Huang](https://tsung-wei-huang.github.io/).
+  I am currently a **student researcher** at [Ricursive Intelligence](https://www.ricursive.com/) for Fall 2026.
+  My research focuses on GPU acceleration for compiler optimization and design automation.
 
-  I developed SimPart, a GPU-parallel graph partitioner for logic simulation by integrating disjoint-set and replication-aided strategies, further optimized with conditional CUDA Graphs. I also collaborate with Synopsys to develop GPU-parallel algorithms for gate sizing in an industrial-use EDA tool.
+  I developed XEG, a GPU-parallel e-graph extractor that accelerates e-graph extraction while maintaining high solution quality.
+  Previously, I developed SimPart, a GPU-parallel graph partitioner for logic simulation by integrating disjoint-set and replication-aided strategies, further optimized with conditional CUDA Graphs.
+  I also collaborate with Synopsys to develop GPU-parallel algorithms for gate sizing in an industrial EDA tool.
+
 
 affiliations:
   - name: Department of Electrical and Computer Engineering, University of Wisconsin-Madison
@@ -58,26 +63,30 @@ education:
 experience:
   - role: Student Researcher
     org: Ricursive Intelligence
+    company_url: https://www.ricursive.com/
     icon_image: /img/logos/ricursive.jpeg
     start: 2026/08
     summary: |
-      Mentored by Yi-Chen Lu | Manager: Anna Goldie.
+      Mentor: [Yi-Chen Lu](https://yichen-lu.github.io/) | Manager: [Anna Goldie](https://www.annagoldie.com/).
+      - Developing GPU-accelerated optimization techniques for AI-driven chip design workflows.
   - role: Technical Intern, R&D Team, EDA Group
     org: Synopsys, Sunnyvale
+    company_url: https://www.synopsys.com/
     icon_image: /img/logos/synopsys.svg
     start: 2024/06
     end: 2024/12
     summary: |
-      Mentored by Nahmsuk Oh | Manager: Malleswara Gupta | Collaborated with Vishal Khandelwal, Aditya Shiledar, and Sudipto Kundu.
+      Mentor: [Nahmsuk Oh](https://www.linkedin.com/in/nahmsuk-nick-oh-4023ba5/) | Manager: [Malleswara Gupta](https://www.linkedin.com/in/malleswara-gupta-b15b70?utm_source=share_via&utm_content=profile&utm_medium=member_ios) | Collaborated with [Vishal Khandelwal](https://www.linkedin.com/in/vishal-khandelwal-691b6721/), [Aditya Shiledar](https://www.linkedin.com/in/aditya-shiledar-a7ab39/), and [Sudipto Kundu](https://www.linkedin.com/in/kundusudipto/).
       - Designed and implemented GPU-parallel kernel algorithms for LibCell selection in gate sizing, achieving a 38.13x speedup over the 16-core CPU-based Synopsys industrial sizer.
       - Integrated the GPU kernels into Synopsys Fusion Compiler, enabling heterogeneous CPU-GPU co-processing for gate sizing; published in the *Euro-Par PhD Symposium 2025*.
   - role: Full-Time Research Assistant
     org: Institute of Information Science, Academia Sinica
+    company_url: https://www.iis.sinica.edu.tw/en/index.html
     icon_image: /img/logos/academia-sinica.jpeg
     start: 2022/08
     end: 2023/03
     summary: |
-      Advised by [Prof. Bo-Yin Yang](https://homepage.iis.sinica.edu.tw/pages/byyang/index_en.html), [Prof. Daniel J. Bernstein](https://cr.yp.to/djb.html), and [Prof. Tanja Lange](https://www.hyperelliptic.org/tanja/). 
+      Advised by [Bo-Yin Yang](https://homepage.iis.sinica.edu.tw/pages/byyang/index_en.html), [Daniel J. Bernstein](https://cr.yp.to/djb.html), and [Tanja Lange](https://www.hyperelliptic.org/tanja/). 
       - Developed GPU-accelerated big-integer multiplication with NVIDIA-level performance for post-quantum cryptosystems.
       - Accelerated NTRU and NTRU Prime lattice-based cryptosystems on Cortex-A72 with vectorized polynomial multipliers, achieving up to 6.7x faster multiplications and 7.67x faster key generation compared to state-of-the-art; published in the *Indocrypt, 2023*.
     button:
