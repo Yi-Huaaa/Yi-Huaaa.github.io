@@ -58,10 +58,10 @@ sections:
                 **XEG: A GPU-Parallel Algorithm for Efficient and Effective E-Graph Extraction**<br>
                 **Yi-Hua Chung**, Hao-Hsiang Hsiao, Cheng-Hsiang Chiu, Boyang Zhang, Che Chang, Joshua San Miguel, and Tsung-Wei Huang<br>
                 *ACM International Conference on Architectural Support for Programming Languages and Operating Systems (ASPLOS)*, Heraklion, Crete, Greece, 2027
-              # buttons:
-              #   - text: Paper
-              #     url: https://tsung-wei-huang.github.io/papers/
-              #     icon: hero/document-text
+              buttons:
+                - text: Paper
+                  url: uploads/publications/2027-xeg-paper.pdf
+                  icon: hero/document-text
             - image: /img/publications/simpart.png
               text: |
                 **SimPart: A Simple Yet Effective Replication-aided Partitioning Algorithm for Logic Simulation on GPU**<br>
