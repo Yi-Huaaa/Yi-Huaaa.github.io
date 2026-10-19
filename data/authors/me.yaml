@@ -103,7 +103,7 @@ teaching:
     summary: |
       Instructor: [Prof. Joshua San Miguel](https://jsm.ece.wisc.edu)
       - Built a cross-platform Docker environment for gem5 simulation and benchmarking on Linux, macOS, and Windows.
-      - Recognized with the Department of ECE Gerald Holdridge Teaching Excellence Award (2026)
+      - Recognized with the Department of ECE Gerald Holdridge Teaching Excellence Award (2026).
     buttons:
       - text: Course Website
         url: https://sites.google.com/wisc.edu/ececs757spring2026/course-description?authuser=0

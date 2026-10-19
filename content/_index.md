@@ -15,7 +15,7 @@ sections:
       # Show a call-to-action button under your biography? (optional)
       button:
         text: Download CV
-        url: uploads/Yi-Hua-Chung-Resume-20260927.pdf
+        url: uploads/Yi-Hua-Chung-CV-20261018.pdf
       headings:
         about: ''
         education: ''
