@@ -62,7 +62,7 @@ education:
 
 experience:
   - role: Student Researcher
-    org: Ricursive Intelligence
+    org: Ricursive Intelligence, Palo Alto
     company_url: https://www.ricursive.com/
     icon_image: /img/logos/ricursive.jpeg
     start: 2026/08
@@ -80,7 +80,7 @@ experience:
       - Designed and implemented GPU-parallel kernel algorithms for LibCell selection in gate sizing, achieving a 38.13x speedup over the 16-core CPU-based Synopsys industrial sizer.
       - Integrated the GPU kernels into Synopsys Fusion Compiler, enabling heterogeneous CPU-GPU co-processing for gate sizing; published in the *Euro-Par PhD Symposium 2025*.
   - role: Full-Time Research Assistant
-    org: Institute of Information Science, Academia Sinica
+    org: Institute of Information Science, Academia Sinica, Taipei
     company_url: https://www.iis.sinica.edu.tw/en/index.html
     icon_image: /img/logos/academia-sinica.jpeg
     start: 2022/08
