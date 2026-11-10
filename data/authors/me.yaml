@@ -6,7 +6,7 @@ name:
   display: Yi-Hua Chung
   given: Yi-Hua
   family: Chung
-  alternate: ''  # Example: 王伟
+  alternate: 鍾宜樺
   pronunciation: ''  # Example: Wáng Wěi
   pronouns: she/her
 # postnominals:
@@ -46,7 +46,7 @@ interests:
   - GPU Acceleration using CUDA
   - Heterogeneous Computing
   - Compiler Optimization
-  - GPU-Parallel Electronic Design Automation
+  - Electronic Design Automation
 
 education:
   - degree: Ph.D., Electrical and Computer Engineering
@@ -67,7 +67,7 @@ experience:
     icon_image: /img/logos/ricursive.jpeg
     start: 2026/08
     summary: |
-      Mentor: [Yi-Chen Lu](https://yichen-lu.github.io/) | Manager: [Anna Goldie](https://www.annagoldie.com/).
+      Mentor: [Yi-Chen Lu](https://yichen-lu.github.io/) | Manager: [Anna Goldie](https://www.annagoldie.com/) | Collaborated with [Hao-Hsiang (Thomas) Hsiao](https://hhsiao30.github.io/).
       - Developing GPU-accelerated optimization techniques for AI-driven chip design workflows.
   - role: Technical Intern, R&D Team, EDA Group
     org: Synopsys, Sunnyvale

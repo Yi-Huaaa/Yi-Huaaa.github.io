@@ -1,0 +1,49 @@
+/*
+  Homepage hero (resume-biography-3): reduce top and bottom whitespace.
+
+  The space above and below the content comes from two layers:
+    1. The outer <section id="bio" class="hbb-section"> padding
+       (var(--hb-spacing-section) = 6rem with the "spacious" spacing setting).
+    2. The inner .resume-biography padding
+       (theme default 2rem / sm 3rem / md 4rem / lg 6rem / xl 8rem).
+
+  Here the outer padding is removed for this section only, and the inner
+  padding is set to the total whitespace we want, the same at top and bottom.
+*/
+#bio.hbb-section {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+#bio .resume-biography {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+@media (min-width: 40rem) {
+  #bio .resume-biography {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+}
+
+@media (min-width: 48rem) {
+  #bio .resume-biography {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  #bio .resume-biography {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+
+@media (min-width: 80rem) {
+  #bio .resume-biography {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
