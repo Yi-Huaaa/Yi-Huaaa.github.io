@@ -54,19 +54,17 @@ sections:
           icon: hero/book-open
           items:
             - image: /img/publications/xeg.png
-              text: |
-                **XEG: A GPU-Parallel Algorithm for Efficient and Effective E-Graph Extraction**<br>
-                **Yi-Hua Chung**, Hao-Hsiang Hsiao, Cheng-Hsiang Chiu, Boyang Zhang, Che Chang, Joshua San Miguel, and Tsung-Wei Huang<br>
-                *ACM International Conference on Architectural Support for Programming Languages and Operating Systems (ASPLOS)*, Heraklion, Crete, Greece, 2027
+              title: "XEG: A GPU-Parallel Algorithm for Efficient and Effective E-Graph Extraction"
+              authors: "**Yi-Hua Chung**, Hao-Hsiang Hsiao, Cheng-Hsiang Chiu, Boyang Zhang, Che Chang, Joshua San Miguel, and Tsung-Wei Huang"
+              venue: "ACM International Conference on Architectural Support for Programming Languages and Operating Systems (ASPLOS), Heraklion, Crete, Greece, 2027"
               buttons:
                 - text: Paper
                   url: uploads/publications/2027-xeg-paper.pdf
                   icon: hero/document-text
             - image: /img/publications/simpart.png
-              text: |
-                **SimPart: A Simple Yet Effective Replication-aided Partitioning Algorithm for Logic Simulation on GPU**<br>
-                **Yi-Hua Chung**, Shui Jiang, Wan Luan Lee, Yanqing Zhang, Haoxing Ren, Tsung-Yi Ho, and Tsung-Wei Huang<br>
-                *International European Conference on Parallel and Distributed Computing (Euro-Par)*, Dresden, Germany, 2025
+              title: "SimPart: A Simple Yet Effective Replication-aided Partitioning Algorithm for Logic Simulation on GPU"
+              authors: "**Yi-Hua Chung**, Shui Jiang, Wan Luan Lee, Yanqing Zhang, Haoxing Ren, Tsung-Yi Ho, and Tsung-Wei Huang"
+              venue: "International European Conference on Parallel and Distributed Computing (Euro-Par), Dresden, Germany, 2025"
               buttons:
                 - text: Paper
                   url: uploads/publications/2025-simpart-paper.pdf
@@ -75,10 +73,9 @@ sections:
                   url: uploads/publications/2025-simpart-slides.pdf
                   icon: hero/presentation-chart-bar
             - image: /img/publications/gate-sizing.png
-              text: |
-                **Accelerating Gate Sizing using GPU**<br>
-                **Yi-Hua Chung**, Nahmsuk Oh, Malleswara Gupta Balabhadra Naga Venkata, Aditya Shiledar, Sudipto Kundu, Vishal Khandelwal, and Tsung-Wei Huang<br>
-                *International European Conference on Parallel and Distributed Computing (Euro-Par)*, Dresden, Germany, 2025
+              title: "Accelerating Gate Sizing using GPU"
+              authors: "**Yi-Hua Chung**, Nahmsuk Oh, Malleswara Gupta Balabhadra Naga Venkata, Aditya Shiledar, Sudipto Kundu, Vishal Khandelwal, and Tsung-Wei Huang"
+              venue: "International European Conference on Parallel and Distributed Computing (Euro-Par), Dresden, Germany, 2025"
               buttons:
                 - text: Paper
                   url: uploads/publications/2025-gate-sizing-paper.pdf

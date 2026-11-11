@@ -1,0 +1,58 @@
+/*
+  Homepage "Selected Publications" entries (markdown block items with title/authors/venue).
+  Modeled on https://hhsiao30.github.io/ : serif title, sans-serif authors and venue,
+  each on its own line with distinct size and color.
+  Public Sans is loaded in layouts/_partials/hooks/head-end/publication-fonts.html.
+*/
+.pub-entry {
+  --pub-sans: "Public Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.pub-entry-title {
+  margin: 0 0 0.4rem;
+  font-family: var(--hb-font-body, "Source Serif 4", Georgia, serif);
+  font-size: 1.0625rem; /* 17px */
+  font-weight: 600;
+  line-height: 1.4;
+  color: #111827; /* gray-900 */
+}
+
+.pub-entry-authors {
+  margin: 0 0 0.3rem;
+  font-family: var(--pub-sans);
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.55;
+  color: #1f2937; /* gray-800 */
+}
+
+.pub-entry-authors strong {
+  font-weight: 600;
+  color: #111827;
+}
+
+.pub-entry-venue {
+  margin: 0;
+  font-family: var(--pub-sans);
+  font-size: 0.84375rem; /* 13.5px */
+  font-style: italic;
+  line-height: 1.5;
+  color: #4b5563; /* gray-600 */
+}
+
+.pub-entry-venue strong {
+  font-style: normal;
+  font-weight: 600;
+}
+
+.dark .pub-entry-title,
+.dark .pub-entry-authors strong {
+  color: #ffffff;
+}
+
+.dark .pub-entry-authors {
+  color: #e5e7eb; /* gray-200 */
+}
+
+.dark .pub-entry-venue {
+  color: #9ca3af; /* gray-400 */
+}
