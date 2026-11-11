@@ -87,10 +87,10 @@
 <div class="resume-biography py-8 px-4 sm:py-12 md:py-16 lg:py-24 xl:py-32 relative overflow-hidden">
   {{/* Add subtle top gradient for navbar transition */}}
   <div class="max-w-7xl mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-start">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-x-8 md:gap-y-8 items-start">
       
       {{/* Left Column: Flexible span */}}
-      <div class="md:col-span-4 flex flex-col items-center text-center space-y-6 md:space-y-8">
+      <div class="md:col-span-4 md:col-start-1 md:row-start-1 flex flex-col items-center text-center space-y-6 md:space-y-8">
         
         {{/* Banner Image */}}
         {{ $img := "" }}
@@ -338,6 +338,10 @@
         </div>
         {{ end }}
 
+      </div>
+
+      {{/* Local change: CV button in its own left cell (row 2), level with the Education heading */}}
+      <div class="md:col-span-4 md:col-start-1 md:row-start-2 flex flex-col items-center text-center">
         {{/* CV Download Button (Local change: moved here from the right column, under the social icons) */}}
         {{ $button_raw := index $content "button" }}
         {{ if and $button_raw (reflect.IsMap $button_raw) }}
@@ -368,7 +372,10 @@
             </div>
           {{ end }}
         {{ end }}
+      </div>
 
+      {{/* Local change: interests in their own left cell (row 3), spread over the height of the Education cards */}}
+      <div class="md:col-span-4 md:col-start-1 md:row-start-3 lg:self-stretch flex justify-center">
         {{/* Interests tags (Local change: moved here from the right column, heading removed, same tag style) */}}
         {{ $interests_raw := $profile.interests }}
         {{ $interests := slice }}
@@ -379,8 +386,9 @@
         {{ end }}
         {{ if gt (len $interests) 0 }}
         {{/* Icon list: each interest gets a small tinted icon tile (keyword-matched, sparkles as fallback).
-             Staggered: icons always on the left; even items are indented to the right. */}}
-        <ul class="list-none m-0 p-0 inline-flex flex-col items-start gap-2.5 text-left">
+             Staggered: icons always on the left; even items are indented to the right.
+             lg+: the list stretches to the Education cards' height and spreads its items evenly. */}}
+        <ul class="list-none m-0 p-0 inline-flex flex-col items-start lg:justify-between gap-2.5 text-left">
           {{ range $interests }}
           {{ $interest := strings.TrimSpace (printf "%v" .) }}
           {{ if $interest }}
@@ -404,7 +412,7 @@
       </div>
 
       {{/* Right Column: Flexible span */}}
-      <div class="md:col-span-8">
+      <div class="md:col-span-8 md:col-start-5 md:row-start-1">
         
         {{/* Bio Section */}}
         {{ $bio_content := "" }}
@@ -416,7 +424,7 @@
           {{ with $profile.bio }}{{ $bio_content = printf "%v" . | emojify | $page.RenderString }}{{ end }}
         {{ end }}
         {{ with $bio_content }}
-        <div class="mb-12">
+        <div>
           <div class="flex items-center gap-4 mb-8">
             <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/50 rounded-full flex items-center justify-center">
               {{ partial "functions/get_icon" (dict "name" "identification" "attributes" "class='w-6 h-6 text-primary-600 dark:text-primary-400'") }}
@@ -443,15 +451,18 @@
 
         {{/* Local change: CV Download Button moved to the left column, under the social icons */}}
 
-        {{/* Education Section */}}
-        {{ $education_raw := $profile.education }}
-        {{ $education := slice }}
-        {{ if reflect.IsSlice $education_raw }}
-          {{ $education = $education_raw }}
-        {{ end }}
-        {{ if gt (len $education) 0 }}
-        <div class="mb-16">
-          <div class="flex items-center gap-4 mb-8">
+      </div>
+
+      {{/* Education Section */}}
+      {{ $education_raw := $profile.education }}
+      {{ $education := slice }}
+      {{ if reflect.IsSlice $education_raw }}
+        {{ $education = $education_raw }}
+      {{ end }}
+      {{ if gt (len $education) 0 }}
+      {{/* Local change: Education heading in its own grid cell (row 2), level with the CV button */}}
+      <div class="md:col-span-8 md:col-start-5 md:row-start-2 md:pt-3">
+          <div class="flex items-center gap-4">
             <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/50 rounded-full flex items-center justify-center">
               {{ partial "functions/get_icon" (dict "name" "academic-cap" "attributes" "class='w-6 h-6 text-primary-600 dark:text-primary-400'") }}
             </div>
@@ -465,18 +476,34 @@
             {{ end }}
             <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">{{ $education_heading | markdownify }}</h3>
           </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      </div>
+
+      {{/* Local change: Education cards in their own grid cell (row 3), beside the interests list */}}
+      <div class="md:col-span-8 md:col-start-5 md:row-start-3">
+          {{/* Local change: narrower 3-card grid (max 720px, roughly the width of the summary text).
+               Each card: icon + degree abbreviation as the title, then field, institution, and dates pinned to the bottom. */}}
+          <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-5 max-w-[45rem]">
             {{ range $education }}
             {{ if reflect.IsMap . }}
             {{ $degree := "" }}
             {{ $degreeRaw := index . "degree" | default (index . "area") }}
             {{ if ne $degreeRaw nil }}{{ $degree = printf "%v" $degreeRaw }}{{ end }}
+            {{/* Split "Ph.D., Electrical and Computer Engineering" into title "Ph.D." and field "Electrical and Computer Engineering" */}}
+            {{ $degree_title := $degree }}
+            {{ $degree_field := "" }}
+            {{ $degree_parts := split $degree ", " }}
+            {{ if gt (len $degree_parts) 1 }}
+              {{ $degree_title = index $degree_parts 0 }}
+              {{ $degree_field = delimit (after 1 $degree_parts) ", " }}
+            {{ end }}
             {{ $year := "" }}
             {{ with index . "year" }}{{ $year = printf "%v" . }}{{ end }}
             {{ $start := "" }}
             {{ with index . "start" }}{{ $start = printf "%v" . }}{{ end }}
             {{ $end := "" }}
             {{ with index . "end" }}{{ $end = printf "%v" . }}{{ end }}
+            {{ $dates := $year }}
+            {{ if not $dates }}{{ $dates = $start }}{{ with $end }}{{ $dates = printf "%s – %s" $dates . }}{{ end }}{{ end }}
             {{ $institution := "" }}
             {{ with index . "institution" }}{{ $institution = printf "%v" . }}{{ end }}
             {{ $icon := "" }}
@@ -484,43 +511,30 @@
             {{ if eq (printf "%T" $iconRaw) "string" }}
               {{ $icon = $iconRaw }}
             {{ end }}
-            <div class="group h-full flex flex-col bg-gradient-to-br from-white/90 to-primary-50/30 dark:from-gray-800/90 dark:to-primary-900/20 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-transparent hover:border-primary-200 dark:hover:border-primary-800 backdrop-blur-md">
-              <div class="flex gap-4">
-                <div class="flex-shrink-0 w-12 h-12 bg-white dark:bg-gray-800 ring-1 ring-gray-200 dark:ring-gray-700 rounded-full flex items-center justify-center shadow-md">
-                  {{ if $icon }}
-                    {{ partial "functions/get_icon" (dict "name" $icon "attributes" "class='w-6 h-6 text-primary-600 dark:text-primary-400'") }}
-                  {{ else }}
-                    {{ partial "functions/get_icon" (dict "name" "academic-cap" "attributes" "class='w-6 h-6 text-primary-600 dark:text-primary-400'") }}
-                  {{ end }}
+            <div class="group h-full flex flex-col bg-gradient-to-br from-white/90 to-primary-50/30 dark:from-gray-800/90 dark:to-primary-900/20 rounded-xl p-5 shadow-md hover:shadow-xl transition-all duration-300 border border-transparent hover:border-primary-200 dark:hover:border-primary-800 backdrop-blur-md">
+              <div class="flex items-center gap-3">
+                <div class="flex-shrink-0 w-10 h-10 bg-white dark:bg-gray-800 ring-1 ring-gray-200 dark:ring-gray-700 rounded-full flex items-center justify-center shadow-md">
+                  {{ partial "functions/get_icon" (dict "name" ($icon | default "academic-cap") "attributes" "class='w-5 h-5 text-primary-600 dark:text-primary-400'") }}
                 </div>
-                <div class="flex-1 flex-grow">
-                  {{ if $degree }}
-                  <p class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                    {{ $degree }}
-                  </p>
-                  {{ end }}
-                  {{ if $year }}
-                    <p class="text-gray-500 dark:text-gray-400 text-sm mt-2">{{ $year }}</p>
-                  {{ else if $start }}
-                    <p class="text-gray-500 dark:text-gray-400 text-sm mt-2">
-                      {{ $start }}
-                      {{ if $end }}<br>{{ $end }}{{ end }}
-                    </p>
-                  {{ end }}
-                  {{ if $institution }}
-                    <p class="text-gray-700 dark:text-gray-300 text-base">{{ $institution }}</p>
-                  {{ end }}
-                </div>
+                {{ with $degree_title }}
+                <p class="m-0 text-xl font-bold leading-tight text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{{ . }}</p>
+                {{ end }}
               </div>
+              {{ with $degree_field }}
+              <p class="m-0 mt-3 text-[15px] font-semibold leading-snug text-gray-800 dark:text-gray-100">{{ . }}</p>
+              {{ end }}
+              {{ with $institution }}
+              <p class="m-0 mt-1.5 text-sm leading-snug text-gray-600 dark:text-gray-300">{{ . }}</p>
+              {{ end }}
+              {{ with $dates }}
+              <p class="m-0 mt-auto pt-3 text-sm tabular-nums text-gray-500 dark:text-gray-400">{{ . }}</p>
+              {{ end }}
             </div>
             {{ end }}
             {{ end }}
           </div>
-        </div>
-        {{ end }}
-
-        {{/* Local change: Interests moved to the left column (tags only, no heading), under the CV button */}}
       </div>
+      {{ end }}
     </div>
   </div>
 </div>
