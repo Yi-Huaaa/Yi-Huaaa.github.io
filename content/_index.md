@@ -97,6 +97,7 @@ sections:
     id: experience
     content:
       title: Professional Experience
+      icon: hero/briefcase
       username: me
       source_field: experience
       show_education: false
@@ -106,6 +107,7 @@ sections:
     id: teaching
     content:
       title: Teaching & Service
+      icon: hero/user-group
       username: me
       source_field: teaching
       show_education: false

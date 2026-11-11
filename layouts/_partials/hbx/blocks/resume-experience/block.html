@@ -32,6 +32,9 @@
 {{/* Custom: allow overriding the section title */}}
 {{ $experience_title := "" }}
 {{ with index $content "title" }}{{ $experience_title = strings.TrimSpace (printf "%v" .) }}{{ end }}
+{{/* Custom: optional icon shown before the section title */}}
+{{ $experience_title_icon := "" }}
+{{ with index $content "icon" }}{{ $experience_title_icon = strings.TrimSpace (printf "%v" .) }}{{ end }}
 {{/* Custom: allow reading a different profile field instead of "experience" */}}
 {{ $source_field := "experience" }}
 {{ with index $content "source_field" }}{{ $source_field = strings.TrimSpace (printf "%v" .) }}{{ end }}
@@ -192,7 +195,15 @@
 
 {{ if gt (len $experience) 0 }}
 <div class="w-full">
-  <h2 class="mb-10 text-3xl font-bold text-gray-900 dark:text-white text-center">{{ $experience_title | default (i18n "experience" | default "Experience") }}</h2>
+  <h2 class="mb-10 flex items-center justify-center gap-3 text-3xl font-bold text-gray-900 dark:text-white text-center">
+    {{ with $experience_title_icon }}
+    {{/* Plain icon in the title's color */}}
+    <span aria-hidden="true" class="flex-shrink-0 flex items-center justify-center">
+      {{ partial "functions/get_icon" (dict "name" . "attributes" "class='w-8 h-8 text-gray-600 dark:text-gray-300'") }}
+    </span>
+    {{ end }}
+    <span>{{ $experience_title | default (i18n "experience" | default "Experience") }}</span>
+  </h2>
   
   {{/* Timeline container */}}
   <div class="relative">

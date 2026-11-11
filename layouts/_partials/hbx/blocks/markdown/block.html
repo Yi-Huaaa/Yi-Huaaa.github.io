@@ -26,7 +26,7 @@
     {{ . }}
   </div>
   {{ end }}
-  <div class="flex flex-col gap-8">
+  <div class="flex flex-col gap-32">
     {{ range $columns_raw }}
       {{ $col_title := "" }}
       {{ with index . "title" }}{{ $col_title = printf "%v" . | emojify | $page.RenderString }}{{ end }}
@@ -34,9 +34,17 @@
       {{ with index . "icon" }}{{ $col_icon = printf "%v" . }}{{ end }}
       {{ $col_text := "" }}
       {{ with index . "text" }}{{ $col_text = printf "%v" . | emojify | $page.RenderString | safeHTML }}{{ end }}
+      {{/* Custom: wrap each column (title + card) so the outer gap separates columns, not title from card */}}
+      <div class="flex flex-col gap-8">
       {{ with $col_title }}
-      <div class="mb-4 text-3xl font-bold text-gray-900 dark:text-white text-center">
-        {{ $col_title }}
+      {{/* Custom: show the column icon (if set) before the title, plain and in the title's color */}}
+      <div class="mb-4 flex items-center justify-center gap-3 text-3xl font-bold text-gray-900 dark:text-white text-center">
+        {{ with $col_icon }}
+        <span aria-hidden="true" class="flex-shrink-0 flex items-center justify-center">
+          {{ partial "functions/get_icon" (dict "name" . "attributes" "class='w-8 h-8 text-gray-600 dark:text-gray-300'") }}
+        </span>
+        {{ end }}
+        <span>{{ $col_title }}</span>
       </div>
       {{ end }}
       <div class="bg-white dark:bg-white/[0.02] backdrop-blur-sm rounded-xl border border-gray-200 dark:border-white/[0.06] p-6 shadow-sm dark:shadow-none">
@@ -123,6 +131,7 @@
           </div>
           {{ end }}
         {{ end }}
+      </div>
       </div>
     {{ end }}
   </div>
