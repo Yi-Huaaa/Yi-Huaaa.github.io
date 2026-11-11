@@ -368,6 +368,38 @@
             </div>
           {{ end }}
         {{ end }}
+
+        {{/* Interests tags (Local change: moved here from the right column, heading removed, same tag style) */}}
+        {{ $interests_raw := $profile.interests }}
+        {{ $interests := slice }}
+        {{ if reflect.IsSlice $interests_raw }}
+          {{ $interests = $interests_raw }}
+        {{ else if eq (printf "%T" $interests_raw) "string" }}
+          {{ $interests = slice $interests_raw }}
+        {{ end }}
+        {{ if gt (len $interests) 0 }}
+        {{/* Icon list: each interest gets a small tinted icon tile (keyword-matched, sparkles as fallback) */}}
+        <ul class="list-none m-0 p-0 inline-flex flex-col items-start gap-2.5 text-left">
+          {{ range $interests }}
+          {{ $interest := strings.TrimSpace (printf "%v" .) }}
+          {{ if $interest }}
+          {{ $key := lower $interest }}
+          {{ $interest_icon := "sparkles" }}
+          {{ if or (in $key "gpu") (in $key "cuda") }}{{ $interest_icon = "bolt" }}
+          {{ else if in $key "heterogeneous" }}{{ $interest_icon = "squares-2x2" }}
+          {{ else if in $key "compiler" }}{{ $interest_icon = "code-bracket" }}
+          {{ else if or (in $key "design automation") (in $key "eda") }}{{ $interest_icon = "cpu-chip" }}
+          {{ end }}
+          <li class="flex items-center gap-3">
+            <span aria-hidden="true" class="flex-shrink-0 w-8 h-8 rounded-lg bg-primary-50 dark:bg-gray-800 ring-1 ring-primary-200/60 dark:ring-primary-800/50 flex items-center justify-center">
+              {{ partial "functions/get_icon" (dict "name" $interest_icon "attributes" "class='w-4 h-4 text-primary-600 dark:text-primary-400'") }}
+            </span>
+            <span class="text-[15px] font-medium leading-snug text-gray-700 dark:text-gray-300">{{ $interest | markdownify | emojify }}</span>
+          </li>
+          {{ end }}
+          {{ end }}
+        </ul>
+        {{ end }}
       </div>
 
       {{/* Right Column: Flexible span */}}
@@ -486,45 +518,7 @@
         </div>
         {{ end }}
 
-        {{/* Interests Section */}}
-        {{ $interests_raw := $profile.interests }}
-        {{ $interests := slice }}
-        {{ if reflect.IsSlice $interests_raw }}
-          {{ $interests = $interests_raw }}
-        {{ else if eq (printf "%T" $interests_raw) "string" }}
-          {{ $interests = slice $interests_raw }}
-        {{ end }}
-        {{ if gt (len $interests) 0 }}
-        <div>
-          <div class="flex items-center gap-4 mb-8">
-            <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/50 rounded-full flex items-center justify-center">
-              {{ partial "functions/get_icon" (dict "name" "sparkles" "attributes" "class='w-6 h-6 text-primary-600 dark:text-primary-400'") }}
-            </div>
-            {{ $interests_heading := i18n "interests" }}
-            {{ $interests_heading_raw := index $headings "interests" }}
-            {{ if eq (printf "%T" $interests_heading_raw) "string" }}
-              {{ $interests_heading_raw = strings.TrimSpace $interests_heading_raw }}
-              {{ if ne $interests_heading_raw "" }}
-                {{ $interests_heading = $interests_heading_raw }}
-              {{ end }}
-            {{ end }}
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white tracking-tight">{{ $interests_heading | markdownify }}</h3>
-          </div>
-          <div class="flex flex-wrap gap-3">
-            {{ range $interests }}
-            {{ $interest := strings.TrimSpace (printf "%v" .) }}
-            {{ if $interest }}
-            <span class="inline-block bg-primary-50 dark:bg-gray-800 text-primary-800 dark:text-primary-200 text-base font-medium px-4 py-2 rounded-full border border-primary-200/50 dark:border-primary-800/50
-                           hover:bg-primary-100 
-                           dark:hover:bg-primary-500 dark:hover:text-gray-900 dark:hover:border-primary-500
-                           transition-all duration-200 cursor-default">
-              {{ $interest | markdownify | emojify }}
-            </span>
-            {{ end }}
-            {{ end }}
-          </div>
-        </div>
-        {{ end }}
+        {{/* Local change: Interests moved to the left column (tags only, no heading), under the CV button */}}
       </div>
     </div>
   </div>
