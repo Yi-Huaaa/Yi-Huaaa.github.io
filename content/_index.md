@@ -61,6 +61,9 @@ sections:
                 - text: Paper
                   url: uploads/publications/2027-xeg-paper.pdf
                   icon: hero/document-text
+                - text: Cite
+                  bib: publications/xeg/cite.bib
+                  icon: hero/document-duplicate
             - image: /img/publications/simpart.png
               title: "SimPart: A Simple Yet Effective Replication-aided Partitioning Algorithm for Logic Simulation on GPU"
               authors: "**Yi-Hua Chung**, Shui Jiang, Wan Luan Lee, Yanqing Zhang, Haoxing Ren, Tsung-Yi Ho, and Tsung-Wei Huang"
@@ -72,6 +75,9 @@ sections:
                 - text: Slides
                   url: uploads/publications/2025-simpart-slides.pdf
                   icon: hero/presentation-chart-bar
+                - text: Cite
+                  bib: publications/simpart/cite.bib
+                  icon: hero/document-duplicate
             - image: /img/publications/gate-sizing.png
               title: "Accelerating Gate Sizing using GPU"
               authors: "**Yi-Hua Chung**, Nahmsuk Oh, Malleswara Gupta Balabhadra Naga Venkata, Aditya Shiledar, Sudipto Kundu, Vishal Khandelwal, and Tsung-Wei Huang"
@@ -86,6 +92,9 @@ sections:
                 - text: Slides
                   url: uploads/publications/2025-gate-sizing-slides.pdf
                   icon: hero/presentation-chart-bar
+                - text: Cite
+                  bib: publications/gate-sizing/cite.bib
+                  icon: hero/document-duplicate
           button:
             text: Full Publications
             url: publications/

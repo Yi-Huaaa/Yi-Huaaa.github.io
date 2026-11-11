@@ -88,7 +88,15 @@
                   {{ range $item_buttons }}
                     {{ $btn := . }}
                     {{ $btn_url := index $btn "url" }}
-                    {{ if $btn_url }}
+                    {{ $btn_bib := index $btn "bib" }}
+                    {{ if $btn_bib }}
+                    {{/* Custom: "bib" button copies the BibTeX file to the clipboard using the theme's
+                         built-in citation handler (assets/js/hb-citation.js, class js-cite-clipboard) */}}
+                    <button type="button" data-filename="{{ $btn_bib | relURL }}" class="js-cite-clipboard cursor-pointer inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                      {{ partial "functions/get_icon" (dict "name" (index $btn "icon" | default "hero/document-duplicate") "attributes" "class='w-4 h-4'") }}
+                      {{ index $btn "text" | default "Cite" }}
+                    </button>
+                    {{ else if $btn_url }}
                     {{ $btn_text := index $btn "text" | default "Learn more" }}
                     {{ $btn_icon := index $btn "icon" }}
                     {{ $btn_link := $btn_url }}
