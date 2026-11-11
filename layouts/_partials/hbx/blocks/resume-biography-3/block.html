@@ -378,7 +378,8 @@
           {{ $interests = slice $interests_raw }}
         {{ end }}
         {{ if gt (len $interests) 0 }}
-        {{/* Icon list: each interest gets a small tinted icon tile (keyword-matched, sparkles as fallback) */}}
+        {{/* Icon list: each interest gets a small tinted icon tile (keyword-matched, sparkles as fallback).
+             Staggered: icons always on the left; even items are indented to the right. */}}
         <ul class="list-none m-0 p-0 inline-flex flex-col items-start gap-2.5 text-left">
           {{ range $interests }}
           {{ $interest := strings.TrimSpace (printf "%v" .) }}
@@ -390,7 +391,7 @@
           {{ else if in $key "compiler" }}{{ $interest_icon = "code-bracket" }}
           {{ else if or (in $key "design automation") (in $key "eda") }}{{ $interest_icon = "cpu-chip" }}
           {{ end }}
-          <li class="flex items-center gap-3">
+          <li class="flex items-center gap-3 even:ml-10">
             <span aria-hidden="true" class="flex-shrink-0 w-8 h-8 rounded-lg bg-primary-50 dark:bg-gray-800 ring-1 ring-primary-200/60 dark:ring-primary-800/50 flex items-center justify-center">
               {{ partial "functions/get_icon" (dict "name" $interest_icon "attributes" "class='w-4 h-4 text-primary-600 dark:text-primary-400'") }}
             </span>
