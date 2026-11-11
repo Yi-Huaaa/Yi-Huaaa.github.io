@@ -1,0 +1,57 @@
+{{/* Local override of the theme's layouts/list.html for the Publications section only.
+     Same as the theme's list template, plus a "Back" button at the bottom that
+     links to the homepage's Selected Publications section (/#publications). */}}
+{{ define "main" }}
+
+<div class="max-w-prose mx-auto flex justify-center">
+  <article class="prose prose-slate lg:prose-xl dark:prose-invert">
+    <h1 class="lg:text-6xl">{{ .Title }}</h1>
+    {{ .Content }}
+  </article>
+</div>
+
+{{ $view := .Params.view | default "card" }}
+{{ $block := . }}
+
+{{ $paginator := .Paginate .Pages.ByDate.Reverse }}
+{{ $config := dict
+  "columns" (.Params.columns | default 2)
+  "len" (len $paginator.Pages)
+  "fill_image" (.Params.fill_image | default true)
+  "show_date" (.Params.show_date | default true)
+  "show_read_time" (.Params.show_read_time | default true)
+  "show_read_more" (.Params.show_read_more | default true)
+}}
+
+{{/* Check if any pages have author_notes to enable Alpine.js */}}
+{{ range .Pages }}
+  {{ if isset .Params "author_notes" }}
+    {{ $.Store.Set "has_alpine" true }}
+    {{ break }}
+  {{ end }}
+{{ end }}
+
+<div class="flex flex-col items-center">
+
+  {{ partial "functions/render_view" (dict "fragment" "start" "page" $block "item" . "view" $view "config" $config) }}
+
+  {{ range $index, $item := $paginator.Pages }}
+  {{ partial "functions/render_view" (dict "page" . "item" . "view" $view "index" $index "config" $config) }}
+  {{end}}
+
+  {{ partial "functions/render_view" (dict "fragment" "end" "page" $block "item" . "view" $view) }}
+
+  {{ partial "components/paginator" . }}
+
+  {{/* Local change: Back button */}}
+  <div class="mt-12 mb-4">
+    <a href="{{ "/" | relLangURL }}#publications"
+       class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-gray-300 dark:border-gray-700 bg-white/70 dark:bg-gray-800/60 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-100 dark:hover:bg-gray-700 hover:shadow transition-all no-underline">
+      {{ partial "functions/get_icon" (dict "name" "hero/arrow-left" "attributes" "class='w-4 h-4'") }}
+      <span>Back</span>
+    </a>
+  </div>
+
+</div>
+
+{{ end }}
