@@ -121,7 +121,7 @@ sections:
     design:
       date_format: 'MMM 2006'
   - block: markdown
-    id: awards-skills
+    id: awards
     content:
       columns_content:
         - title: Awards
@@ -139,9 +139,19 @@ sections:
               image: /img/awards/best-paper-2020.png
             - text: Outstanding Performance Award, NTU-IBM Q System 2020 Q-Camp, Hackathon, Sep 2020
               image: /img/awards/ibm-qcamp.jpg
+  - block: markdown
+    id: skills
+    content:
+      columns_content:
         - title: Skills
           icon: hero/light-bulb
           text: |
             - **Expert:** C/C++, CUDA C/C++, OpenMP, ARM Intrinsic, ARM Assembly, Linux, Shell
             - **Experienced:** Python, C#, Qiskit, JavaScript, WebGL
+  - block: talk-map
+    id: talks
+    content:
+      title: Talks
+      subtitle: Places where I have presented my work
+      icon: hero/globe-asia-australia
 ---

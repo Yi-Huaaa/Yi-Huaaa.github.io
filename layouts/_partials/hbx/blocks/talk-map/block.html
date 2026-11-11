@@ -1,0 +1,349 @@
+{{/* Custom block: talk-map
+     A simple, fixed world map (Leaflet + Esri Light/Dark Gray Canvas basemap, no zoom or panning) with a little
+     flag for every city where I gave a talk. Clicking a flag opens a card listing the talks there.
+     Cities too close to tell apart at world scale are nudged apart so each keeps its own flag.
+     Data: data/talks.yaml. Styles: assets/css/hbx/blocks/talk-map/style.css.
+
+     Front matter usage (content/_index.md):
+       - block: talk-map
+         id: talks
+         content:
+           title: Talks
+           subtitle: Places where I have presented my work
+           icon: hero/globe-asia-australia
+*/}}
+{{ $block := .wcBlock }}
+{{ $content := $block.content }}
+{{ if not (reflect.IsMap $content) }}{{ $content = dict }}{{ end }}
+{{ $title := index $content "title" | default "Talks" }}
+{{ $subtitle := index $content "subtitle" | default "" }}
+{{ $icon := index $content "icon" | default "hero/globe-asia-australia" }}
+
+{{/* Build the talk list (newest first) and summary stats.
+     kind "attended" = a conference I attended (gray flag); it counts toward cities/countries but not talks. */}}
+{{ $raw := hugo.Data.talks.talks | default slice }}
+{{ $items := slice }}
+{{ $done := 0 }}
+{{ $attended := 0 }}
+{{ $cities := slice }}
+{{ $countries := slice }}
+{{ range sort $raw "date" "desc" }}
+  {{ $d := time.AsTime .date }}
+  {{ $upcoming := $d.After now }}
+  {{ $is_attended := eq (.kind | default "talk") "attended" }}
+  {{ $on_map := and (ne .lat nil) (ne .lng nil) (not .remote) }}
+  {{ $place := "" }}
+  {{ if $on_map }}{{ $place = printf "%s, %s" .city .country }}{{ end }}
+  {{ if not $upcoming }}
+    {{ if $is_attended }}{{ $attended = add $attended 1 }}{{ else }}{{ $done = add $done 1 }}{{ end }}
+    {{ if $on_map }}
+      {{ $cities = $cities | append $place }}
+      {{ $countries = $countries | append .country }}
+    {{ end }}
+  {{ end }}
+  {{ if $on_map }}
+  {{ $items = $items | append (dict
+      "title" (.title | default "")
+      "type" (.type | default "")
+      "event" (.event | default "")
+      "date" ($d.Format "Jan 2006")
+      "place" $place
+      "city" (.city | default "")
+      "lat" .lat
+      "lng" .lng
+      "url" (cond (ne (.url | default "") "") (.url | relURL) "")
+      "note" (.note | default "")
+      "upcoming" $upcoming
+      "attended" $is_attended
+  ) }}
+  {{ end }}
+{{ end }}
+{{ $n_upcoming := 0 }}
+{{ range $items }}{{ if .upcoming }}{{ $n_upcoming = add $n_upcoming 1 }}{{ end }}{{ end }}
+{{ $n_cities := len (uniq $cities) }}
+{{ $n_countries := len (uniq $countries) }}
+{{ $map_id := printf "talk-map-%s" (.wcIdentifier | default "1") }}
+
+<div class="max-w-5xl mx-auto px-6 talk-map-block">
+  <div class="mb-3 flex items-center justify-center gap-3 text-3xl font-bold text-gray-900 dark:text-white text-center">
+    <span aria-hidden="true" class="flex-shrink-0 flex items-center justify-center">
+      {{ partial "functions/get_icon" (dict "name" $icon "attributes" "class='w-8 h-8 text-gray-600 dark:text-gray-300'") }}
+    </span>
+    <span>{{ $title }}</span>
+  </div>
+
+  {{ with $subtitle }}<p class="talk-map-subtitle">{{ . }}</p>{{ end }}
+  <p class="talk-map-stats">
+    <span><strong>{{ $done }}</strong> {{ cond (eq $done 1) "talk" "talks" }}</span>
+    {{ if gt $attended 0 }}
+    <span aria-hidden="true">·</span>
+    <span class="talk-map-stats-attended"><strong>{{ $attended }}</strong> {{ cond (eq $attended 1) "conference" "conferences" }} attended</span>
+    {{ end }}
+    <span aria-hidden="true">·</span>
+    <span><strong>{{ $n_cities }}</strong> {{ cond (eq $n_cities 1) "city" "cities" }}</span>
+    <span aria-hidden="true">·</span>
+    <span><strong>{{ $n_countries }}</strong> {{ cond (eq $n_countries 1) "country" "countries" }}</span>
+    {{ if gt $n_upcoming 0 }}
+    <span aria-hidden="true">·</span>
+    <span class="talk-map-stats-upcoming"><strong>{{ $n_upcoming }}</strong> upcoming</span>
+    {{ end }}
+  </p>
+
+  <div class="talk-map-card">
+    <div id="{{ $map_id }}" class="talk-map-canvas" role="region" aria-label="World map of talks and conferences. Select a flag to see what happened there."></div>
+    <div class="talk-map-legend" aria-hidden="true">
+      <span><span class="talk-legend-flag"></span>Talk</span>
+      {{ if gt $attended 0 }}<span><span class="talk-legend-flag is-attended"></span>Attended</span>{{ end }}
+      {{ if gt $n_upcoming 0 }}<span><span class="talk-legend-flag is-upcoming"></span>Upcoming</span>{{ end }}
+      <span class="talk-map-legend-hint">Click a flag for details</span>
+    </div>
+  </div>
+</div>
+
+<script type="application/json" id="{{ $map_id }}-data">{{ dict "talks" $items "offsets" (hugo.Data.talks.map_offsets | default dict) | jsonify | safeJS }}</script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function () {
+  var mapEl = document.getElementById({{ $map_id }});
+  var dataEl = document.getElementById({{ printf "%s-data" $map_id }});
+  if (!mapEl || !dataEl || !window.L) return;
+
+  var data = JSON.parse(dataEl.textContent || "{}");
+  var talks = data.talks || [];
+  // hand placement for crowded cities: { "City, Country": [right, down] } in pixels (keys compared case-insensitively)
+  var offsets = {};
+  Object.keys(data.offsets || {}).forEach(function (k) { offsets[k.toLowerCase()] = data.offsets[k]; });
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  // One entry per city
+  var places = {}, order = [];
+  talks.forEach(function (t) {
+    if (!places[t.place]) {
+      places[t.place] = { key: t.place, city: t.city, lat: t.lat, lng: t.lng, talks: [] };
+      order.push(t.place);
+    }
+    places[t.place].talks.push(t);
+  });
+  if (!order.length) return;
+
+  // A fixed map: no zooming or panning. Whole zoom levels keep the tiles crisp; narrow screens
+  // need a fractional zoom to fit every flag (the ocean-colored background hides tile hairlines).
+  var narrow = mapEl.clientWidth < 640;
+  var map = L.map(mapEl, {
+    zoomControl: false,
+    dragging: false,
+    touchZoom: false,
+    doubleClickZoom: false,
+    scrollWheelZoom: false,
+    boxZoom: false,
+    keyboard: false,
+    zoomSnap: narrow ? 0.25 : 1,
+    minZoom: 0,
+    maxZoom: 6
+  });
+
+  // Basemap: Esri Light Gray / Dark Gray Canvas (no API key), following the site's theme toggle
+  var esri = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/";
+  function baseUrl() {
+    return esri + (document.documentElement.classList.contains("dark") ? "World_Dark_Gray_Base" : "World_Light_Gray_Base") +
+           "/MapServer/tile/{z}/{y}/{x}";
+  }
+  var tiles = L.tileLayer(baseUrl(), {
+    maxZoom: 16,
+    attribution: 'Tiles &copy; <a href="https://www.esri.com/">Esri</a> &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap contributors, and the GIS User Community'
+  }).addTo(map);
+  new MutationObserver(function () { tiles.setUrl(baseUrl()); })
+    .observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
+  // Little flag marker: pole + waving pennant (+ count badge when there are several talks)
+  function flagIcon(n, upcoming, attended) {
+    return L.divIcon({
+      className: "talk-flag-wrap",
+      html: '<span class="talk-flag' + (upcoming ? " is-upcoming" : attended ? " is-attended" : "") + '">' +
+              '<svg viewBox="0 0 26 34" aria-hidden="true">' +
+                '<ellipse class="talk-flag-shadow" cx="5" cy="32" rx="4" ry="1.6"/>' +
+                '<line class="talk-flag-pole" x1="5" y1="3" x2="5" y2="32"/>' +
+                '<circle class="talk-flag-knob" cx="5" cy="2.6" r="1.8"/>' +
+                '<path class="talk-flag-cloth" d="M5.6 4.5 C 11 3, 15 7, 23 5.5 L 21 11 L 23 16.5 C 15 18, 11 14, 5.6 15.5 Z"/>' +
+              "</svg>" +
+              (n > 1 ? '<span class="talk-flag-count">' + n + "</span>" : "") +
+            "</span>",
+      iconSize: [26, 34],
+      iconAnchor: [5, 32]
+    });
+  }
+
+  // Card listing the talks of one flag (grouped by city when the flag covers several cities)
+  function cardHtml(keys) {
+    var html = '<button type="button" class="talk-card-close" aria-label="Close">&times;</button>';
+    keys.forEach(function (k) {
+      var p = places[k];
+      html += '<div class="talk-card-place">' + esc(p.key) + "</div><ul>";
+      p.talks.forEach(function (t) {
+        var badges = (t.upcoming ? '<span class="talk-card-badge">Upcoming</span>' : "") +
+                     (t.attended ? '<span class="talk-card-badge is-attended">Attended</span>' : "") +
+                     (t.note ? '<span class="talk-card-badge is-award">' + esc(t.note) + "</span>" : "");
+        var title = t.url
+          ? '<a class="talk-card-title" href="' + esc(t.url) + '">' + esc(t.title) + "</a>"
+          : '<span class="talk-card-title">' + esc(t.title) + "</span>";
+        html += '<li><div class="talk-card-meta"><span class="talk-card-event">' + esc(t.event) + "</span>" +
+                '<span class="talk-card-date">' + esc(t.date) + "</span></div>" + title +
+                (t.type ? '<div class="talk-card-type">' + esc(t.type) + "</div>" : "") +
+                (badges ? '<div class="talk-card-badges">' + badges + "</div>" : "") + "</li>";
+      });
+      html += "</ul>";
+    });
+    return html;
+  }
+
+  var flagLayer = L.layerGroup().addTo(map);
+  var card = null, openId = null;
+
+  function closeCard() {
+    if (card) { map.closeTooltip(card); card = null; }
+    openId = null;
+    mapEl.querySelectorAll(".leaflet-marker-icon.is-active").forEach(function (el) { el.classList.remove("is-active"); });
+  }
+
+  // Measure the card off-screen, then open it on a side of the flag where it fits completely
+  // (above, below, right, left). If no side fits, use the roomiest side and cap the card's height.
+  var EDGE = 10;
+  var OFFSETS = { top: [8, -38], bottom: [8, 6], right: [28, -16], left: [-6, -16] };
+  function measureCard(html) {
+    var probe = L.DomUtil.create("div", "leaflet-tooltip talk-card", mapEl);
+    probe.style.visibility = "hidden";
+    probe.style.left = "0px";
+    probe.style.top = "0px";
+    probe.innerHTML = html;
+    var box = { w: probe.offsetWidth, h: probe.offsetHeight };
+    probe.remove();
+    return box;
+  }
+  function chooseSide(pt, box, size) {
+    var o = OFFSETS;
+    var fitsX = function (cx) { return cx - box.w / 2 >= EDGE && cx + box.w / 2 <= size.x - EDGE; };
+    var fitsY = function (cy) { return cy - box.h / 2 >= EDGE && cy + box.h / 2 <= size.y - EDGE; };
+    var room = {
+      top: pt.y + o.top[1] - EDGE,
+      bottom: size.y - (pt.y + o.bottom[1]) - EDGE,
+      right: size.x - (pt.x + o.right[0]) - EDGE,
+      left: pt.x + o.left[0] - EDGE
+    };
+    if (room.top >= box.h && fitsX(pt.x + o.top[0])) return { dir: "top", maxH: null };
+    if (room.bottom >= box.h && fitsX(pt.x + o.bottom[0])) return { dir: "bottom", maxH: null };
+    if (room.right >= box.w && fitsY(pt.y + o.right[1])) return { dir: "right", maxH: null };
+    if (room.left >= box.w && fitsY(pt.y + o.left[1])) return { dir: "left", maxH: null };
+    // Nothing fits as-is: go sideways (the full map height is available) or to the taller vertical side
+    if (room.right >= box.w || room.left >= box.w) {
+      return { dir: room.right >= box.w ? "right" : "left", maxH: size.y - 2 * EDGE, centerY: true };
+    }
+    return room.top > room.bottom ? { dir: "top", maxH: room.top } : { dir: "bottom", maxH: room.bottom };
+  }
+
+  function openCard(marker, keys, id) {
+    if (openId === id) { closeCard(); return; }
+    closeCard();
+    var html = cardHtml(keys);
+    var size = map.getSize();
+    var pt = map.latLngToContainerPoint(marker.getLatLng());
+    var side = chooseSide(pt, measureCard(html), size);
+    var offset = OFFSETS[side.dir].slice();
+    if (side.centerY) {
+      // sideways card taller than the room around the flag: center it on the map instead of the flag
+      var h = Math.min(measureCard(html).h, side.maxH);
+      var cy = Math.min(Math.max(pt.y + offset[1], EDGE + h / 2), size.y - EDGE - h / 2);
+      offset[1] = cy - pt.y;
+    }
+    card = L.tooltip({ direction: side.dir, offset: offset, interactive: true, permanent: true, opacity: 1, className: "talk-card" })
+      .setLatLng(marker.getLatLng())
+      .setContent(html);
+    map.openTooltip(card);
+    if (side.maxH && card.getElement()) {
+      card.getElement().style.maxHeight = side.maxH + "px";
+      card.update();
+    }
+    openId = id;
+    var el = marker.getElement();
+    if (el) el.classList.add("is-active");
+    var cardEl = card.getElement();
+    if (cardEl) {
+      L.DomEvent.disableClickPropagation(cardEl);
+      L.DomEvent.disableScrollPropagation(cardEl);
+      var btn = cardEl.querySelector(".talk-card-close");
+      if (btn) btn.addEventListener("click", closeCard);
+    }
+  }
+
+  // One flag per city. Cities that are too close to tell apart at world scale (e.g. Palo Alto and
+  // Sunnyvale) are nudged apart on screen so each still gets its own flag; positions are approximate.
+  // Only the eastern flag of a close pair moves, and only to the right (inland for coastal cities such as
+  // Palo Alto and Hamburg, which keep their true position). Flags may still overlap a little.
+  var MIN_GAP_PX = 18;
+  var CROWD_SHIFT_PX = 6; // crowded coastal pairs (Bay Area, Hamburg) sit right on the coastline: move them inland a bit
+  function spreadOut(pts) {
+    var crowded = pts.map(function (a) {
+      return pts.some(function (b) { return b !== a && a.p.distanceTo(b.p) < MIN_GAP_PX; });
+    });
+    pts.forEach(function (a, i) { if (crowded[i]) a.p = L.point(a.p.x + CROWD_SHIFT_PX, a.p.y); });
+    pts.sort(function (a, b) { return a.p.x - b.p.x; });
+    for (var iter = 0; iter < 40; iter++) {
+      var moved = false;
+      for (var i = 0; i < pts.length; i++) {
+        for (var j = i + 1; j < pts.length; j++) {
+          var dx = pts[j].p.x - pts[i].p.x, dy = pts[j].p.y - pts[i].p.y;
+          if (Math.sqrt(dx * dx + dy * dy) >= MIN_GAP_PX) continue;
+          // shift the eastern flag right until the pair is MIN_GAP_PX apart
+          var needDx = Math.sqrt(Math.max(MIN_GAP_PX * MIN_GAP_PX - dy * dy, 0));
+          pts[j].p = L.point(pts[i].p.x + needDx + 0.5, pts[j].p.y);
+          moved = true;
+        }
+      }
+      if (!moved) break;
+    }
+    return pts;
+  }
+
+  function drawFlags() {
+    closeCard();
+    flagLayer.clearLayers();
+    var pts = [], auto = [];
+    order.forEach(function (k) {
+      var pt = { key: k, p: map.latLngToLayerPoint([places[k].lat, places[k].lng]) };
+      var off = offsets[k.toLowerCase()];
+      if (off) { pt.p = L.point(pt.p.x + off[0], pt.p.y + off[1]); pts.push(pt); }
+      else { auto.push(pt); }
+    });
+    pts = pts.concat(spreadOut(auto));
+    pts.forEach(function (a) {
+      var p = places[a.key];
+      var upcoming = p.talks.every(function (t) { return t.upcoming; });
+      var attended = p.talks.every(function (t) { return t.attended; });
+      var m = L.marker(map.layerPointToLatLng(a.p), { icon: flagIcon(p.talks.length, upcoming, attended), title: p.key, riseOnHover: true });
+      m.bindTooltip(esc(p.city), { direction: "top", offset: [8, -34], className: "talk-tooltip" });
+      m.on("click", function () { m.closeTooltip(); openCard(m, [a.key], a.key); });
+      flagLayer.addLayer(m);
+    });
+  }
+
+  function fitWorld() {
+    var bounds = order.map(function (k) { return [places[k].lat, places[k].lng]; });
+    map.fitBounds(bounds, narrow
+      ? { paddingTopLeft: [24, 50], paddingBottomRight: [24, 30], maxZoom: 3 }
+      : { paddingTopLeft: [40, 70], paddingBottomRight: [40, 40], maxZoom: 3 });
+    drawFlags();
+  }
+
+  map.on("click", closeCard);
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeCard(); });
+  map.on("resize", fitWorld);
+  fitWorld();
+  // Leaflet needs a size refresh if the container was laid out late (fonts, images)
+  window.addEventListener("load", function () { map.invalidateSize(); fitWorld(); });
+})();
+</script>

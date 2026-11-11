@@ -5,12 +5,9 @@
   top and bottom, so two adjacent sections are 12rem (192px) apart. Here the
   padding on the shared edges is set to 4rem, making those gaps 8rem (128px),
   i.e. two thirds of the original:
-    publications -> experience -> teaching -> awards-skills
-  The gap above Selected Publications (after the hero) and below Skills (before
+    publications -> experience -> teaching -> awards -> skills -> talks
+  The gap above Selected Publications (after the hero) and below Talks (before
   the footer) is unchanged.
-
-  Awards -> Skills live in one section; that gap is set to the same 8rem in
-  layouts/_partials/hbx/blocks/markdown/block.html (gap-32).
 */
 #publications.hbb-section {
   padding-bottom: 4rem;
@@ -22,6 +19,16 @@
   padding-bottom: 4rem;
 }
 
-#awards-skills.hbb-section {
+#awards.hbb-section {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+#skills.hbb-section {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+#talks.hbb-section {
   padding-top: 4rem;
 }

@@ -39,6 +39,12 @@ main:
   - name: Teaching
     url: /#teaching
     weight: 40
-  - name: Awards & Skills
-    url: /#awards-skills
+  - name: Awards
+    url: /#awards
     weight: 50
+  - name: Skills
+    url: /#skills
+    weight: 60
+  - name: Talks
+    url: /#talks
+    weight: 70

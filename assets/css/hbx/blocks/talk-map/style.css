@@ -1,0 +1,412 @@
+/*
+  Talk map block (layouts/_partials/hbx/blocks/talk-map/block.html).
+  Colors follow the theme's primary/secondary palette via --color-primary-* / --color-secondary-*.
+*/
+
+.talk-map-block {
+  --tm-sans: "Public Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --tm-accent: var(--color-primary-600);
+  --tm-upcoming: var(--color-secondary-500);
+  --tm-attended: #6b7280; /* gray-500: conferences attended */
+  --tm-ink: #111827;
+  --tm-ink-2: #4b5563;
+  --tm-ink-3: #6b7280;
+  --tm-line: #e5e7eb;
+}
+.dark .talk-map-block {
+  --tm-accent: var(--color-primary-400);
+  --tm-upcoming: var(--color-secondary-400);
+  --tm-attended: #9ca3af;
+  --tm-ink: #ffffff;
+  --tm-ink-2: #d1d5db;
+  --tm-ink-3: #9ca3af;
+  --tm-line: rgb(255 255 255 / 0.08);
+}
+
+/* ── heading extras ─────────────────────────────────────────────────── */
+.talk-map-subtitle {
+  margin: 0 0 0.35rem;
+  text-align: center;
+  font-family: var(--tm-sans);
+  font-size: 0.95rem;
+  color: var(--tm-ink-2);
+}
+.talk-map-stats {
+  margin: 0 0 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--tm-sans);
+  font-size: 0.875rem;
+  color: var(--tm-ink-3);
+}
+.talk-map-stats strong {
+  color: var(--tm-ink);
+  font-weight: 600;
+}
+.talk-map-stats-upcoming strong {
+  color: var(--tm-upcoming);
+}
+.talk-map-stats-attended strong {
+  color: var(--tm-attended);
+}
+
+/* ── map card ───────────────────────────────────────────────────────── */
+.talk-map-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--tm-line);
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 2px rgb(16 24 40 / 0.05);
+}
+/* Background = the basemap's ocean color, so any hairline gaps between scaled tiles
+   (fractional zoom on narrow screens) blend in. */
+.talk-map-canvas,
+.talk-map-canvas.leaflet-container {
+  height: 460px;
+  background: #d0cfd4;
+  font-family: var(--tm-sans);
+  cursor: default;
+  z-index: 0; /* keep Leaflet panes below the sticky site header */
+}
+.dark .talk-map-canvas,
+.dark .talk-map-canvas.leaflet-container {
+  background: #232227;
+}
+@media (max-width: 640px) {
+  .talk-map-canvas,
+  .talk-map-canvas.leaflet-container {
+    height: 300px;
+  }
+}
+/* Tailwind preflight sets img/svg max-width; Leaflet tiles and panes must not be constrained */
+.talk-map-canvas img,
+.talk-map-canvas svg {
+  max-width: none !important;
+  max-height: none !important;
+}
+
+.talk-map-legend {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.88);
+  font-family: var(--tm-sans);
+  font-size: 0.75rem;
+  color: var(--tm-ink-2);
+  box-shadow: 0 1px 4px rgb(16 24 40 / 0.1);
+  pointer-events: none;
+}
+.talk-map-legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.talk-map-legend-hint {
+  color: var(--tm-ink-3);
+}
+.dark .talk-map-legend {
+  background: rgb(17 24 39 / 0.85);
+}
+@media (max-width: 640px) {
+  /* not enough room next to the attribution on phones */
+  .talk-map-legend {
+    display: none;
+  }
+}
+.talk-legend-flag {
+  width: 10px;
+  height: 8px;
+  background: var(--tm-accent);
+  clip-path: polygon(0 0, 100% 15%, 80% 50%, 100% 85%, 0 100%);
+}
+.talk-legend-flag.is-upcoming {
+  background: var(--tm-upcoming);
+  opacity: 0.75;
+}
+.talk-legend-flag.is-attended {
+  background: var(--tm-attended);
+}
+
+/* ── flag markers ───────────────────────────────────────────────────── */
+.talk-flag-wrap {
+  background: none;
+  border: 0;
+}
+.talk-flag {
+  position: relative;
+  display: block;
+  width: 26px;
+  height: 34px;
+  cursor: pointer;
+  transform-origin: 5px 32px;
+  transition: transform 0.2s ease;
+}
+.talk-flag svg {
+  display: block;
+  width: 26px;
+  height: 34px;
+  overflow: visible;
+  filter: drop-shadow(0 1px 1.5px rgb(16 24 40 / 0.25));
+}
+.talk-flag-shadow {
+  fill: rgb(16 24 40 / 0.22);
+}
+.talk-flag-pole {
+  stroke: #374151;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+.talk-flag-knob {
+  fill: #374151;
+}
+.dark .talk-flag-pole {
+  stroke: #e5e7eb;
+}
+.dark .talk-flag-knob {
+  fill: #e5e7eb;
+}
+.talk-flag-cloth {
+  fill: var(--tm-accent);
+  stroke: rgb(0 0 0 / 0.08);
+  stroke-width: 0.6;
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: talk-flag-wave 3.2s ease-in-out infinite;
+}
+.talk-flag.is-upcoming .talk-flag-cloth {
+  fill: color-mix(in srgb, var(--tm-upcoming) 30%, white);
+  stroke: var(--tm-upcoming);
+  stroke-width: 1.1;
+  stroke-dasharray: 2.2 1.6;
+}
+.dark .talk-flag.is-upcoming .talk-flag-cloth {
+  fill: color-mix(in srgb, var(--tm-upcoming) 35%, #111827);
+}
+.talk-flag.is-attended .talk-flag-cloth {
+  fill: var(--tm-attended);
+}
+.talk-flag.is-attended .talk-flag-count {
+  color: var(--tm-attended);
+  box-shadow: 0 0 0 1.5px var(--tm-attended), 0 1px 3px rgb(16 24 40 / 0.25);
+}
+.talk-flag-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--tm-accent);
+  font-family: var(--tm-sans);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
+  box-shadow: 0 0 0 1.5px var(--tm-accent), 0 1px 3px rgb(16 24 40 / 0.25);
+}
+.leaflet-marker-icon:hover .talk-flag,
+.leaflet-marker-icon:focus-visible .talk-flag {
+  transform: scale(1.18) translateY(-2px);
+}
+.leaflet-marker-icon.is-active .talk-flag {
+  transform: scale(1.3) translateY(-3px);
+}
+.leaflet-marker-icon:hover .talk-flag-cloth,
+.leaflet-marker-icon.is-active .talk-flag-cloth {
+  animation-duration: 1.4s;
+}
+@keyframes talk-flag-wave {
+  0%, 100% { transform: skewY(0deg) scaleX(1); }
+  30%      { transform: skewY(-4deg) scaleX(0.94); }
+  60%      { transform: skewY(3deg) scaleX(0.98); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .talk-flag-cloth { animation: none; }
+  .talk-flag { transition: none; }
+}
+
+/* ── hover label ────────────────────────────────────────────────────── */
+.talk-tooltip.leaflet-tooltip {
+  padding: 2px 8px;
+  border: 0;
+  border-radius: 6px;
+  background: #111827;
+  color: #ffffff;
+  font-family: var(--tm-sans);
+  font-size: 12px;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgb(16 24 40 / 0.25);
+}
+.talk-tooltip.leaflet-tooltip-top::before {
+  border-top-color: #111827;
+}
+
+/* ── talk card (opens when a flag is clicked) ───────────────────────── */
+.talk-card.leaflet-tooltip {
+  width: 300px;
+  max-height: 380px;
+  overflow-y: auto;
+  padding: 12px 14px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #1f2937;
+  white-space: normal;
+  font-family: var(--tm-sans);
+  font-size: 13px;
+  line-height: 1.45;
+  box-shadow: 0 12px 32px -10px rgb(16 24 40 / 0.35);
+  pointer-events: auto;
+  cursor: auto;
+}
+.talk-card.leaflet-tooltip::before {
+  display: none; /* no arrow: the card sits beside the flag */
+}
+@media (max-width: 640px) {
+  .talk-card.leaflet-tooltip {
+    width: 240px;
+    max-height: 210px;
+  }
+}
+.talk-card-close {
+  position: sticky;
+  top: 0;
+  float: right;
+  margin: -4px -6px 0 8px;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #6b7280;
+  font-size: 18px;
+  line-height: 24px;
+  cursor: pointer;
+}
+.talk-card-close:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+.talk-card-place {
+  margin: 0 0 6px;
+  font-family: var(--hb-font-body, "Source Serif 4", Georgia, serif);
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+}
+.talk-card ul + .talk-card-place {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #e5e7eb;
+}
+.talk-card ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.talk-card li + li {
+  margin-top: 9px;
+  padding-top: 9px;
+  border-top: 1px dashed #eef0f3;
+}
+.talk-card-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 2px;
+}
+.talk-card-event {
+  font-weight: 600;
+  color: var(--color-primary-700);
+}
+.talk-card-date {
+  flex-shrink: 0;
+  color: #6b7280;
+  font-variant-numeric: tabular-nums;
+}
+.talk-card-title {
+  display: block;
+  color: #111827;
+  font-weight: 500;
+}
+/* .leaflet-container a sets a blue link color; out-specify it */
+.talk-map-canvas .talk-card a.talk-card-title {
+  color: #111827;
+  text-decoration: underline;
+  text-decoration-color: #d1d5db;
+  text-underline-offset: 2px;
+}
+.talk-map-canvas .talk-card a.talk-card-title:hover {
+  color: var(--color-primary-700);
+  text-decoration-color: currentColor;
+}
+.talk-card-type {
+  margin-top: 2px;
+  font-style: italic;
+  color: #6b7280;
+}
+.talk-card-badges {
+  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.talk-card-badge {
+  display: inline-block;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-secondary-500) 14%, white);
+  color: var(--color-secondary-700);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 18px;
+}
+.talk-card-badge.is-award {
+  background: #fdf3d7;
+  color: #8a6416;
+}
+.talk-card-badge.is-attended {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+/* dark mode card */
+.dark .talk-card.leaflet-tooltip {
+  border-color: rgb(255 255 255 / 0.1);
+  background: #1f2937;
+  color: #e5e7eb;
+}
+.dark .talk-card-place,
+.dark .talk-card-title,
+.dark .talk-map-canvas .talk-card a.talk-card-title {
+  color: #ffffff;
+}
+.dark .talk-map-canvas .talk-card a.talk-card-title {
+  text-decoration-color: rgb(255 255 255 / 0.3);
+}
+.dark .talk-card-event {
+  color: var(--color-primary-300);
+}
+.dark .talk-card-date,
+.dark .talk-card-type,
+.dark .talk-card-close {
+  color: #9ca3af;
+}
+.dark .talk-card-close:hover {
+  background: rgb(255 255 255 / 0.08);
+  color: #ffffff;
+}
+.dark .talk-card ul + .talk-card-place,
+.dark .talk-card li + li {
+  border-top-color: rgb(255 255 255 / 0.08);
+}

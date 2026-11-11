@@ -1,0 +1,139 @@
+# Talks & presentations, shown on the homepage map (block: talk-map, layouts/_partials/hbx/blocks/talk-map/).
+# Source: "Talks & Presentations" section of the CV (static/uploads/Yi-Hua-Chung-CV-*.pdf).
+#
+# Fields:
+#   title       talk / paper title (for attended conferences: what I was there for)
+#   type        e.g. Oral Presentation, Invited Talk, Poster Presentation
+#   kind        "talk" (default) or "attended" for conferences I attended (gray flag, not counted as a talk)
+#   event       short event name (shown on the map and in the list)
+#   event_full  full conference name (optional)
+#   date        "YYYY-MM-DD" (first day of the event). Talks dated after the site's build time are shown as "Upcoming".
+#   city, country, lat, lng   where the talk took place; talks in the same city share one flag.
+#                             Omit lat/lng for remote talks (listed, but no flag on the map).
+#   remote      true for online talks (optional)
+#   url         link to the paper page (optional)
+#   note        short highlight such as an award (optional)
+
+# Optional hand placement for crowded cities on the world map: [right, down] in pixels from the
+# city's true position (at the default world view). Cities listed here are not auto-spread.
+# Keys are "City, Country" exactly as in the talks below.
+map_offsets:
+  "San Francisco, CA, USA": [8, -33]
+  "Palo Alto, CA, USA": [16, -11]
+  "Sunnyvale, CA, USA": [10, 15]
+  "San Jose, CA, USA": [33, 15]
+
+talks:
+  - title: "XEG: A GPU-Parallel Algorithm for Efficient and Effective E-Graph Extraction"
+    type: Oral Presentation
+    event: ASPLOS 2027
+    event_full: ACM International Conference on Architectural Support for Programming Languages and Operating Systems
+    date: "2027-04-10"
+    city: Heraklion, Crete
+    country: Greece
+    lat: 35.3387
+    lng: 25.1442
+    url: publications/xeg/
+
+  - title: Attended as Student Researcher, Ricursive Intelligence
+    kind: attended
+    event: ICCAD 2026
+    event_full: IEEE/ACM International Conference on Computer-Aided Design
+    date: "2026-11-01"
+    city: San Jose, CA
+    country: USA
+    lat: 37.3382
+    lng: -121.8863
+
+  - title: "XEG: A GPU-Parallel Algorithm for Efficient and Effective E-Graph Extraction"
+    type: Invited Talk
+    event: Ricursive Intelligence
+    date: "2026-06-01"
+    city: Palo Alto, CA
+    country: USA
+    lat: 37.4419
+    lng: -122.1430
+
+  - title: "SimPart: A Simple Yet Effective Replication-aided Partitioning Algorithm for Logic Simulation on GPU"
+    type: Oral Presentation
+    event: Euro-Par 2025
+    event_full: International European Conference on Parallel and Distributed Computing
+    date: "2025-08-25"
+    city: Dresden
+    country: Germany
+    lat: 51.0504
+    lng: 13.7373
+    url: publications/simpart/
+
+  - title: Accelerating Gate Sizing using GPU
+    type: Elevator Pitch & Poster Presentation
+    event: Euro-Par 2025 PhD Symposium
+    event_full: International European Conference on Parallel and Distributed Computing
+    date: "2025-08-25"
+    city: Dresden
+    country: Germany
+    lat: 51.0504
+    lng: 13.7373
+    url: publications/gate-sizing/
+
+  - title: Scalable Code Generation for RTL Simulation of Deep Learning Accelerators with MLIR
+    type: Oral Presentation (on behalf of first author)
+    event: Euro-Par 2025
+    event_full: International European Conference on Parallel and Distributed Computing
+    date: "2025-08-25"
+    city: Dresden
+    country: Germany
+    lat: 51.0504
+    lng: 13.7373
+
+  - title: ACM/IEEE DAC Young Student Fellowship
+    type: Poster Presentation
+    kind: attended
+    event: DAC 2024
+    event_full: ACM/IEEE Design Automation Conference
+    date: "2024-06-23"
+    city: San Francisco, CA
+    country: USA
+    lat: 37.7749
+    lng: -122.4194
+
+  - title: GPU-Accelerated Gate Sizing in Synopsys EDA Tool
+    type: Intern Final Presentation
+    event: Synopsys EDA Group
+    date: "2024-08-01"
+    city: Sunnyvale, CA
+    country: USA
+    lat: 37.3688
+    lng: -122.0363
+
+  - title: Introduction to GPU Computing for EDA
+    type: Invited Talk
+    event: Synopsys EDA Group
+    date: "2024-06-01"
+    city: Sunnyvale, CA
+    country: USA
+    lat: 37.3688
+    lng: -122.0363
+
+  - title: Accelerating Simulated Quantum Annealing with GPU and Tensor Cores
+    type: Oral Presentation
+    event: ISC 2022
+    event_full: ISC High Performance
+    date: "2022-05-29"
+    city: Hamburg
+    country: Germany
+    lat: 53.5511
+    lng: 9.9937
+    url: publications/sqa-gpu-tensor-cores/
+
+  - title: Development of a Small Intelligent Weather Station for Agricultural Applications
+    type: Oral Presentation
+    event: IMETI 2020
+    event_full: International Multi-Conference on Engineering and Technology Innovation
+    date: "2020-10-23"
+    city: Taichung
+    country: Taiwan
+    lat: 24.1477
+    lng: 120.6736
+    url: publications/weather-station/
+    note: Best Paper Award
