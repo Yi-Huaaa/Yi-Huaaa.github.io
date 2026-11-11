@@ -48,6 +48,15 @@
 .talk-map-stats-upcoming strong {
   color: var(--tm-upcoming);
 }
+@media (max-width: 640px) {
+  /* when the stats wrap, a trailing "·" looks odd: drop the dots and space the items instead */
+  .talk-map-stats {
+    gap: 0.2rem 0.9rem;
+  }
+  .talk-map-stats > [aria-hidden="true"] {
+    display: none;
+  }
+}
 .talk-map-stats-attended strong {
   color: var(--tm-attended);
 }
@@ -75,9 +84,10 @@
   background: #232227;
 }
 @media (max-width: 640px) {
+  /* taller on phones so a flag's card has room to open without heavy scrolling */
   .talk-map-canvas,
   .talk-map-canvas.leaflet-container {
-    height: 300px;
+    height: 400px;
   }
 }
 /* Map credit (required by Esri / OpenStreetMap): keep it, but small and quiet */
@@ -297,7 +307,7 @@
 @media (max-width: 640px) {
   .talk-card.leaflet-tooltip {
     width: 240px;
-    max-height: 210px;
+    max-height: 300px;
   }
 }
 .talk-card-close {

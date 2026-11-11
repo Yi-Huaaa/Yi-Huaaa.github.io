@@ -215,6 +215,7 @@
   // Measure the card off-screen, then open it on a side of the flag where it fits completely
   // (above, below, right, left). If no side fits, use the roomiest side and cap the card's height.
   var EDGE = 10;
+  var EDGE_BOTTOM = 24; // keep clear of the map credit in the bottom-right corner
   var OFFSETS = { top: [8, -38], bottom: [8, 6], right: [28, -16], left: [-6, -16] };
   function measureCard(html) {
     var probe = L.DomUtil.create("div", "leaflet-tooltip talk-card", mapEl);
@@ -229,10 +230,10 @@
   function chooseSide(pt, box, size) {
     var o = OFFSETS;
     var fitsX = function (cx) { return cx - box.w / 2 >= EDGE && cx + box.w / 2 <= size.x - EDGE; };
-    var fitsY = function (cy) { return cy - box.h / 2 >= EDGE && cy + box.h / 2 <= size.y - EDGE; };
+    var fitsY = function (cy) { return cy - box.h / 2 >= EDGE && cy + box.h / 2 <= size.y - EDGE_BOTTOM; };
     var room = {
       top: pt.y + o.top[1] - EDGE,
-      bottom: size.y - (pt.y + o.bottom[1]) - EDGE,
+      bottom: size.y - (pt.y + o.bottom[1]) - EDGE_BOTTOM,
       right: size.x - (pt.x + o.right[0]) - EDGE,
       left: pt.x + o.left[0] - EDGE
     };
@@ -242,7 +243,7 @@
     if (room.left >= box.w && fitsY(pt.y + o.left[1])) return { dir: "left", maxH: null };
     // Nothing fits as-is: go sideways (the full map height is available) or to the taller vertical side
     if (room.right >= box.w || room.left >= box.w) {
-      return { dir: room.right >= box.w ? "right" : "left", maxH: size.y - 2 * EDGE, centerY: true };
+      return { dir: room.right >= box.w ? "right" : "left", maxH: size.y - EDGE - EDGE_BOTTOM, centerY: true };
     }
     return room.top > room.bottom ? { dir: "top", maxH: room.top } : { dir: "bottom", maxH: room.bottom };
   }
@@ -258,7 +259,7 @@
     if (side.centerY) {
       // sideways card taller than the room around the flag: center it on the map instead of the flag
       var h = Math.min(measureCard(html).h, side.maxH);
-      var cy = Math.min(Math.max(pt.y + offset[1], EDGE + h / 2), size.y - EDGE - h / 2);
+      var cy = Math.min(Math.max(pt.y + offset[1], EDGE + h / 2), size.y - EDGE_BOTTOM - h / 2);
       offset[1] = cy - pt.y;
     }
     card = L.tooltip({ direction: side.dir, offset: offset, interactive: true, permanent: true, opacity: 1, className: "talk-card" })
