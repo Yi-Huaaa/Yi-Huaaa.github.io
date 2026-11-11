@@ -80,6 +80,28 @@
     height: 300px;
   }
 }
+/* Map credit (required by Esri / OpenStreetMap): keep it, but small and quiet */
+.talk-map-canvas .leaflet-control-attribution {
+  margin: 0;
+  padding: 1px 6px;
+  border-top-left-radius: 6px;
+  background: rgb(255 255 255 / 0.55);
+  font-size: 9.5px;
+  line-height: 1.5;
+  color: #6b7280;
+}
+.talk-map-canvas .leaflet-control-attribution a {
+  color: inherit;
+  text-decoration: none;
+}
+.talk-map-canvas .leaflet-control-attribution a:hover {
+  text-decoration: underline;
+}
+.dark .talk-map-canvas .leaflet-control-attribution {
+  background: rgb(17 24 39 / 0.55);
+  color: #9ca3af;
+}
+
 /* Tailwind preflight sets img/svg max-width; Leaflet tiles and panes must not be constrained */
 .talk-map-canvas img,
 .talk-map-canvas svg {

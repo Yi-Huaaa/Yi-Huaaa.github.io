@@ -74,18 +74,18 @@
 
   {{ with $subtitle }}<p class="talk-map-subtitle">{{ . }}</p>{{ end }}
   <p class="talk-map-stats">
-    <span><strong>{{ $done }}</strong> {{ cond (eq $done 1) "talk" "talks" }}</span>
+    <span><strong>{{ $done }}</strong> {{ cond (eq $done 1) "Talk" "Talks" }}</span>
     {{ if gt $attended 0 }}
     <span aria-hidden="true">·</span>
-    <span class="talk-map-stats-attended"><strong>{{ $attended }}</strong> {{ cond (eq $attended 1) "conference" "conferences" }} attended</span>
+    <span class="talk-map-stats-attended"><strong>{{ $attended }}</strong> {{ cond (eq $attended 1) "Conference" "Conferences" }} Attended</span>
     {{ end }}
     <span aria-hidden="true">·</span>
-    <span><strong>{{ $n_cities }}</strong> {{ cond (eq $n_cities 1) "city" "cities" }}</span>
+    <span><strong>{{ $n_cities }}</strong> {{ cond (eq $n_cities 1) "City" "Cities" }}</span>
     <span aria-hidden="true">·</span>
-    <span><strong>{{ $n_countries }}</strong> {{ cond (eq $n_countries 1) "country" "countries" }}</span>
+    <span><strong>{{ $n_countries }}</strong> {{ cond (eq $n_countries 1) "Country" "Countries" }}</span>
     {{ if gt $n_upcoming 0 }}
     <span aria-hidden="true">·</span>
-    <span class="talk-map-stats-upcoming"><strong>{{ $n_upcoming }}</strong> upcoming</span>
+    <span class="talk-map-stats-upcoming"><strong>{{ $n_upcoming }}</strong> Upcoming</span>
     {{ end }}
   </p>
 
@@ -156,8 +156,9 @@
   }
   var tiles = L.tileLayer(baseUrl(), {
     maxZoom: 16,
-    attribution: 'Tiles &copy; <a href="https://www.esri.com/">Esri</a> &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap contributors, and the GIS User Community'
+    attribution: '&copy; <a href="https://www.esri.com/">Esri</a>, HERE, Garmin, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
+  map.attributionControl.setPrefix(false); // drop the optional "Leaflet" credit; the required Esri/OSM credit stays
   new MutationObserver(function () { tiles.setUrl(baseUrl()); })
     .observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 
