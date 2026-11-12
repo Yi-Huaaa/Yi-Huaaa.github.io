@@ -11,9 +11,8 @@ on:
         options:
         - Stable
         - Beta (Preview)
-  schedule:
-    # Run at 05:00 on Monday
-    - cron: '0 5 * * 1'
+  # Weekly schedule turned off: the theme is pinned on purpose (hugoblox.yaml).
+  # Run this workflow by hand from the Actions tab when you want to upgrade.
 
 permissions:
   contents: write
