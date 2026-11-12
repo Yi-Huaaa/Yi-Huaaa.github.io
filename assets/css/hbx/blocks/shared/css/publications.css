@@ -4,24 +4,29 @@
   each on its own line with distinct size and color.
   Public Sans is loaded in layouts/_partials/hooks/head-end/publication-fonts.html.
 */
+/* A little more room between papers (the list's default is 1rem). */
+#publications ul > li:not(:last-child) {
+  margin-bottom: 1.75rem;
+}
+
 .pub-entry {
   --pub-sans: "Public Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
 .pub-entry-title {
-  margin: 0 0 0.4rem;
+  margin: 0 0 0.55rem;
   font-family: var(--hb-font-body, "Source Serif 4", Georgia, serif);
   font-size: 1.0625rem; /* 17px */
   font-weight: 600;
-  line-height: 1.4;
+  line-height: 1.45;
   color: #111827; /* gray-900 */
 }
 
 .pub-entry-authors {
-  margin: 0 0 0.3rem;
+  margin: 0 0 0.45rem;
   font-family: var(--pub-sans);
   font-size: 0.875rem; /* 14px */
-  line-height: 1.55;
+  line-height: 1.7;
   color: #1f2937; /* gray-800 */
 }
 
@@ -35,7 +40,7 @@
   font-family: var(--pub-sans);
   font-size: 0.84375rem; /* 13.5px */
   font-style: italic;
-  line-height: 1.5;
+  line-height: 1.65;
   color: #4b5563; /* gray-600 */
 }
 
