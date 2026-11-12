@@ -14,6 +14,8 @@ abstract: |
 links:
   - type: pdf
     url: uploads/publications/2021-weather-station.pdf
+  - type: code
+    url: https://github.com/Yi-Huaaa/Lightning-Detection-AS3935-and-Central-Weather-Bureau
 awards:
   - name: "Best Paper Award"
     level: winner
