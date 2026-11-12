@@ -18,4 +18,6 @@ abstract: |
 links:
   - type: pdf
     url: uploads/publications/2027-xeg-paper.pdf
+  # Code not released yet: no url = shown as "Code · Coming soon". Add the repo url when it is public.
+  - type: code
 ---

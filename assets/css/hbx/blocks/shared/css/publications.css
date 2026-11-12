@@ -82,3 +82,21 @@
 .dark .pub-btn-soon {
   color: #6b7280; /* gray-500 */
 }
+
+/* Same idea on the publications list and paper pages (layouts/_partials/page_links.html). */
+.hb-attachment-link.pub-btn-soon,
+.hb-attachment-link.pub-btn-soon:hover {
+  color: #9ca3af; /* gray-400 */
+  text-decoration: none;
+}
+
+.dark .hb-attachment-link.pub-btn-soon,
+.dark .hb-attachment-link.pub-btn-soon:hover {
+  color: #6b7280; /* gray-500 */
+}
+
+.hb-attachment-link .pub-btn-badge {
+  text-transform: none;
+  letter-spacing: 0.01em;
+  vertical-align: 0.05em;
+}
