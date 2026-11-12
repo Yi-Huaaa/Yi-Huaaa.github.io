@@ -1,5 +1,6 @@
 {{/* Local override of the theme's page_links.html (publication links on the list and
-     single pages). Changes: links are shown in a fixed order (see below), and a link with no url (e.g. `- type: code` before the code
+     single pages). Changes: links are shown in a fixed order (see below), code links are shown as
+     the green "Open Source" tag, and a link with no url (e.g. `- type: code` before the code
      is released) is shown as a muted, non-clickable label with a "Coming soon" badge,
      instead of linking to the homepage. Styles: assets/css/hbx/blocks/shared/css/publications.css */}}
 {{ $is_list := .is_list }}
@@ -79,6 +80,12 @@
         {{ $label }}
         <span class="pub-btn-badge">Coming soon</span>
       </span>
+    {{ else if eq .type "code" }}
+      {{/* Local change: code links are shown as the green "Open Source" tag (same as the homepage) */}}
+      <a class="pub-sticker pub-sticker-link pub-sticker-attach {{ cond $is_list "is-small" "is-large" }}" href="{{ $url | safeURL }}" {{ $target | safeHTMLAttr }} {{ with $rel }}rel="{{ delimit . " " }}"{{ end }}>
+        {{ partial "functions/get_icon" (dict "name" (cond (strings.Contains $url "github.com") "brands/github" (.icon | default "hero/code-bracket")) "attributes" "class='pub-sticker-icon'") }}
+        Open Source
+      </a>
     {{ else if eq .type "bibtex" }}
       <button class="{{ $classes }} js-cite-clipboard cursor-pointer" type="button" data-filename="{{ $url }}">
         {{ partial "functions/get_icon" (dict "name" (.icon | default "hero/document-duplicate") "attributes" "style=\"height: 1em\" class='inline-block'") }}

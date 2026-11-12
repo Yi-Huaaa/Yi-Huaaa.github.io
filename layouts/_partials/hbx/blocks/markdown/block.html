@@ -78,10 +78,6 @@
                   <h3 class="pub-entry-title">{{ $item_title }}</h3>
                   {{ with $item_authors }}<p class="pub-entry-authors">{{ . }}</p>{{ end }}
                   {{ with $item_venue }}<p class="pub-entry-venue">{{ . }}</p>{{ end }}
-                  {{/* Custom: optional small tag on its own row above the buttons, e.g. `sticker: Open Source` */}}
-                  {{ with index . "sticker" }}
-                  <div class="pub-sticker-row"><span class="pub-sticker">{{ partial "functions/get_icon" (dict "name" "brands/github" "attributes" "class='pub-sticker-icon'") }}{{ . }}</span></div>
-                  {{ end }}
                 </div>
                 {{ else }}
                 <div class="prose prose-slate dark:prose-invert max-w-none">{{ $item_text }}</div>
@@ -112,12 +108,22 @@
                     {{ else if in (slice "http" "https") $btn_scheme }}
                       {{ $btn_target = "target=\"_blank\" rel=\"noopener\"" }}
                     {{ end }}
+                    {{ if eq (index $btn "style") "sticker" }}
+                    {{/* Custom: `style: sticker` shows the button as a small green tag (e.g. "Open Source" linking to the repo) */}}
+                    <a href="{{ $btn_link | safeURL }}" {{ $btn_target | safeHTMLAttr }} class="pub-sticker pub-sticker-link">
+                      {{ with $btn_icon }}
+                        {{ partial "functions/get_icon" (dict "name" . "attributes" "class='pub-sticker-icon'") }}
+                      {{ end }}
+                      {{ $btn_text }}
+                    </a>
+                    {{ else }}
                     <a href="{{ $btn_link | safeURL }}" {{ $btn_target | safeHTMLAttr }} class="inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
                       {{ with $btn_icon }}
                         {{ partial "functions/get_icon" (dict "name" . "attributes" "class='w-4 h-4'") }}
                       {{ end }}
                       {{ $btn_text }}
                     </a>
+                    {{ end }}
                     {{ else }}
                     {{/* Custom: a button with no url/bib is shown as a muted, non-clickable label,
                          with an optional small "badge" (e.g. Code + "Coming soon") */}}

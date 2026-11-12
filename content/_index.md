@@ -54,7 +54,6 @@ sections:
           icon: hero/book-open
           items:
             - image: /img/publications/xeg.png
-              sticker: Open Source
               title: "XEG: A GPU-Parallel Algorithm for Efficient and Effective E-Graph Extraction"
               authors: "**Yi-Hua Chung**, Hao-Hsiang Hsiao, Cheng-Hsiang Chiu, Boyang Zhang, Che Chang, Joshua San Miguel, and Tsung-Wei Huang"
               venue: "ACM International Conference on Architectural Support for Programming Languages and Operating Systems (ASPLOS), Heraklion, Crete, Greece, 2027"
@@ -65,11 +64,11 @@ sections:
                 - text: Cite
                   bib: publications/xeg/cite.bib
                   icon: hero/document-duplicate
-                - text: Code
+                - text: Open Source
                   url: https://github.com/Yi-Huaaa/XEG
                   icon: brands/github
+                  style: sticker
             - image: /img/publications/simpart.png
-              sticker: Open Source
               title: "SimPart: A Simple Yet Effective Replication-aided Partitioning Algorithm for Logic Simulation on GPU"
               authors: "**Yi-Hua Chung**, Shui Jiang, Wan Luan Lee, Yanqing Zhang, Haoxing Ren, Tsung-Yi Ho, and Tsung-Wei Huang"
               venue: "International European Conference on Parallel and Distributed Computing (Euro-Par), Dresden, Germany, 2025"
@@ -83,9 +82,10 @@ sections:
                 - text: Cite
                   bib: publications/simpart/cite.bib
                   icon: hero/document-duplicate
-                - text: Code
+                - text: Open Source
                   url: https://github.com/Yi-Huaaa/SimPart
                   icon: brands/github
+                  style: sticker
             - image: /img/publications/gate-sizing.png
               title: "Accelerating Gate Sizing using GPU"
               authors: "**Yi-Hua Chung**, Nahmsuk Oh, Malleswara Gupta Balabhadra Naga Venkata, Aditya Shiledar, Sudipto Kundu, Vishal Khandelwal, and Tsung-Wei Huang"
