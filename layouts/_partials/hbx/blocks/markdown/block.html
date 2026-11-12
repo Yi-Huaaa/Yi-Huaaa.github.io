@@ -78,6 +78,10 @@
                   <h3 class="pub-entry-title">{{ $item_title }}</h3>
                   {{ with $item_authors }}<p class="pub-entry-authors">{{ . }}</p>{{ end }}
                   {{ with $item_venue }}<p class="pub-entry-venue">{{ . }}</p>{{ end }}
+                  {{/* Custom: optional small tag on its own row above the buttons, e.g. `sticker: Open Source` */}}
+                  {{ with index . "sticker" }}
+                  <div class="pub-sticker-row"><span class="pub-sticker">{{ partial "functions/get_icon" (dict "name" "brands/github" "attributes" "class='pub-sticker-icon'") }}{{ . }}</span></div>
+                  {{ end }}
                 </div>
                 {{ else }}
                 <div class="prose prose-slate dark:prose-invert max-w-none">{{ $item_text }}</div>
