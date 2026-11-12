@@ -20,4 +20,6 @@ abstract: |
 links:
   - type: pdf
     url: uploads/publications/2023-ntru-indocrypt.pdf
+  - type: code
+    url: https://github.com/vector-polymul-ntru-ntrup/vector-polymul-ntru-ntrup
 ---

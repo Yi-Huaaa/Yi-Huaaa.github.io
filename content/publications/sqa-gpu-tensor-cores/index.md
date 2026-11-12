@@ -15,4 +15,6 @@ links:
     url: uploads/publications/2022-sqa-gpu-tensor-cores.pdf
   - type: slides
     url: uploads/publications/2022-sqa-gpu-tensor-cores-slides.pdf
+  # Code not released yet: no url = shown as "Code · Coming soon". Add the repo url when it is ready.
+  - type: code
 ---
