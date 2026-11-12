@@ -65,8 +65,8 @@ sections:
                   bib: publications/xeg/cite.bib
                   icon: hero/document-duplicate
                 - text: Code
+                  url: https://github.com/Yi-Huaaa/XEG
                   icon: brands/github
-                  badge: Coming soon
             - image: /img/publications/simpart.png
               title: "SimPart: A Simple Yet Effective Replication-aided Partitioning Algorithm for Logic Simulation on GPU"
               authors: "**Yi-Hua Chung**, Shui Jiang, Wan Luan Lee, Yanqing Zhang, Haoxing Ren, Tsung-Yi Ho, and Tsung-Wei Huang"
