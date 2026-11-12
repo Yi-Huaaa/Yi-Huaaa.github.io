@@ -15,4 +15,6 @@ abstract: |
 links:
   - type: pdf
     url: uploads/publications/2025-bqsim.pdf  
+  - type: code
+    url: https://github.com/IDEA-CUHK/BQSim
 ---
