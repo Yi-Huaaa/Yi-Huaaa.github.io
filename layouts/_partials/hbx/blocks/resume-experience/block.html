@@ -189,7 +189,8 @@
   {{ end }}
 {{ end }}
 
-<div id="{{ $section_id }}" class="mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8">
+{{/* Custom: same width as the markdown blocks (Selected Publications, Awards, Skills) */}}
+<div id="{{ $section_id }}" class="mx-auto w-full max-w-5xl px-6">
 
 <div class="flex flex-col gap-16 {{ if $is_education_first }}flex-col-reverse{{end}}">
 
