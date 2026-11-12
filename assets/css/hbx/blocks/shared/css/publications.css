@@ -14,19 +14,19 @@
 }
 
 .pub-entry-title {
-  margin: 0 0 0.55rem;
+  margin: 0 0 0.5rem;
   font-family: var(--hb-font-body, "Source Serif 4", Georgia, serif);
   font-size: 1.0625rem; /* 17px */
   font-weight: 600;
-  line-height: 1.45;
+  line-height: 1.42;
   color: #111827; /* gray-900 */
 }
 
 .pub-entry-authors {
-  margin: 0 0 0.45rem;
+  margin: 0 0 0.4rem;
   font-family: var(--pub-sans);
   font-size: 0.875rem; /* 14px */
-  line-height: 1.7;
+  line-height: 1.62;
   color: #1f2937; /* gray-800 */
 }
 
@@ -40,7 +40,7 @@
   font-family: var(--pub-sans);
   font-size: 0.84375rem; /* 13.5px */
   font-style: italic;
-  line-height: 1.65;
+  line-height: 1.58;
   color: #4b5563; /* gray-600 */
 }
 
