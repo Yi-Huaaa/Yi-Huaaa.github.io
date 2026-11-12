@@ -114,6 +114,16 @@
                       {{ end }}
                       {{ $btn_text }}
                     </a>
+                    {{ else }}
+                    {{/* Custom: a button with no url/bib is shown as a muted, non-clickable label,
+                         with an optional small "badge" (e.g. Code + "Coming soon") */}}
+                    <span class="pub-btn-soon inline-flex items-center gap-1.5 text-sm font-medium">
+                      {{ with index $btn "icon" }}
+                        {{ partial "functions/get_icon" (dict "name" . "attributes" "class='w-4 h-4'") }}
+                      {{ end }}
+                      {{ index $btn "text" }}
+                      {{ with index $btn "badge" }}<span class="pub-btn-badge">{{ . }}</span>{{ end }}
+                    </span>
                     {{ end }}
                   {{ end }}
                 </div>

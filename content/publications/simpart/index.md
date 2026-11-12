@@ -19,4 +19,6 @@ links:
     url: uploads/publications/2025-simpart-paper.pdf
   - type: slides
     url: uploads/publications/2025-simpart-slides.pdf
+  - type: code
+    url: https://github.com/Yi-Huaaa/SimPart
 ---

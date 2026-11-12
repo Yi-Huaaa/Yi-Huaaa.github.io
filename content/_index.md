@@ -64,6 +64,9 @@ sections:
                 - text: Cite
                   bib: publications/xeg/cite.bib
                   icon: hero/document-duplicate
+                - text: Code
+                  icon: brands/github
+                  badge: Coming soon
             - image: /img/publications/simpart.png
               title: "SimPart: A Simple Yet Effective Replication-aided Partitioning Algorithm for Logic Simulation on GPU"
               authors: "**Yi-Hua Chung**, Shui Jiang, Wan Luan Lee, Yanqing Zhang, Haoxing Ren, Tsung-Yi Ho, and Tsung-Wei Huang"
@@ -78,6 +81,9 @@ sections:
                 - text: Cite
                   bib: publications/simpart/cite.bib
                   icon: hero/document-duplicate
+                - text: Code
+                  url: https://github.com/Yi-Huaaa/SimPart
+                  icon: brands/github
             - image: /img/publications/gate-sizing.png
               title: "Accelerating Gate Sizing using GPU"
               authors: "**Yi-Hua Chung**, Nahmsuk Oh, Malleswara Gupta Balabhadra Naga Venkata, Aditya Shiledar, Sudipto Kundu, Vishal Khandelwal, and Tsung-Wei Huang"
