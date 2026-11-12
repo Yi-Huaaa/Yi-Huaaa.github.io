@@ -92,12 +92,12 @@ sections:
                 - text: Paper
                   url: uploads/publications/2025-gate-sizing-paper.pdf
                   icon: hero/document-text
-                - text: Poster
-                  url: uploads/publications/2025-gate-sizing-poster.pdf
-                  icon: hero/photo
                 - text: Slides
                   url: uploads/publications/2025-gate-sizing-slides.pdf
                   icon: hero/presentation-chart-bar
+                - text: Poster
+                  url: uploads/publications/2025-gate-sizing-poster.pdf
+                  icon: hero/photo
                 - text: Cite
                   bib: publications/gate-sizing/cite.bib
                   icon: hero/document-duplicate

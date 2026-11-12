@@ -1,5 +1,5 @@
 {{/* Local override of the theme's page_links.html (publication links on the list and
-     single pages). Only change: a link with no url (e.g. `- type: code` before the code
+     single pages). Changes: links are shown in a fixed order (see below), and a link with no url (e.g. `- type: code` before the code
      is released) is shown as a muted, non-clickable label with a "Coming soon" badge,
      instead of linking to the homepage. Styles: assets/css/hbx/blocks/shared/css/publications.css */}}
 {{ $is_list := .is_list }}
@@ -7,6 +7,16 @@
 
 {{/* Build normalized links (new API) */}}
 {{ $built := partial "functions/build_links" (dict "page" $page "is_list" $is_list) }}
+
+{{/* Local change: always show links in this order: Paper (PDF), Slides, Poster, Cite, Code.
+     Any other link types keep their original order after these. */}}
+{{ $order := slice "pdf" "slides" "poster" "bibtex" "code" }}
+{{ $sorted := slice }}
+{{ range $t := $order }}
+  {{ range $built }}{{ if eq .type $t }}{{ $sorted = $sorted | append . }}{{ end }}{{ end }}
+{{ end }}
+{{ range $built }}{{ if not (in $order .type) }}{{ $sorted = $sorted | append . }}{{ end }}{{ end }}
+{{ $built = $sorted }}
 
 {{ $ctx := cond $is_list "list" "page" }}
 
