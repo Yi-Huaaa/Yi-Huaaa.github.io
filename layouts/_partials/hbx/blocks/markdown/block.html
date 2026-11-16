@@ -110,7 +110,7 @@
                     {{ end }}
                     {{ if eq (index $btn "style") "sticker" }}
                     {{/* Custom: `style: sticker` shows the button as a small green tag (e.g. "Open Source" linking to the repo) */}}
-                    <a href="{{ $btn_link | safeURL }}" {{ $btn_target | safeHTMLAttr }} class="pub-sticker pub-sticker-link">
+                    <a href="{{ $btn_link | safeURL }}" {{ $btn_target | safeHTMLAttr }} class="pub-sticker pub-sticker-link"{{ with $item_title }} title="{{ index (split (plainify .) ":") 0 }} source code on GitHub"{{ end }}>
                       {{ with $btn_icon }}
                         {{ partial "functions/get_icon" (dict "name" . "attributes" "class='pub-sticker-icon'") }}
                       {{ end }}

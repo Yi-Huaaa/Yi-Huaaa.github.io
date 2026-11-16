@@ -31,7 +31,7 @@
   {{ end }}
 {{ end }}
 
-<div class="flex flex-col items-center">
+<div class="flex flex-col items-center px-6">{{/* Local change: side padding so text does not touch the screen edge on phones */}}
 
   {{ partial "functions/render_view" (dict "fragment" "start" "page" $block "item" . "view" $view "config" $config) }}
 

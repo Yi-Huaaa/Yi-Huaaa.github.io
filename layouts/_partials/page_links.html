@@ -82,7 +82,9 @@
       </span>
     {{ else if eq .type "code" }}
       {{/* Local change: code links are shown as the green "Open Source" tag (same as the homepage) */}}
-      <a class="pub-sticker pub-sticker-link pub-sticker-attach {{ cond $is_list "is-small" "is-large" }}" href="{{ $url | safeURL }}" {{ $target | safeHTMLAttr }} {{ with $rel }}rel="{{ delimit . " " }}"{{ end }}>
+      {{ $short := index (split $page.Title ":") 0 }}
+      {{ $tip := cond (le (len $short) 40) (printf "%s source code on GitHub" $short) "Source code on GitHub" }}
+      <a class="pub-sticker pub-sticker-link pub-sticker-attach {{ cond $is_list "is-small" "is-large" }}" href="{{ $url | safeURL }}" title="{{ $tip }}" {{ $target | safeHTMLAttr }} {{ with $rel }}rel="{{ delimit . " " }}"{{ end }}>
         {{ partial "functions/get_icon" (dict "name" (cond (strings.Contains $url "github.com") "brands/github" (.icon | default "hero/code-bracket")) "attributes" "class='pub-sticker-icon'") }}
         Open Source
       </a>

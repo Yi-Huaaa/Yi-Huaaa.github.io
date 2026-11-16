@@ -1,0 +1,27 @@
+{{/* Paper pages with a code link: schema.org SoftwareSourceCode data, so search engines can
+     connect the paper (e.g. XEG) to its GitHub repository. Uses the page's `links` (type: code). */}}
+{{ if and (eq .Section "publications") .IsPage }}
+  {{ $page := . }}
+  {{ range .Params.links }}
+    {{ if and (eq .type "code") .url }}
+      {{ $name := index (split $page.Title ":") 0 }}
+      {{ if gt (len $name) 40 }}{{ $name = $page.Title }}{{ end }}
+      {{ $code := dict
+        "@context" "https://schema.org"
+        "@type" "SoftwareSourceCode"
+        "name" $name
+        "description" $page.Title
+        "codeRepository" .url
+        "url" .url
+        "subjectOf" (dict "@type" "ScholarlyArticle" "name" $page.Title "url" $page.Permalink)
+      }}
+      {{/* Only claim authorship for repos under the owner's GitHub account */}}
+      {{ if strings.Contains (lower .url) "github.com/yi-huaaa/" }}
+        {{ with hugo.Data.authors.me }}
+          {{ $code = merge $code (dict "author" (dict "@type" "Person" "name" .name.display "url" site.Home.Permalink)) }}
+        {{ end }}
+      {{ end }}
+<script type="application/ld+json">{{ $code | jsonify | safeJS }}</script>
+    {{ end }}
+  {{ end }}
+{{ end }}
