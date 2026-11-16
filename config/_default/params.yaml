@@ -25,7 +25,7 @@ hugoblox:
       Kit. Easily create your personal academic website."
     # Social accounts (used for meta tags like Twitter Cards)
     social:
-      twitter: "GoOwnable" # Twitter/X handle for Twitter Cards (without @)
+      twitter: "" # Twitter/X handle for Twitter Cards (without @); none
 
   # ────────────────────────────────────────────────────────────────────────────
   # THEME
