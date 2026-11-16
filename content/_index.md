@@ -2,6 +2,9 @@
 # Leave the homepage title empty to use the site title
 title: ''
 summary: ''
+# Browser tab / search result title for the homepage only
+seo:
+  title: 'Yi-Hua Chung (鍾宜樺) | Ph.D. Student, UW–Madison'
 date: 2022-10-24
 type: landing
 

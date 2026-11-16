@@ -21,8 +21,8 @@ hugoblox:
     # Short tagline displayed on your site
     tagline: ""
     # Site meta description for search engines and social sharing
-    description: "The highly-customizable Hugo Academic theme powered by HugoBlox
-      Kit. Easily create your personal academic website."
+    description: "Yi-Hua Chung (鍾宜樺) is a Ph.D. student in ECE at UW–Madison working on
+      GPU acceleration for electronic design automation (EDA) and compiler optimization."
     # Social accounts (used for meta tags like Twitter Cards)
     social:
       twitter: "" # Twitter/X handle for Twitter Cards (without @); none

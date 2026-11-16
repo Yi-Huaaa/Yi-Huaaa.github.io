@@ -1,0 +1,52 @@
+{{/* Homepage only: schema.org Person structured data, so search engines can tie the name
+     (English and Chinese) to this site and to the profiles below.
+     Data comes from data/authors/me.yaml; update that file and this stays in sync. */}}
+{{ if .IsHome }}
+{{ with hugo.Data.authors.me }}
+  {{ $me := . }}
+  {{ $person := dict
+    "@context" "https://schema.org"
+    "@type" "Person"
+    "name" $me.name.display
+    "givenName" $me.name.given
+    "familyName" $me.name.family
+    "url" site.Home.Permalink
+  }}
+  {{ with $me.name.alternate }}{{ $person = merge $person (dict "alternateName" .) }}{{ end }}
+  {{ with $me.role }}{{ $person = merge $person (dict "jobTitle" .) }}{{ end }}
+
+  {{ with resources.Get "media/authors/me.png" }}
+    {{ $person = merge $person (dict "image" (.Fill "400x400 Center").Permalink) }}
+  {{ end }}
+
+  {{ with $me.affiliations }}
+    {{ $aff := index . 0 }}
+    {{ $person = merge $person (dict "affiliation" (dict
+      "@type" "CollegeOrUniversity"
+      "name" "University of Wisconsin–Madison"
+      "department" (dict "@type" "Organization" "name" $aff.name "url" $aff.url)
+    )) }}
+  {{ end }}
+
+  {{ $alumni := slice }}
+  {{ $seen := slice }}
+  {{ range $me.education }}
+    {{/* Past schools only (skip the current Ph.D.) */}}
+    {{ if and .institution (not (in $seen .institution)) (not (strings.Contains (printf "%v" .start) "Present")) }}
+      {{ $alumni = $alumni | append (dict "@type" "CollegeOrUniversity" "name" .institution) }}
+      {{ $seen = $seen | append .institution }}
+    {{ end }}
+  {{ end }}
+  {{ with $alumni }}{{ $person = merge $person (dict "alumniOf" .) }}{{ end }}
+
+  {{ with $me.interests }}{{ $person = merge $person (dict "knowsAbout" .) }}{{ end }}
+
+  {{ $same := slice }}
+  {{ range $me.links }}
+    {{ if and .url (hasPrefix .url "http") }}{{ $same = $same | append .url }}{{ end }}
+  {{ end }}
+  {{ with $same }}{{ $person = merge $person (dict "sameAs" .) }}{{ end }}
+
+<script type="application/ld+json">{{ $person | jsonify | safeJS }}</script>
+{{ end }}
+{{ end }}
